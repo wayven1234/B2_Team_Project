@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
@@ -16,18 +17,20 @@ public class ButtonManager : MonoBehaviour
 
     void Start()
     {
+        // Main
         startButton.onClick.AddListener(OnStartButtonClick);        // 게임 시작 버튼 클릭 이벤트 리스너 등록
         gameExButton.onClick.AddListener(OnGameExButtonClick);      // 게임 설명 버튼 클릭 이벤트 리스너 등록
         setButton.onClick.AddListener(OnSetButton);                 // 게임 설정 버튼 클릭 이벤트 리스너 등록
         exitButton.onClick.AddListener(OnExitButtonClick);          // 게임 종료 버튼 클릭 이벤트 리스너 등록
 
+        // Setting
         setPanel.SetActive(false);                                  // 설정창 비활성화
         setExitButton.onClick.AddListener(OnSetExitButtonClick);    // 설정창 닫기 버튼 클릭 이벤트 리스너 등록
     }
 
     public void OnStartButtonClick()
     {
-        //ScneneManager.LoadScene("Stage1"); // 게임 시작 버튼 클릭 시 씬 전환 (씬 이름 입력)
+        SceneManager.LoadScene("Stage1"); // 게임 시작 버튼 클릭 시 씬 전환
         //Debug.Log("Start Button Clicked");
     }
 
