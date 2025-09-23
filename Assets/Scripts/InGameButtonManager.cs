@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -38,6 +39,16 @@ public class InGameButtonManager : MonoBehaviour
         {
             escPanel.SetActive(!escPanel.activeSelf);   // Esc 키를 누르면 Esc 창 토글
             setPanel.SetActive(false);                  // Esc 창이 켜질 때 설정창 끄기
+        }
+
+        // esc창, 설정창의 상태를 보고 게임을 일시정지 또는 재개
+        if (escPanel.activeSelf || setPanel.activeSelf)
+        {
+            Time.timeScale = 0f; // 참이 하나라도 켜져있으면 게임 일시정지
+        }
+        else
+        {
+            Time.timeScale = 1f; // 모두 닫혀 있으면 게임 재개
         }
     }
 
