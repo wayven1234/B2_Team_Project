@@ -1065,7 +1065,7 @@ MonoBehaviour:
   - {fileID: 1898159466}
   - {fileID: 1005422596}
   - {fileID: 1601348512}
-  spawnInterval: 10
+  spawnInterval: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
