@@ -1,29 +1,52 @@
+using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 1f; // ì´ë™ ì†ë„
+    [SerializeField] private PlayerHealthBar healthBar;
+    public float maxHealth;
+    private float currentHealth;
+
+    public float moveSpeed = 1f; // ÀÌµ¿ ¼Óµµ
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
     private void Start()
     {
+        healthBar.Init(currentHealth);
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        // W, A, S, D, ì…ë ¥ê°’ ë°›ê¸°
+        // W, A, S, D, ÀÔ·Â°ª ¹Ş±â
         float moveX = Input.GetAxisRaw("Horizontal"); // A. D
         float moveY = Input.GetAxisRaw("Vertical");   // W, S
 
-        moveInput = new Vector2(moveX, moveY).normalized; // ëŒ€ê°ì„  ì´ë™ ì‹œ ì†ë„ ë³´ì •
+        moveInput = new Vector2(moveX, moveY).normalized; // ´ë°¢¼± ÀÌµ¿ ½Ã ¼Óµµ º¸Á¤
     }
 
     private void FixedUpdate()
     {
-        // Rigidbody2Dë¥¼ ì´ìš©í•œ ì´ë™
+        // Rigidbody2D¸¦ ÀÌ¿ëÇÑ ÀÌµ¿
         rb.linearVelocity = moveInput * moveSpeed;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0f)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

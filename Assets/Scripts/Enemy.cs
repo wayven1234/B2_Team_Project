@@ -1,8 +1,13 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     public float moveSpeed = 1f; // 이동 속도
+
+    public float damage;
+
     private Transform player;    // 플레이어 Transform
     private Rigidbody2D rb;      // Rigidbody2D 참조
 
@@ -27,6 +32,14 @@ public class Enemy : MonoBehaviour
 
             // Rigidbody2D를 이용한 이동
             rb.linearVelocity = direction * moveSpeed;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision collison)
+    {
+        if (collison.gameObject.tag == "Player")
+        {
+            _player.TakeDamage(damage);
         }
     }
 }
