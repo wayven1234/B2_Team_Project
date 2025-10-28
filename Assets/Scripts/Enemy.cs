@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerController _player;
+
+    [SerializeField] private GameObject _expPrefab;
+
+    public float maxHealth;
+    public float currentHealth;
+
     public float moveSpeed = 1f; // 이동 속도
 
     public float damage;
@@ -13,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+
         // "Player" 태그를 붙은 오브젝트 찾기
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -35,11 +43,29 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision collison)
+    private void OnCollisionEnter2D(Collision2D collison)
     {
         if (collison.gameObject.tag == "Player")
         {
             _player.TakeDamage(damage);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"Enemy took {damage} damage. Current HP: {currentHealth}");
+
+        if (currentHealth <= 0f)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Instantiate(_expPrefab, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
     }
 }

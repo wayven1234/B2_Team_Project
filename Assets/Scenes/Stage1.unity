@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 92855798}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -329,8 +329,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1367555815}
+  _expPrefab: {fileID: 1717421565983677000, guid: c04045be66ba3e246a4620b914d456bf, type: 3}
+  maxHealth: 10
+  currentHealth: 10
   moveSpeed: 2
-  damage: 10
+  damage: 0
 --- !u!58 &92855798
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -564,7 +567,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 316063367}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 647109946}
+        m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
+        m_MethodName: OnReplayButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &316063367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +700,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 329944176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 647109946}
+        m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
+        m_MethodName: OnGameExitButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &329944176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1172,7 +1199,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 616454343}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 647109946}
+        m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
+        m_MethodName: OnSetButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &616454343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,13 +1280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escPanel: {fileID: 2090880782}
-  mainButton: {fileID: 1828444917}
-  replayButton: {fileID: 316063366}
-  gameExitButton: {fileID: 329944175}
-  setButton: {fileID: 616454342}
-  closeButton: {fileID: 709417503}
   setPanel: {fileID: 963370961}
-  setExitButton: {fileID: 922055908}
 --- !u!4 &647109947
 Transform:
   m_ObjectHideFlags: 0
@@ -1420,7 +1453,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 709417504}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 647109946}
+        m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
+        m_MethodName: OnCloseButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &709417504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2136,8 +2181,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+      - m_Target: {fileID: 647109946}
+        m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
         m_MethodName: OnSetExitButtonClick
         m_Mode: 1
         m_Arguments:
@@ -2824,8 +2869,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63783d31573f87c4ea6fb953e75915a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 366968917}
+  _healthBar: {fileID: 366968917}
   maxHealth: 100
+  currentHealth: 100
+  currentLevel: 1
+  damage: 10
   moveSpeed: 3
 --- !u!58 &1367555816
 CircleCollider2D:
@@ -4027,7 +4075,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1828444918}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 647109946}
+        m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
+        m_MethodName: OnMainButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1828444918
 MonoBehaviour:
   m_ObjectHideFlags: 0
