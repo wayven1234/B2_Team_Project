@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 133353013}
   - component: {fileID: 133353012}
   m_Layer: 0
-  m_Name: ButtonManager
+  m_Name: -ButtonManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
