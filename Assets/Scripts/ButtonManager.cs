@@ -42,7 +42,7 @@ public class ButtonManager : MonoBehaviour
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
-        // ºôµåµÈ °ÔÀÓ¿¡¼­ Á¾·á
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Application.Quit();
 #endif
     }
@@ -54,7 +54,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnNomalButtonClick()
     {
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("Story");
     }
 
     public void OnNextButtonClick()
@@ -62,11 +62,10 @@ public class ButtonManager : MonoBehaviour
         firstWindow.SetActive(false);
         secondWindow.SetActive(true);
     }
-    
+
     public void OnBackButtonClick()
     {
         firstWindow.SetActive(true);
         secondWindow.SetActive(false);
     }
-
 }

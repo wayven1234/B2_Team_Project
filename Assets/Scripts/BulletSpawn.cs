@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BulletSpawn : MonoBehaviour
 {
-    public GameObject bulletPrefab;
+    public GameObject bulletPrefab;     // BulletPrefab ì—°ê²°
 
-    public float spawnInterval;
+    public float spawnInterval;         // Bullet Spawn Interval
 
     private void Start()
     {
@@ -14,15 +14,12 @@ public class BulletSpawn : MonoBehaviour
     void SpawnBullet()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //Debug.Log("Enemy count: " + enemies.Length);
 
         if (enemies.Length == 0)
         {
-            //Debug.Log("Enemy ¾øÀ½, Bullet »ý¼º ¾È ÇÔ");
             return;
         }
 
-        //Debug.Log("Enemy ÀÖÀ½, Bullet »ý¼º");
         Instantiate(bulletPrefab, transform.position, Quaternion.identity);
     }
 
