@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    public static string gameState = "playing";
+    public static string gameState = "playing";             // 게임 상태 playing
 
     [SerializeField] private PlayerHealthBar _healthBar;    // PlayerHealthBar.cs 연결
     public float maxHealth;                                 // 최대 체력
@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 1f;                            // 이동 속도
 
-    private Rigidbody2D rb;
-    private Vector2 moveInput;
+    private Rigidbody2D rb;                                 // Rigidbody2D 참조
+    private Vector2 moveInput;                              // moveInput
 
-    public event Action OnGameOver;
+    public event Action OnGameOver;                         // GameOver Event
 
     private void Start()
     {
@@ -33,11 +33,12 @@ public class PlayerController : MonoBehaviour
 
         _healthBar.Init(currentHealth);                     // 체력바 초기화
 
-        gameState = "playimg";
+        gameState = "playing";                              // 게임 상태 playing으로 초기화
     }
 
     private void Update()
     {
+        // 게임 상태가 playing이 아닐 시 return
         if (gameState != "playing")
             return;
 
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 게임 상태가 playing이 아닐 시 return
         if (gameState != "playing")
             return;
 
@@ -97,26 +99,26 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        GameOver();
+        GameOver();                                         // GameOver() 메서드 실행
 
         Destroy(gameObject);                                // Player 파괴
     }
 
     public void GameOver()
     {
-        OnGameOver?.Invoke();
+        OnGameOver?.Invoke();                               // OnGameOver Event
 
-        gameState = "gameOver";
-        GameStop();
+        gameState = "gameOver";                             // 게임 상태 = gameOver
+        GameStop();                                         // GameStop() 메서드 실행
 
         Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
         foreach (var col in colliders)
-            col.enabled = false;
+            col.enabled = false;                            // Collider 비활성화
     }
 
     void GameStop()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = new Vector2(0.0f, 0.0f);
+        rb.linearVelocity = new Vector2(0.0f, 0.0f);        // 움직이지 못하게 강제로 멈춤
     }
 }
