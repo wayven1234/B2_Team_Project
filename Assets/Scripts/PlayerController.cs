@@ -5,120 +5,147 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    public static string gameState = "playing";             // 게임 상태 playing
+    [Header("컴포넌트 연결")]
+    [SerializeField] private PlayerHealthBar healthBar;    // PlayerHealthBar.cs 연결
 
-    [SerializeField] private PlayerHealthBar _healthBar;    // PlayerHealthBar.cs 연결
-    public float maxHealth;                                 // 최대 체력
-    public float currentHealth;                             // 현재 체력
+    [Header("플레이어 스탯")]
+    public float maxHealth;     // 최대 체력 (기본값 설정)
+    public float damage;        // 기본 데미지
+    public float moveSpeed;     // 이동 속도
 
-    private float startLevel = 1f;                          // 시작 레벨
-    private float maxLevel = 12f;                           // 최대 레벨
-    public float currentLevel;                              // 현재 레벨
+    [SerializeField] private float startLevel;  // 시작 레벨
+    [SerializeField] private float maxLevel;    // 최대 레벨
+    [SerializeField] private float levelPerExpOrb;  // 경험치 구슬 1개당 레벨
 
-    public float damage;                                    // 기본 데미지
+    [Header("태그 설정")]
+    [SerializeField] private string enemyTag = "Enemy";
+    [SerializeField] private string expTag = "EXP";
 
-    public float moveSpeed = 1f;                            // 이동 속도
+    [Header("현재 상태")]
+    public float currentHealth; // 현재 체력
+    public float currentLevel;  // 현재 레벨
 
-    private Rigidbody2D rb;                                 // Rigidbody2D 참조
-    private Vector2 moveInput;                              // moveInput
+    // 내부 컴포넌트
+    private Rigidbody2D rb;
+    private Vector2 moveInput;
 
-    public event Action OnGameOver;                         // GameOver Event
+    public event Action OnGameOver; // GameOver Event
+
+    private bool canMoveHorizontal;
+    private bool canMoveVertical;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();                   // Rigidbody2D 참조
+        rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
+        currentLevel = startLevel;
+        healthBar.Init(currentHealth);
 
-        currentHealth = maxHealth;                          // 게임 시작 시 현재 체력을 최대 체력으로 초기화
-        currentLevel = startLevel;                          // 게임 시작 시 레벨 초기화 (1레벨)
+        SetMovementByStage();
+    }
 
-        _healthBar.Init(currentHealth);                     // 체력바 초기화
+    /// <summary>
+    /// GameManager로부터 현재 스테이지 타입을 받아와서
+    /// canMoveHorizontal/Vertical 변수를 설정합니다.
+    /// </summary>
+    void SetMovementByStage()
+    {
+        if (GameManager.instance == null)
+        {
+            canMoveHorizontal = true;
+            canMoveVertical = true;
+            return;
+        }
 
-        gameState = "playing";                              // 게임 상태 playing으로 초기화
+        StageType stage = GameManager.instance.GetStageType();
+
+        switch (stage)
+        {
+            case StageType.Vertical:
+                canMoveHorizontal = false;
+                canMoveVertical = true;
+                break;
+
+            case StageType.Normal:
+            default:
+                canMoveHorizontal = true;
+                canMoveVertical = true;
+                break;
+        }
     }
 
     private void Update()
     {
-        // 게임 상태가 playing이 아닐 시 return
-        if (gameState != "playing")
-            return;
+        if (GameManager.instance.currentGameState != GameState.Playing) return;
 
-        // W, A, S, D, 입력값 받기
-        float moveX = Input.GetAxisRaw("Horizontal");       // A. D
-        float moveY = Input.GetAxisRaw("Vertical");         // W, S
+        float moveX = 0f;
+        float moveY = 0f;
 
-        moveInput = new Vector2(moveX, moveY).normalized;   // 대각선 이동 시 속도 보정
+        if (canMoveHorizontal)
+            moveX = Input.GetAxisRaw("Horizontal");
+
+        if (canMoveVertical)
+            moveY = Input.GetAxisRaw("Vertical");
+
+        moveInput = new Vector2(moveX, moveY).normalized;
     }
 
     private void FixedUpdate()
     {
-        // 게임 상태가 playing이 아닐 시 return
-        if (gameState != "playing")
-            return;
-
-        // Rigidbody2D를 이용한 이동
+        if (GameManager.instance.currentGameState != GameState.Playing) return;
         rb.linearVelocity = moveInput * moveSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // tag가 Enemy인 Object와 충돌했을 때
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.CompareTag(enemyTag))
         {
-            // Enemy Object의 Enemy Component 가져오기
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            // Enemy가 Null이 아닐 때
             if (enemy != null)
-            {
-                Debug.Log("Enemy Hit!");
-                enemy.TakeDamage(damage);                   // Enemy Object에게 Player의 damage만큼 TakeDamage
-            }
+                enemy.TakeDamage(damage);
         }
-        // tag가 EXP인 Object와 충돌했을 때
-        if (collision.gameObject.tag == "EXP")
+
+        if (collision.gameObject.CompareTag(expTag))
         {
-            // 현재 레벨이 최대 레벨보다 낮으면
             if (currentLevel < maxLevel)
-            {
-                currentLevel += 1f;                         // 현재 레벨에서 +1
-            }
-            Destroy(collision.gameObject);                  // 부딪힌 EXP의 gameObject 파괴
+                currentLevel += levelPerExpOrb;
+
+            Destroy(collision.gameObject);
         }
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;                            // 현재 체력에서 받은 damage만큼 TakeDamage
-        _healthBar.SetHealth(currentHealth);                // PlayerHealthBar를 현재 체력으로 업데이트
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
 
-        // 현재 체력이 0이거나 0보다 낮을 때
         if (currentHealth <= 0f)
-        {
-            Die();                                          // 죽음
-        }
+            Die();
     }
 
     void Die()
     {
-        GameOver();                                         // GameOver() 메서드 실행
-
-        Destroy(gameObject);                                // Player 파괴
+        GameOver();
+        Destroy(gameObject);
     }
 
     public void GameOver()
     {
-        OnGameOver?.Invoke();                               // OnGameOver Event
+        // OnGameOver 이벤트가 등록된 곳이 있다면 호출
+        OnGameOver?.Invoke();
 
-        gameState = "gameOver";                             // 게임 상태 = gameOver
-        GameStop();                                         // GameStop() 메서드 실행
+        GameManager.instance.ChangeState(GameState.GameOver);
+
+        GameStop();
 
         Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
         foreach (var col in colliders)
-            col.enabled = false;                            // Collider 비활성화
+            col.enabled = false;
     }
 
     void GameStop()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = new Vector2(0.0f, 0.0f);        // 움직이지 못하게 강제로 멈춤
+        rb.linearVelocity = Vector2.zero;
     }
 }
