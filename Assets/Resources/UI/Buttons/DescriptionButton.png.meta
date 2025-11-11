@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 355d4d711f791e84381022045e2da283
+guid: 234bccea7ca11bb47b654619d0121218
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6762800067303374293
-    second: "\uCEA1\uCC98_0"
+      213: 2157316728438032860
+    second: DescriptionButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uCEA1\uCC98_0"
+      name: DescriptionButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 466
-        height: 18
+        width: 426
+        height: 157
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ddfa9294da4add50800000000000000
-      internalID: 6762800067303374293
+      spriteID: cd98e82722450fd10800000000000000
+      internalID: 2157316728438032860
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uCEA1\uCC98_0": 6762800067303374293
+      DescriptionButton_0: 2157316728438032860
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

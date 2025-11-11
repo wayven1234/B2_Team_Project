@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -33,12 +34,19 @@ public class InGameManager : MonoBehaviour
 
         if (player != null && player.gameObject.activeSelf)
         {
-            hpLvPanel.SetActive(true);
-            timePanel.SetActive(true);
-            itemPanel.SetActive(true);
-            closeButton.SetActive(true);
+            StartCoroutine(AcitveTrue());
 
             isUiActive = true;
         }
+    }
+
+    IEnumerator AcitveTrue()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        hpLvPanel.SetActive(true);
+        timePanel.SetActive(true);
+        itemPanel.SetActive(true);
+        closeButton.SetActive(true);
     }
 }

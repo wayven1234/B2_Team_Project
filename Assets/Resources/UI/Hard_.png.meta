@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 355d4d711f791e84381022045e2da283
+guid: 96fe07b50b3e00d4dadd606e38bb5ba7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6762800067303374293
-    second: "\uCEA1\uCC98_0"
+      213: -366938620550447622
+    second: Hard__0
+  - first:
+      213: -4931684187926935572
+    second: Hard__1
+  - first:
+      213: 6180835051606644200
+    second: Hard__2
+  - first:
+      213: 6956819866420308601
+    second: Hard__3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uCEA1\uCC98_0"
+      name: Hard__0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 466
-        height: 18
+        x: 15
+        y: 53
+        width: 75
+        height: 84
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ddfa9294da4add50800000000000000
-      internalID: 6762800067303374293
+      spriteID: afdf7bbc44f58eaf0800000000000000
+      internalID: -366938620550447622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hard__1
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 52
+        width: 61
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce7443a3c532f8bb0800000000000000
+      internalID: -4931684187926935572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hard__2
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 53
+        width: 41
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e51c426bbcb6c550800000000000000
+      internalID: 6180835051606644200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hard__3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 52
+        width: 69
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97aec584fc69b8060800000000000000
+      internalID: 6956819866420308601
       vertices: []
       indices: 
       edges: []
@@ -138,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uCEA1\uCC98_0": 6762800067303374293
+      Hard__0: -366938620550447622
+      Hard__1: -4931684187926935572
+      Hard__2: 6180835051606644200
+      Hard__3: 6956819866420308601
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

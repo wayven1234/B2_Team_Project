@@ -7,6 +7,7 @@ using NUnit.Framework.Constraints;
 
 public class ItemPrefab : MonoBehaviour
 {
+    [SerializeField] private GameObject itemSelectPanel;
     [SerializeField] private ItemData data;
     Image image; 
     TMP_Text text;
@@ -40,7 +41,7 @@ public class ItemPrefab : MonoBehaviour
 
                 }
                     break;
-            case ItemData.ItemType.Tray:
+            case ItemData.ItemType.Talk:
                 break;
             case ItemData.ItemType.Bar:
                 break;
@@ -50,5 +51,6 @@ public class ItemPrefab : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
+        itemSelectPanel.SetActive(false);
     }
 }

@@ -26,7 +26,7 @@ public class Weapon : MonoBehaviour
             {
                 case ItemData.ItemType.Book:
                     break;
-                case ItemData.ItemType.Tray:
+                case ItemData.ItemType.Talk:
                     break;
                 case ItemData.ItemType.Bar:
                     break;

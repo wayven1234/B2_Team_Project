@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 355d4d711f791e84381022045e2da283
+guid: baa078c16e11f44469e34d650d3e7d54
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6762800067303374293
-    second: "\uCEA1\uCC98_0"
+      213: 5720276225250364641
+    second: BoyCharacterSelectButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uCEA1\uCC98_0"
+      name: BoyCharacterSelectButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 466
-        height: 18
+        width: 390
+        height: 587
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ddfa9294da4add50800000000000000
-      internalID: 6762800067303374293
+      spriteID: 1ec09276be0826f40800000000000000
+      internalID: 5720276225250364641
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uCEA1\uCC98_0": 6762800067303374293
+      BoyCharacterSelectButton_0: 5720276225250364641
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
