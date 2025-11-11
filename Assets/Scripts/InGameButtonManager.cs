@@ -8,13 +8,21 @@ public class InGameButtonManager : MonoBehaviour
 {
     // Esc
     [SerializeField] private GameObject escPanel;   // Esc 창
-
+    // Setting
     [SerializeField] private GameObject setPanel;   // 설정창
+
+    [SerializeField] private GameObject characterSelectionPanel;
+    [SerializeField] private GameObject itemSelectionPanel;
+    [SerializeField] private GameObject levelUpPanel;
 
     private void Start()
     {
         escPanel.SetActive(false);  // 게임 시작 시 Esc 창 비활성화
         setPanel.SetActive(false);  // 게임 시작 시 설정창 비활성화
+
+        characterSelectionPanel.SetActive(true);
+        itemSelectionPanel.SetActive(false);
+        levelUpPanel.SetActive(false);
     }
 
     private void Update()
@@ -74,5 +82,17 @@ public class InGameButtonManager : MonoBehaviour
     public void OnSetExitButtonClick()
     {
         setPanel.SetActive(false); // 설정창 닫기 버튼 클릭 시 설정창 끄기
+    }
+
+    public void OnGirlCharacterSelect()
+    {
+        characterSelectionPanel.SetActive(false);
+        itemSelectionPanel.SetActive(true);
+    }
+
+    public void OnBoyCharacterSelect()
+    {
+        characterSelectionPanel.SetActive(false);
+        itemSelectionPanel.SetActive(true);
     }
 }
