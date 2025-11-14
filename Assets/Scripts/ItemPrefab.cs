@@ -4,16 +4,18 @@ using TMPro;
 using System.Collections;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Constraints;
+using Unity.Android.Gradle.Manifest;
 
 public class ItemPrefab : MonoBehaviour
 {
+    [SerializeField] private PlayerController playerCnt;
     [SerializeField] private GameObject itemSelectPanel;
     [SerializeField] private ItemData data;
     Image image; 
     TMP_Text text;
-    int level;
-
+ 
     Weapon weapon;
+
     void Awake()
     {
         image = GetComponentsInChildren<Image>()[1];
@@ -27,18 +29,19 @@ public class ItemPrefab : MonoBehaviour
         switch (data.type)
         {
             case ItemData.ItemType.Book:
-                if(level == 0)
+                if(data.level == 0)
                 {
-                    GameObject newWeapon = new GameObject();  
+                    GameObject newWeapon = new GameObject(data.display + "Weapon");  
                     weapon = newWeapon.AddComponent<Weapon>();
                     weapon.Init(data);
                 }
                 else
                 {
-                    float nextDamage = data.damages[level];
-                    float nextSpeed = data.speeds[level];
+                    float nextDamage = data.damages[data.level - 1];
+                    float nextSpeed = data.speeds[data.level - 1];
 
-
+                    if (weapon != null)
+                        weapon.Upgrade(nextDamage, nextSpeed);
                 }
                     break;
             case ItemData.ItemType.Talk:
@@ -46,10 +49,13 @@ public class ItemPrefab : MonoBehaviour
             case ItemData.ItemType.Bar:
                 break;
         }
-        level++;
-        if (level == data.damages.Length)
+
+        data.level++;
+        playerCnt.currentLevel++;
+
+        if (data.level == 4)
         {
-            this.gameObject.SetActive(false);
+            GetComponent<Button>().interactable = false;
         }
         itemSelectPanel.SetActive(false);
     }
