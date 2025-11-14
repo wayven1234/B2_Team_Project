@@ -17,6 +17,8 @@ public class InGameButtonManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.ChangeState(GameState.Paused);
+
         escPanel.SetActive(false);  // 게임 시작 시 Esc 창 비활성화
         setPanel.SetActive(false);  // 게임 시작 시 설정창 비활성화
 
@@ -33,26 +35,50 @@ public class InGameButtonManager : MonoBehaviour
             setPanel.SetActive(false);                  // Esc 창이 켜질 때 설정창 끄기
         }
 
-        // esc창, 설정창의 상태를 보고 게임을 일시정지 또는 재개
-        if (escPanel.activeSelf || setPanel.activeSelf)
+        bool isAnyPausePanelActive = escPanel.activeSelf || 
+                                     setPanel.activeSelf ||
+                                     characterSelectionPanel.activeSelf ||
+                                     itemSelectionPanel.activeSelf ||
+                                     itemLevelUpPanel.activeSelf;
+
+        if (isAnyPausePanelActive)
         {
-            Time.timeScale = 0f; // 참이 하나라도 켜져있으면 게임 일시정지
+            // 패널이 하나라도 켜져 있다면, 게임 상태를 Paused로 설정
+            GameManager.instance.ChangeState(GameState.Paused);
         }
         else
         {
-            Time.timeScale = 1f; // 모두 닫혀 있으면 게임 재개
+            // 위의 패널이 *모두* 꺼져 있을 때만 Playing 상태로 변경
+            GameManager.instance.ChangeState(GameState.Playing);
         }
+    }
+
+    /// <summary>
+    /// 아이템 선택 패널(itemSelectionPanel)에서
+    /// 아이템을 고르고 '게임 시작' 버튼을 눌렀을 때 호출
+    /// </summary>
+    public void OnItemSelectionConfirmed()
+    {
+        // 1. 아이템 선택창을 끈다
+        itemSelectionPanel.SetActive(false);
+
+        // 2. 이제 모든 패널이 꺼졌으므로, Update() 함수가
+        //    자동으로 GameState를 Playing으로 변경할 것입니다.
+        //    (여기서 Playing으로 변경해도 됨)
+        // GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnMainButtonClick()
     {
         SceneManager.LoadScene("TitleScene"); // 메인 화면 버튼 클릭 시 메인 화면으로 이동
+        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnReplayButtonClick()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name); // 다시 시작 버튼 클릭 시 현재 씬 재시작
+        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnGameExitButtonClick()
@@ -72,28 +98,33 @@ public class InGameButtonManager : MonoBehaviour
     {
         escPanel.SetActive(false);  // 설정 버튼 클릭 시 Esc 창 끄기
         setPanel.SetActive(true);   // 설정 버튼 클릭 시 설정창 활성화
+        GameManager.instance.ChangeState(GameState.Paused);
     }
 
     public void OnCloseButtonClick()
     {
         escPanel.SetActive(false); // 닫기 버튼 클릭 시 Esc 창 끄기
+        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnSetExitButtonClick()
     {
         setPanel.SetActive(false); // 설정창 닫기 버튼 클릭 시 설정창 끄기
+        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnGirlCharacterSelect()
     {
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
+        GameManager.instance.ChangeState(GameState.Paused);
     }
 
     public void OnBoyCharacterSelect()
     {
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
+        GameManager.instance.ChangeState(GameState.Paused);
     }
 
     public void OnItemButtonClick()

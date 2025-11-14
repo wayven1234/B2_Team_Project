@@ -181,7 +181,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -436,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 92855793}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.72, y: 0.91, z: 0}
+  m_LocalPosition: {x: 12.68, y: 3.84, z: 0}
   m_LocalScale: {x: 0.125, y: 0.125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1155,7 +1155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &308326030
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3029,7 +3029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e7d11ae80e2b848b28bac8acb5badf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStageType: 0
+  stageData:
+    stageType: 0
   currentGameState: 0
 --- !u!4 &561680255
 Transform:
@@ -3362,7 +3363,7 @@ MonoBehaviour:
   setPanel: {fileID: 963370961}
   characterSelectionPanel: {fileID: 773578214}
   itemSelectionPanel: {fileID: 1152609294}
-  levelUpPanel: {fileID: 308326029}
+  itemLevelUpPanel: {fileID: 308326029}
 --- !u!4 &647109947
 Transform:
   m_ObjectHideFlags: 0
@@ -6557,7 +6558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1367555812
 Transform:
   m_ObjectHideFlags: 0
@@ -7249,7 +7250,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -7981,7 +7982,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

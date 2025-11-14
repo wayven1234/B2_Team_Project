@@ -67,16 +67,16 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        StageType stage = GameManager.instance.GetStageType();
+        StageData.StageType stage = GameManager.instance.GetStageType();
 
         switch (stage)
         {
-            case StageType.Vertical:
+            case StageData.StageType.Vertical:
                 canMoveHorizontal = false;
                 canMoveVertical = true;
                 break;
 
-            case StageType.Normal:
+            case StageData.StageType.Normal:
             default:
                 canMoveHorizontal = true;
                 canMoveVertical = true;
