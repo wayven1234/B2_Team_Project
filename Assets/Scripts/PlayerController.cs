@@ -5,12 +5,13 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("컴포넌트 연결")]
+    [Header("연결")]
     [SerializeField] private PlayerHealthBar healthBar;    // PlayerHealthBar.cs 연결
+    [SerializeField] private UnityEngine.UI.Image[] itemImage;
+    [SerializeField] private Sprite itemSprite;
 
     [Header("플레이어 스탯")]
     public float maxHealth;     // 최대 체력 (기본값 설정)
-    public float damage;        // 기본 데미지
     public float moveSpeed;     // 이동 속도
 
     [SerializeField] private float startLevel;  // 시작 레벨
@@ -20,10 +21,12 @@ public class PlayerController : MonoBehaviour
     [Header("태그 설정")]
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private string expTag = "EXP";
+    [SerializeField] private string itemTag = "HealthItem";
 
     [Header("현재 상태")]
     public float currentHealth; // 현재 체력
     public float currentLevel;  // 현재 레벨
+    public int itemUI;        // 아이템 갯수
 
     // 내부 컴포넌트
     private Rigidbody2D rb;
@@ -102,7 +105,8 @@ public class PlayerController : MonoBehaviour
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             if (enemy != null)
-                enemy.TakeDamage(damage);
+                Debug.Log("제작중");
+                //enemy.TakeDamage(damage);
         }
 
         if (collision.gameObject.CompareTag(expTag))
@@ -112,8 +116,52 @@ public class PlayerController : MonoBehaviour
 
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.CompareTag(itemTag))
+        {
+            if (itemUI < 2)
+            {
+                itemUIUpdate(itemSprite, itemUI);
+                itemUI++;
+            }
+            else
+                Debug.Log("이미 2개 모두 획득");
+            Destroy(collision.gameObject);
+        }
     }
 
+    void itemUIUpdate(Sprite newSprite, int index)
+    {
+        if (index < 0 || index >= itemImage.Length)
+        return;
+
+        if (newSprite == null)
+        {
+            // 초기화: 슬롯 2개 모두 비우기
+            for (int i = 0; i < itemImage.Length; i++)
+            {
+                itemImage[i].sprite = null;
+                itemImage[i].color = new Color(1, 1, 1, 0);
+            }
+            return;
+        }
+
+        // 해당 슬롯에 스프라이트 넣기
+        itemImage[index].sprite = newSprite;
+        itemImage[index].color = new Color(1, 1, 1, 1);
+
+        //Debug.Log($"아이템 슬롯 {index} 채워짐");
+    }
+
+    public void UseItemUI()
+    {
+        if (itemUI > 0)
+        {
+            itemUI--;
+            itemUIUpdate(null, itemUI);
+        }
+    }
+    
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;

@@ -95,4 +95,23 @@ public class InGameButtonManager : MonoBehaviour
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
     }
+
+    public void OnItemButtonClick()
+    {
+        PlayerController playerCnt = FindObjectOfType<PlayerController>();
+
+        if (playerCnt == null)
+            return;
+
+        // 아이템이 1개 이상 있을 때만 사용 가능
+        if (playerCnt.itemUI > 0)
+        {
+            playerCnt.currentHealth += 100f;
+            playerCnt.UseItemUI();
+        }
+        else
+        {
+            Debug.Log("아이템이 없어서 사용할 수 없습니다.");
+        }
+    }
 }
