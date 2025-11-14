@@ -13,7 +13,7 @@ public class InGameButtonManager : MonoBehaviour
 
     [SerializeField] private GameObject characterSelectionPanel;
     [SerializeField] private GameObject itemSelectionPanel;
-    [SerializeField] private GameObject levelUpPanel;
+    [SerializeField] private GameObject itemLevelUpPanel;
 
     private void Start()
     {
@@ -22,7 +22,7 @@ public class InGameButtonManager : MonoBehaviour
 
         characterSelectionPanel.SetActive(true);
         itemSelectionPanel.SetActive(false);
-        levelUpPanel.SetActive(false);
+        itemLevelUpPanel.SetActive(false);
     }
 
     private void Update()

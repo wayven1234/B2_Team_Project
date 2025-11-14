@@ -13,8 +13,7 @@ public class ItemData
     [Header("레벨당 속성")]
     public float baseDamage;
     public float baseSpeed;
-    public float baseDelay;
 
     public float[] damages;
-    public int[] speeds;
+    public float[] speeds;
 }

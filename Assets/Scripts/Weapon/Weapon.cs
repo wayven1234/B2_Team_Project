@@ -14,10 +14,12 @@ public class Weapon : MonoBehaviour
         currentDamage = data.baseDamage;
         currentSpeed = data.baseSpeed;
     }
+
     public void Upgrade(float damage, float speed)
     {
-        
+
     }
+
     private IEnumerator WeaponSpawn(ItemData weaponType, float delay)
     {
         while (true)

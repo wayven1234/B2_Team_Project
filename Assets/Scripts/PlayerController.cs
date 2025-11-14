@@ -5,18 +5,19 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("캐릭터 데이터")]
+    [SerializeField] private CharacterData characterData;
+
     [Header("연결")]
     [SerializeField] private PlayerHealthBar healthBar;    // PlayerHealthBar.cs 연결
+    [SerializeField] private PlayerLevelBar levelBar;      // PlayerLevelBar.cs 연결
     [SerializeField] private UnityEngine.UI.Image[] itemImage;
     [SerializeField] private Sprite itemSprite;
 
     [Header("플레이어 스탯")]
-    public float maxHealth;     // 최대 체력 (기본값 설정)
-    public float moveSpeed;     // 이동 속도
-
     [SerializeField] private float startLevel;  // 시작 레벨
     [SerializeField] private float maxLevel;    // 최대 레벨
-    [SerializeField] private float levelPerExpOrb;  // 경험치 구슬 1개당 레벨
+    [SerializeField] private int expOrbsPerLevel = 20;
 
     [Header("태그 설정")]
     [SerializeField] private string enemyTag = "Enemy";
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float currentHealth; // 현재 체력
     public float currentLevel;  // 현재 레벨
     public int itemUI;        // 아이템 갯수
+    public int currentExpCount = 0;
 
     // 내부 컴포넌트
     private Rigidbody2D rb;
@@ -40,9 +42,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
+
+        currentHealth = characterData.maxHealth;
+
         currentLevel = startLevel;
         healthBar.Init(currentHealth);
+
+        if (levelBar != null)
+            levelBar.Init(expOrbsPerLevel);
 
         SetMovementByStage();
     }
@@ -96,7 +103,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameManager.instance.currentGameState != GameState.Playing) return;
-        rb.linearVelocity = moveInput * moveSpeed;
+        rb.linearVelocity = moveInput * characterData.moveSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -104,14 +111,27 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag(enemyTag))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-
-            TakeDamage(enemy.damage);
+            if (enemy != null)
+            {
+                enemy.TakeDamage(enemy.damage);
+            }
         }
 
         if (collision.gameObject.CompareTag(expTag))
         {
-            if (currentLevel < maxLevel)
-                currentLevel += levelPerExpOrb;
+            if (currentLevel >= maxLevel)
+            {
+                Destroy(collision.gameObject);
+                return;
+            }
+
+            currentExpCount++;
+
+            if (levelBar != null)
+                levelBar.SetHealth(currentExpCount);
+
+            if (currentExpCount >= expOrbsPerLevel)
+                LevelUp();
 
             Destroy(collision.gameObject);
         }
@@ -127,6 +147,21 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("이미 2개 모두 획득");
             Destroy(collision.gameObject);
         }
+    }
+
+    /// <summary>
+    /// 레벨업 처리 함수
+    /// </summary>
+    private void LevelUp()
+    {
+        if (currentLevel >= maxLevel) return;
+        
+        currentLevel++;
+        currentExpCount = 0;
+        Debug.Log($"레벨업! 현재 레벨: {currentLevel}");
+
+        if (levelBar != null)
+            levelBar.SetHealth(0);
     }
 
     void itemUIUpdate(Sprite newSprite, int index)
@@ -157,16 +192,16 @@ public class PlayerController : MonoBehaviour
             itemUI--; // 아이템 갯수 하나 감소
 
             // 아이템 사용 전에 현재 체력이 최대 체력보다 적을 경우에만 100 증가
-            if (currentHealth < maxHealth)
+            if (currentHealth < characterData.maxHealth)
             {
                 currentHealth += 100f;
                 Debug.Log("아이템 사용: 체력 회복");
             }
 
             // 만약 현재 체력이 최대 체력을 초과하면 최대 체력으로 설정
-            if (currentHealth > maxHealth)
+            if (currentHealth > characterData.maxHealth)
             {
-                currentHealth = maxHealth;
+                currentHealth = characterData.maxHealth;
                 Debug.Log("현재 체력이 최대 체력을 초과하여 최대 체력으로 설정");
             }
 
@@ -215,5 +250,20 @@ public class PlayerController : MonoBehaviour
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
+    }
+
+    /// <summary>
+    /// 이 플레이어의 스킬 데미지 보너스를 반환합니다. (예: 무기 스크립트에서 호출)
+    /// </summary>
+    /// <returns>캐릭터 타입에 따른 데미지 보너스</returns>
+    public float GetSkillDamageBonus()
+    {
+        if (characterData == null)
+        {
+            Debug.LogError("CharacterData가 PlayerController에 연결되지 않았습니다.");
+            return 0f;
+        }
+
+        return characterData.GetSkillDamageBonus();
     }
 }
