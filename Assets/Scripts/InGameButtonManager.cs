@@ -98,7 +98,7 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnItemButtonClick()
     {
-        PlayerController playerCnt = FindObjectOfType<PlayerController>();
+        PlayerController playerCnt = Object.FindFirstObjectByType<PlayerController>();
 
         if (playerCnt == null)
             return;
@@ -106,7 +106,6 @@ public class InGameButtonManager : MonoBehaviour
         // 아이템이 1개 이상 있을 때만 사용 가능
         if (playerCnt.itemUI > 0)
         {
-            playerCnt.currentHealth += 100f;
             playerCnt.UseItemUI();
         }
         else

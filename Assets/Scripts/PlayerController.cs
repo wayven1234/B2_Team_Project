@@ -104,9 +104,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag(enemyTag))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            if (enemy != null)
-                Debug.Log("제작중");
-                //enemy.TakeDamage(damage);
+
+            TakeDamage(enemy.damage);
         }
 
         if (collision.gameObject.CompareTag(expTag))
@@ -133,38 +132,59 @@ public class PlayerController : MonoBehaviour
     void itemUIUpdate(Sprite newSprite, int index)
     {
         if (index < 0 || index >= itemImage.Length)
-        return;
+            return;
 
         if (newSprite == null)
         {
-            // 초기화: 슬롯 2개 모두 비우기
-            for (int i = 0; i < itemImage.Length; i++)
-            {
-                itemImage[i].sprite = null;
-                itemImage[i].color = new Color(1, 1, 1, 0);
-            }
-            return;
+            
+            itemImage[index].sprite = null;
+            itemImage[index].color = new Color(1, 1, 1, 0);
         }
+        else
+        {
+            // 해당 슬롯에 스프라이트 넣기
+            itemImage[index].sprite = newSprite;
+            itemImage[index].color = new Color(1, 1, 1, 1);
 
-        // 해당 슬롯에 스프라이트 넣기
-        itemImage[index].sprite = newSprite;
-        itemImage[index].color = new Color(1, 1, 1, 1);
-
-        //Debug.Log($"아이템 슬롯 {index} 채워짐");
+            //Debug.Log($"아이템 슬롯 {index} 채워짐");
+        }
     }
 
     public void UseItemUI()
     {
         if (itemUI > 0)
         {
-            itemUI--;
+            itemUI--; // 아이템 갯수 하나 감소
+
+            // 아이템 사용 전에 현재 체력이 최대 체력보다 적을 경우에만 100 증가
+            if (currentHealth < maxHealth)
+            {
+                currentHealth += 100f;
+                Debug.Log("아이템 사용: 체력 회복");
+            }
+
+            // 만약 현재 체력이 최대 체력을 초과하면 최대 체력으로 설정
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+                Debug.Log("현재 체력이 최대 체력을 초과하여 최대 체력으로 설정");
+            }
+
+            // 체력바 UI 업데이트
+            healthBar.SetHealth(currentHealth);
+
+            // 아이템 UI 업데이트
             itemUIUpdate(null, itemUI);
+
+            Debug.Log("아이템 사용 후 체력: " + currentHealth);
         }
     }
-    
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0f);
+
         healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0f)

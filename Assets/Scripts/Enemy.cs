@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private GameObject _expPrefab;
 
-    public float maxHealth;
+    public float maxHealth; 
     public float currentHealth;
 
     public float moveSpeed = 1f; // 이동 속도
