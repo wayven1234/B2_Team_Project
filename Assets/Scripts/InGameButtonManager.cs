@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class InGameButtonManager : MonoBehaviour
 {
+    [Header("Player Prefabs & Spawn")]
+    [SerializeField] private GameObject girlPlayerPrefab;
+    [SerializeField] private GameObject boyPlayerPrefab;
+    [SerializeField] private Transform playerSpawnPoint;
+
     // Esc
     [SerializeField] private GameObject escPanel;   // Esc 창
     // Setting
@@ -115,6 +120,8 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnGirlCharacterSelect()
     {
+        SpawnPlayer(girlPlayerPrefab);
+
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
         GameManager.instance.ChangeState(GameState.Paused);
@@ -122,9 +129,28 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnBoyCharacterSelect()
     {
+        SpawnPlayer(boyPlayerPrefab);
+
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
         GameManager.instance.ChangeState(GameState.Paused);
+    }
+
+    void SpawnPlayer(GameObject playerPrefab)
+    {
+        if (playerPrefab == null)
+            return;
+
+        Vector3 spawnPos = Vector3.zero;
+        if (playerSpawnPoint != null)
+            spawnPos = playerSpawnPoint.position;
+        else
+            Debug.LogWarning("PlayerSpawnPoint가 할당되지 않았습니다.");
+
+        if (PlayerController.instance != null)
+            Destroy(PlayerController.instance.gameObject);
+
+        Instantiate(playerPrefab, spawnPos, Quaternion.identity);
     }
 
     public void OnItemButtonClick()

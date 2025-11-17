@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 70a1b1685addf1749b15d1c72c03e2c9
+guid: 58639ed79ad667d44a1db75b2b4d62a8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1665495925942026336
-    second: PlayerTest_0
+      213: 5207549422610186477
+    second: Player_Girl_Anim2_0
   - first:
-      213: -3863006341621653576
-    second: PlayerTest_1
+      213: 8374764901710269321
+    second: Player_Girl_Anim2_1
   - first:
-      213: 5611770271527148706
-    second: PlayerTest_2
+      213: 756223751770575795
+    second: Player_Girl_Anim2_2
   - first:
-      213: 3645270755526016644
-    second: PlayerTest_3
+      213: -6475713271406512067
+    second: Player_Girl_Anim2_3
   - first:
-      213: -5240399612818513443
-    second: PlayerTest_4
+      213: 3257611320516094232
+    second: Player_Girl_Anim2_4
   - first:
-      213: -3537854497118734083
-    second: PlayerTest_5
+      213: -4761824302341671781
+    second: Player_Girl_Anim2_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -111,17 +111,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerTest_0
+      name: Player_Girl_Anim2_0
       rect:
         serializedVersion: 2
-        x: 108
-        y: 953
-        width: 332
-        height: 610
+        x: 68
+        y: 881
+        width: 438
+        height: 622
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 06082a078b70d1710800000000000000
-      internalID: 1665495925942026336
+      spriteID: de088fceb9ee44840800000000000000
+      internalID: 5207549422610186477
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerTest_1
+      name: Player_Girl_Anim2_1
       rect:
         serializedVersion: 2
-        x: 551
-        y: 944
-        width: 332
-        height: 607
+        x: 561
+        y: 882
+        width: 438
+        height: 623
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +165,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8bf5f8a0338d36ac0800000000000000
-      internalID: -3863006341621653576
+      spriteID: 98b89d38e44293470800000000000000
+      internalID: 8374764901710269321
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerTest_2
+      name: Player_Girl_Anim2_2
       rect:
         serializedVersion: 2
-        x: 1027
-        y: 938
-        width: 301
-        height: 614
+        x: 1058
+        y: 882
+        width: 422
+        height: 624
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ac197b545301ed40800000000000000
-      internalID: 5611770271527148706
+      spriteID: 3b39ffede75ae7a00800000000000000
+      internalID: 756223751770575795
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerTest_3
+      name: Player_Girl_Anim2_3
       rect:
         serializedVersion: 2
-        x: 129
-        y: 201
-        width: 301
-        height: 614
+        x: 57
+        y: 192
+        width: 422
+        height: 624
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,20 +209,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 48e7f3d407a969230800000000000000
-      internalID: 3645270755526016644
+      spriteID: d383886e615a126a0800000000000000
+      internalID: -6475713271406512067
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerTest_4
+      name: Player_Girl_Anim2_4
       rect:
         serializedVersion: 2
-        x: 574
-        y: 207
-        width: 332
-        height: 607
+        x: 538
+        y: 192
+        width: 438
+        height: 623
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +231,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd1abd4215c5647b0800000000000000
-      internalID: -5240399612818513443
+      spriteID: 81927a78c3c553d20800000000000000
+      internalID: 3257611320516094232
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerTest_5
+      name: Player_Girl_Anim2_5
       rect:
         serializedVersion: 2
-        x: 1017
-        y: 216
-        width: 332
-        height: 610
+        x: 1031
+        y: 191
+        width: 438
+        height: 622
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,8 +253,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df83838441407eec0800000000000000
-      internalID: -3537854497118734083
+      spriteID: b943a18b60a9aedb0800000000000000
+      internalID: -4761824302341671781
       vertices: []
       indices: 
       edges: []
@@ -260,12 +273,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PlayerTest_0: 1665495925942026336
-      PlayerTest_1: -3863006341621653576
-      PlayerTest_2: 5611770271527148706
-      PlayerTest_3: 3645270755526016644
-      PlayerTest_4: -5240399612818513443
-      PlayerTest_5: -3537854497118734083
+      Player_Girl_Anim2_0: 5207549422610186477
+      Player_Girl_Anim2_1: 8374764901710269321
+      Player_Girl_Anim2_2: 756223751770575795
+      Player_Girl_Anim2_3: -6475713271406512067
+      Player_Girl_Anim2_4: 3257611320516094232
+      Player_Girl_Anim2_5: -4761824302341671781
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

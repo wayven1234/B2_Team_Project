@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameManager : MonoBehaviour
 {
@@ -8,9 +9,12 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject itemPanel;
     [SerializeField] private GameObject closeButton;
 
-    public PlayerController player;
+    [Header("UI Scripts & Slots")]
+    [SerializeField] private PlayerHealthBar healthBarScript;
+    [SerializeField] private PlayerLevelBar levelBarScript;
+    [SerializeField] private Image[] itemImageSlots;
 
-    private bool isUiActive = false;
+    private PlayerController player;
 
     void Start()
     {
@@ -18,35 +22,35 @@ public class InGameManager : MonoBehaviour
         timePanel.SetActive(false);
         itemPanel.SetActive(false);
         closeButton.SetActive(false);
+
+        // (안전 장치) 인스펙터에서 UI 스크립트 연결을 깜빡했다면 찾기
+        if (healthBarScript == null && hpLvPanel != null)
+            healthBarScript = hpLvPanel.GetComponentInChildren<PlayerHealthBar>(true);
+        if (levelBarScript == null && hpLvPanel != null)
+            levelBarScript = hpLvPanel.GetComponentInChildren<PlayerLevelBar>(true);
+
+        StartCoroutine(InitializeUI());
     }
-    
-    void Update()
+
+    IEnumerator InitializeUI()
     {
-        if (isUiActive) return;
-
-        SetActiveTrue();
-    }
-
-    void SetActiveTrue()
-    {
-        if (player == null)
-            player = FindFirstObjectByType<PlayerController>();
-
-        if (player != null && player.gameObject.activeSelf)
+        while (PlayerController.instance == null)
         {
-            StartCoroutine(AcitveTrue());
-
-            isUiActive = true;
+            yield return null;
         }
-    }
 
-    IEnumerator AcitveTrue()
-    {
+        player = PlayerController.instance;
+
         yield return new WaitForSeconds(0.5f);
 
         hpLvPanel.SetActive(true);
         timePanel.SetActive(true);
         itemPanel.SetActive(true);
         closeButton.SetActive(true);
+
+        if (player != null && healthBarScript != null)
+            player.LinkUI(healthBarScript, levelBarScript, itemImageSlots);
+        else
+            Debug.LogError("InGameManager: Player 또는 UI 스크립트를 찾지 못했습니다");
     }
 }

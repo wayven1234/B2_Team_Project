@@ -8,7 +8,8 @@ using Unity.Android.Gradle.Manifest;
 
 public class ItemPrefab : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerCnt;
+    private PlayerController playerCnt;
+
     [SerializeField] private GameObject itemSelectPanel;
     [SerializeField] private ItemData data;
     Image image; 
@@ -26,6 +27,11 @@ public class ItemPrefab : MonoBehaviour
 
     public void OnClick()
     {
+        playerCnt = PlayerController.instance;
+
+        if (playerCnt == null)
+            return;
+
         switch (data.type)
         {
             case ItemData.ItemType.Book:

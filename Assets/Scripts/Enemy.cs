@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private PlayerController _player;
+    private PlayerController player;
 
     [SerializeField] private GameObject _expPrefab;
+    [SerializeField] private string playerTag = "Player";
 
     public float maxHealth; 
     public float currentHealth;
@@ -14,40 +15,53 @@ public class Enemy : MonoBehaviour
 
     public float damage;
 
-    private Transform player;    // 플레이어 Transform
     private Rigidbody2D rb;      // Rigidbody2D 참조
 
     private void Start()
     {
         currentHealth = maxHealth;
-
-        // "Player" 태그를 붙은 오브젝트 찾기
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-        }
-
         rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
-        if (player != null)
+        if (player == null)
         {
-            // 플레이어까지의 방향 벡터 구하기
-            Vector2 direction = (player.position - transform.position).normalized;
+            if (GameManager.instance.currentGameState != GameState.Playing)
+            {
+                rb.linearVelocity = Vector2.zero;
+                return;
+            }
 
-            // Rigidbody2D를 이용한 이동
-            rb.linearVelocity = direction * moveSpeed;
+            player = PlayerController.instance;
+
+            if (player == null)
+                return;
+
+            Debug.Log(gameObject.name + ": Player 추적 시작");
         }
+
+        if (GameManager.instance.currentGameState != GameState.Playing)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        // 플레이어까지의 방향 벡터 구하기
+        Vector2 direction = (player.transform.position - transform.position).normalized;
+
+        // Rigidbody2D를 이용한 이동
+        rb.linearVelocity = direction * moveSpeed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collison)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collison.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag(playerTag))
         {
-            _player.TakeDamage(damage);
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
         }
     }
 
