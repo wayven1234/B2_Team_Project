@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class CharacterData
@@ -12,6 +13,10 @@ public class CharacterData
     public float maxHealth;
     public float moveSpeed;
 
+    public Dictionary<ItemData.ItemType, int> dictSkillLevel = new Dictionary<ItemData.ItemType, int>();
+
+
+
     /// <summary>
     /// 캐릭터 타입에 따른 스킬 데미지 보너스를 반환합니다.
     /// </summary>
@@ -24,4 +29,23 @@ public class CharacterData
             return 0f;
     }
 
+
+//    private void test()
+//    {
+//        // 초기화
+//        dictSkillLevel.Clear();
+//        dictSkillLevel.Add(ItemData.ItemType.Talk, 0);
+//        dictSkillLevel.Add(ItemData.ItemType.Book, 0);
+//        dictSkillLevel.Add(ItemData.ItemType.Bar, 0);
+
+//        // 레벨업
+//        dictSkillLevel[Talk]++;
+
+
+//        // 스킬레벨 판정 및 구현
+//        if (dictSkillLevel[Talk] > 0)
+//        {
+
+//        }
+//    }
 }

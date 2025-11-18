@@ -3,7 +3,12 @@ using UnityEngine;
 [System.Serializable]
 public class ItemData
 {
-    public enum ItemType {Talk, Book, Bar}
+    public enum ItemType
+    {
+        Talk = 0,
+        Book,
+        Bar
+    }
 
     [Header("아이템 설정")]
     public ItemType type;       // 아이템

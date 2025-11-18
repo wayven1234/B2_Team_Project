@@ -4,7 +4,6 @@ using TMPro;
 using System.Collections;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Constraints;
-using Unity.Android.Gradle.Manifest;
 
 public class ItemPrefab : MonoBehaviour
 {

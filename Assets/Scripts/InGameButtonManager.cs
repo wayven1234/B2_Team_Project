@@ -77,6 +77,7 @@ public class InGameButtonManager : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScene"); // 메인 화면 버튼 클릭 시 메인 화면으로 이동
         GameManager.instance.ChangeState(GameState.Playing);
+        LevelUpPanelLogic.ResetOpenCount();
     }
 
     public void OnReplayButtonClick()
@@ -148,9 +149,28 @@ public class InGameButtonManager : MonoBehaviour
             Debug.LogWarning("PlayerSpawnPoint가 할당되지 않았습니다.");
 
         if (PlayerController.instance != null)
+        {
+            PlayerController.instance.OnLevelUp -= HandlePlayerLevelUp;
             Destroy(PlayerController.instance.gameObject);
-
+        }
+        
         Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+
+        if (PlayerController.instance != null)
+            PlayerController.instance.OnLevelUp += HandlePlayerLevelUp;
+    }
+
+    void HandlePlayerLevelUp()
+    {
+        itemSelectionPanel.SetActive(true);
+    }
+
+    void OnDestroy()
+    {
+        if (PlayerController.instance != null)
+        {
+            PlayerController.instance.OnLevelUp -= HandlePlayerLevelUp;
+        }
     }
 
     public void OnItemButtonClick()
@@ -169,5 +189,24 @@ public class InGameButtonManager : MonoBehaviour
         {
             Debug.Log("아이템이 없어서 사용할 수 없습니다.");
         }
+    }
+
+    public void OnLevelUpPanelButtonClick()
+    {
+        itemLevelUpPanel.SetActive(true);
+        itemSelectionPanel.SetActive(false);
+        GameManager.instance.ChangeState(GameState.Paused);
+    }
+
+    public void OnLevelUpPanelCloseButtonClick()
+    {
+        itemLevelUpPanel.SetActive(false);
+        GameManager.instance.ChangeState(GameState.Playing);
+    }
+
+    public void OnItemSelectionPanelCloseButtonClick()
+    {
+        itemSelectionPanel.SetActive(false);
+        GameManager.instance.ChangeState(GameState.Playing);
     }
 }

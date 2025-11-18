@@ -2,6 +2,7 @@ using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float healthPotionHealAmount = 100f;
 
     [Header("태그 설정")]
-    //[SerializeField] private string enemyTag = "Enemy";
+    [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private string expTag = "EXP";
     [SerializeField] private string itemTag = "HealthItem";
 
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     public event Action OnGameOver; // GameOver Event
+    public event Action OnGameClear; // GameClear Event
+    public event Action OnLevelUp;  // LevelUp Event
 
     private bool canMoveHorizontal;
     private bool canMoveVertical;
@@ -250,14 +253,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //if (other.gameObject.CompareTag(enemyTag))
-        //{
-        //    Enemy enemy = other.gameObject.GetComponent<Enemy>();
-        //    if (enemy != null)
-        //    {
-        //        enemy.TakeDamage(enemy.damage);
-        //    }
-        //}
+        if (other.gameObject.CompareTag(enemyTag))
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(enemy.damage);
+            }
+        }
 
         if (other.gameObject.CompareTag(expTag))
         {
@@ -311,6 +314,8 @@ public class PlayerController : MonoBehaviour
 
         if (levelBar != null)
             levelBar.SetHealth(0);
+
+        OnLevelUp?.Invoke();
     }
 
     void itemUIUpdate(Sprite newSprite, int index)
@@ -387,6 +392,19 @@ public class PlayerController : MonoBehaviour
         OnGameOver?.Invoke();
 
         GameManager.instance.ChangeState(GameState.GameOver);
+
+        GameStop();
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (var col in colliders)
+            col.enabled = false;
+    }
+
+    public void GameClear()
+    {
+        OnGameClear?.Invoke();
+
+        GameManager.instance.ChangeState(GameState.GameClear);
 
         GameStop();
 

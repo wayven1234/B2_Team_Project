@@ -18,7 +18,7 @@ public class TimeManager : MonoBehaviour
     // 비공개
     private float _displayTime;         // UI에 표시될 계산된 시간
     private float _times;               // 게임 시작 후 누적 시간
-    private bool _isGameOverCalled = false; // GameOver() 중복 호출 방지용
+    private bool _isGameClearCalled = false; // GameClear() 호출 여부
 
     // 이 오브젝트가 활성화될 때 (Start 대신 OnEnable 사용)
     private void OnEnable()
@@ -26,7 +26,7 @@ public class TimeManager : MonoBehaviour
         // 타이머 초기화
         _times = 0.0f;
         _isTimeOver = false;
-        _isGameOverCalled = false;
+        _isGameClearCalled = false;
 
         if (_isCountDown)
             _displayTime = _gameTime;   // 카운트다운은 gameTime에서 시작
@@ -38,6 +38,9 @@ public class TimeManager : MonoBehaviour
     // 이 오브젝트가 활성화되어 있는 동안 매 프레임 호출
     private void Update()
     {
+        if (GameManager.instance == null || GameManager.instance.currentGameState != GameState.Playing)
+            return;
+
         // 1. 시간 계산
         TimeCalculation();
         // 2. UI 텍스트 업데이트
@@ -89,10 +92,10 @@ public class TimeManager : MonoBehaviour
         if (_playerCnt == null) return;
 
         // 시간이 끝났고, 아직 GameOver()를 호출한 적이 없다면
-        if (_isTimeOver && !_isGameOverCalled)
+        if (_isTimeOver && !_isGameClearCalled)
         {
-            _playerCnt.GameOver();
-            _isGameOverCalled = true; // "호출 완료"로 표시 (중복 방지)
+            _playerCnt.GameClear();
+            _isGameClearCalled = true; // "호출 완료"로 표시 (중복 방지)
         }
     }
 }
