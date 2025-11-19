@@ -7,61 +7,56 @@ using NUnit.Framework.Constraints;
 
 public class ItemPrefab : MonoBehaviour
 {
-    private PlayerController playerCnt;
-
     [SerializeField] private GameObject itemSelectPanel;
     [SerializeField] private ItemData data;
-    Image image; 
+    Image image;
     TMP_Text text;
- 
-    Weapon weapon;
 
+    private SpriteRenderer spriteRenderer;
+ 
     void Awake()
     {
-        image = GetComponentsInChildren<Image>()[1];
-        image.sprite = data.icon;
+        Image[] images = GetComponentsInChildren<Image>();
+        
+        if (images.Length > 1)
+        {
+            image = images[1];
+            image.sprite = data.icon;
+        }
+
         text = GetComponentInChildren<TextMeshProUGUI>();
-        text.text = data.display;
+        if (text != null)
+        {
+            text.text = data.display;
+        }
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = data.icon;
+        else
+            Debug.LogWarning($"아이템 오브젝트 ({gameObject.name})에 SpriteRenderer 컴포넌트가 없습니다");
     }
 
     public void OnClick()
     {
-        playerCnt = PlayerController.instance;
+        PlayerController playerCnt = PlayerController.instance;
 
         if (playerCnt == null)
             return;
 
-        switch (data.type)
-        {
-            case ItemData.ItemType.Book:
-                if(data.level == 0)
-                {
-                    GameObject newWeapon = new GameObject(data.display + "Weapon");  
-                    weapon = newWeapon.AddComponent<Weapon>();
-                    weapon.Init(data);
-                }
-                else
-                {
-                    float nextDamage = data.damages[data.level - 1];
-                    float nextSpeed = data.speeds[data.level - 1];
-
-                    if (weapon != null)
-                        weapon.Upgrade(nextDamage, nextSpeed);
-                }
-                    break;
-            case ItemData.ItemType.Talk:
-                break;
-            case ItemData.ItemType.Bar:
-                break;
-        }
+        playerCnt.AddOrUpgradeWeapon(data);
 
         data.level++;
         playerCnt.currentLevel++;
 
-        if (data.level == 4)
+        if (data.level >= data.maxLevel)
         {
-            GetComponent<Button>().interactable = false;
+            Button button = GetComponent<Button>();
+            if (button != null)
+                button.interactable = false;
         }
+
         itemSelectPanel.SetActive(false);
     }
 }

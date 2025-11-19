@@ -59,7 +59,6 @@ MonoBehaviour:
   maxLevel: 12
   expOrbsPerLevel: 20
   healthPotionHealAmount: 100
-  enemyTag: Enemy
   expTag: EXP
   itemTag: HealthItem
   currentHealth: 230
@@ -110,7 +109,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 8279441396250644107, guid: 7b1e02dbda7ed3940a1bec9cbe51b2ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

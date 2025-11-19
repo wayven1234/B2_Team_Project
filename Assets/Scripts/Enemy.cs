@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0f)
         {
             Die();
+            Debug.Log("Enemy Die");
         }
     }
 
