@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class InGameButtonManager : MonoBehaviour
 {
+    public static InGameButtonManager instance { get; private set; }
+
     [Header("Player Prefabs & Spawn")]
     [SerializeField] private GameObject girlPlayerPrefab;
     [SerializeField] private GameObject boyPlayerPrefab;
@@ -20,9 +22,21 @@ public class InGameButtonManager : MonoBehaviour
     [SerializeField] private GameObject itemSelectionPanel;
     [SerializeField] private GameObject itemLevelUpPanel;
 
+    [Header("게임 종료/클리어 패널")]
+    [SerializeField] private GameObject stageClearPanel;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
+
     private void Start()
     {
-        GameManager.instance.ChangeState(GameState.Paused);
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ChangeState(GameState.Paused);
+        }
 
         escPanel.SetActive(false);  // 게임 시작 시 Esc 창 비활성화
         setPanel.SetActive(false);  // 게임 시작 시 설정창 비활성화
@@ -34,13 +48,22 @@ public class InGameButtonManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance == null) return;
+
+        if (GameManager.instance.currentGameState == GameState.GameOver ||
+        GameManager.instance.currentGameState == GameState.GameClear ||
+        GameManager.instance.currentGameState == GameState.StageClear)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             escPanel.SetActive(!escPanel.activeSelf);   // Esc 키를 누르면 Esc 창 토글
             setPanel.SetActive(false);                  // Esc 창이 켜질 때 설정창 끄기
         }
 
-        bool isAnyPausePanelActive = escPanel.activeSelf || 
+        bool isAnyPausePanelActive = escPanel.activeSelf ||
                                      setPanel.activeSelf ||
                                      characterSelectionPanel.activeSelf ||
                                      itemSelectionPanel.activeSelf ||
@@ -75,16 +98,19 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnMainButtonClick()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("TitleScene"); // 메인 화면 버튼 클릭 시 메인 화면으로 이동
-        GameManager.instance.ChangeState(GameState.Playing);
+        // GameManager.instance.ChangeState(GameState.Playing);
         LevelUpPanelLogic.ResetOpenCount();
     }
 
     public void OnReplayButtonClick()
     {
+        Time.timeScale = 1f;
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name); // 다시 시작 버튼 클릭 시 현재 씬 재시작
-        GameManager.instance.ChangeState(GameState.Playing);
+        LevelUpPanelLogic.ResetOpenCount();
+        // GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnGameExitButtonClick()
@@ -110,13 +136,11 @@ public class InGameButtonManager : MonoBehaviour
     public void OnCloseButtonClick()
     {
         escPanel.SetActive(false); // 닫기 버튼 클릭 시 Esc 창 끄기
-        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnSetExitButtonClick()
     {
         setPanel.SetActive(false); // 설정창 닫기 버튼 클릭 시 설정창 끄기
-        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnGirlCharacterSelect()
@@ -201,12 +225,10 @@ public class InGameButtonManager : MonoBehaviour
     public void OnLevelUpPanelCloseButtonClick()
     {
         itemLevelUpPanel.SetActive(false);
-        GameManager.instance.ChangeState(GameState.Playing);
     }
 
     public void OnItemSelectionPanelCloseButtonClick()
     {
         itemSelectionPanel.SetActive(false);
-        GameManager.instance.ChangeState(GameState.Playing);
     }
 }

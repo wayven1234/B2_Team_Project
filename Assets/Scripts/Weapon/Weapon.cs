@@ -48,6 +48,9 @@ public class Weapon : MonoBehaviour
             if (currentData == null)
                 yield break;
 
+            while (GameManager.instance != null && GameManager.instance.currentGameState != GameState.Playing)
+                yield return null;
+
             switch (currentData.type)
             {
                 case ItemData.ItemType.Book:
@@ -93,7 +96,7 @@ public class Weapon : MonoBehaviour
 
         if (nearestEnemy != null)
         {
-            attackDirection = (nearestEnemy.position - transform.position).normalized;
+            attackDirection = (nearestEnemy.position - player.transform.position).normalized;
         }
         else
         {
@@ -132,7 +135,12 @@ public class Weapon : MonoBehaviour
 
     private Transform GetNearestEnemy(float range)
     {
-        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, range);
+        PlayerController player = PlayerController.instance;
+        if (player == null) return null;
+
+        Vector3 searchCenter = player.transform.position;
+
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(searchCenter, range);
         Transform nearestEnemy = null;
         float minDistance = float.MaxValue;
 
@@ -140,7 +148,7 @@ public class Weapon : MonoBehaviour
         {
             if (col.CompareTag(ENEMY_TAG))
             {
-                float distance = Vector2.Distance(transform.position, col.transform.position);
+                float distance = Vector2.Distance(searchCenter, col.transform.position);
 
                 if (distance < minDistance)
                 {
@@ -166,7 +174,7 @@ public class Weapon : MonoBehaviour
         if (nearestEnemy != null)
         {
             // 2. 적이 있다면: 플레이어 -> 적 방향으로 공격 방향 설정
-            attackDirection = (nearestEnemy.position - transform.position).normalized;
+            attackDirection = (nearestEnemy.position - player.transform.position).normalized;
         }
         else
         {

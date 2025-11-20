@@ -1,5 +1,6 @@
-using UnityEngine;
+using System.Security.Cryptography;
 using TMPro;
+using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
@@ -38,15 +39,19 @@ public class TimeManager : MonoBehaviour
     // 이 오브젝트가 활성화되어 있는 동안 매 프레임 호출
     private void Update()
     {
-        if (GameManager.instance == null || GameManager.instance.currentGameState != GameState.Playing)
+        if (GameManager.instance == null) return;
+        if (GameManager.instance.currentGameState != GameState.Playing)
+        {
+            Debug.Log("TimeManager: Not Playing. Current State: " + GameManager.instance.currentGameState.ToString());
             return;
+        }
 
         // 1. 시간 계산
         TimeCalculation();
         // 2. UI 텍스트 업데이트
         UpdateUIText();
         // 3. 게임 오버 조건 확인
-        CheckGameOver();
+        CheckStageEnd();
     }
 
     // 1. 시간 계산 함수
@@ -85,17 +90,24 @@ public class TimeManager : MonoBehaviour
         _timeText.text = $"{minutes:D2}:{seconds:D2}";
     }
 
-    // 3. 게임 오버를 체크하고 호출하는 함수
-    void CheckGameOver()
+    void CheckStageEnd()
     {
-        // _playerCnt가 연결되지 않았다면 실행하지 않음
-        if (_playerCnt == null) return;
+        if (_playerCnt == null || GameManager.instance == null) return;
 
-        // 시간이 끝났고, 아직 GameOver()를 호출한 적이 없다면
-        if (_isTimeOver && !_isGameClearCalled)
+        if (GameManager.instance.currentGameState == GameState.GameOver)
         {
-            _playerCnt.GameClear();
-            _isGameClearCalled = true; // "호출 완료"로 표시 (중복 방지)
+            return;
+        }
+
+        if (_isTimeOver && !_isGameClearCalled && GameManager.instance.currentGameState == GameState.Playing)
+        {
+            if (_playerCnt != null)
+            {
+                _playerCnt.GameStop();
+            }
+            GameManager.instance.HandleStageClear();
+
+            _isGameClearCalled = true;
         }
     }
 }

@@ -9,8 +9,12 @@ public class GameManager : MonoBehaviour
     [Header("스테이지 설정")]
     [SerializeField] private StageData stageData;
 
-    [Header("게임 상태")]
+    [Header("UI 연결")]
+    public GameObject stageClearPanel;
+
+    [Header("현재 게임 상태")]
     public GameState currentGameState;
+    public int currentStageIndex = 1;
 
     private void Awake()
     {
@@ -28,6 +32,9 @@ public class GameManager : MonoBehaviour
         }
 
         ChangeState(GameState.Playing);
+
+        if (stageClearPanel != null)
+            stageClearPanel.SetActive(false);
     }
 
     public void ChangeState(GameState newState)
@@ -46,11 +53,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
             case GameState.GameClear:
-                Time.timeScale = 0f;
-                break;
             case GameState.GameOver:
-                Time.timeScale = 0f;
-                break;
             case GameState.Paused:
                 Time.timeScale = 0f;
                 break;
@@ -60,5 +63,29 @@ public class GameManager : MonoBehaviour
     public StageData.StageType GetStageType()
     {
         return stageData.stageType;
+    }
+
+    public void HandleStageClear()
+    {
+        bool isFinalStage = (currentStageIndex == 4);
+
+        if (isFinalStage)
+        {
+            ChangeState(GameState.GameClear);
+        }
+        else
+        {
+            ChangeState(GameState.StageClear);
+
+            // StageClear 시 Panel 활성화 로직 추가 (기존 ExecuteStageClear의 내용)
+            if (stageClearPanel != null)
+            {
+                stageClearPanel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("Stage Clear Panel이 GameManager에 연결되지 않았습니다. UI를 띄울 수 없습니다.");
+            }
+        }
     }
 }

@@ -51,7 +51,6 @@ public class ItemPrefab : MonoBehaviour
         playerCnt.AddOrUpgradeWeapon(data);
 
         data.level++;
-        playerCnt.currentLevel++;
 
         if (data.level >= data.maxLevel)
         {

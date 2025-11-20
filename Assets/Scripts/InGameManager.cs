@@ -41,7 +41,7 @@ public class InGameManager : MonoBehaviour
 
         player = PlayerController.instance;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         hpLvPanel.SetActive(true);
         timePanel.SetActive(true);

@@ -65,10 +65,12 @@ public class EnemySpawn : MonoBehaviour
     {
         while (true)
         {
-            if (GameManager.instance.currentGameState == GameState.Playing)
+            while (GameManager.instance.currentGameState != GameState.Playing)
             {
-                SpawnEnemy();
+                yield return null;
             }
+
+            SpawnEnemy();
 
             yield return new WaitForSeconds(interval);
         }
