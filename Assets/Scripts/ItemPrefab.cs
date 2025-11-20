@@ -31,11 +31,14 @@ public class ItemPrefab : MonoBehaviour
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
+    private void Start()
+    {
         if (spriteRenderer != null)
+        {
             spriteRenderer.sprite = data.icon;
-        else
-            Debug.LogWarning($"아이템 오브젝트 ({gameObject.name})에 SpriteRenderer 컴포넌트가 없습니다");
+        }
     }
 
     public void OnClick()

@@ -2744,6 +2744,10 @@ PrefabInstance:
       value: "\uD55C\uBB38 \uC120\uC0DD\uB2D8\uC758 \uC8FD\uBE44"
       objectReference: {fileID: 0}
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
+      propertyPath: data.barPrefab
+      value: 
+      objectReference: {fileID: 6349209872596602074, guid: 302b440e5b70e6a4ab874712d1ecd8df, type: 3}
+    - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.baseSpeed
       value: 2
       objectReference: {fileID: 0}
@@ -7577,6 +7581,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
+      propertyPath: data.bookPrefab
+      value: 
+      objectReference: {fileID: 1518524248982896442, guid: c38787c2f55445b48aa3dc947b3da4c4, type: 3}
+    - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: itemSelectPanel
       value: 
       objectReference: {fileID: 1152609294}
@@ -10511,6 +10519,10 @@ PrefabInstance:
       propertyPath: data.baseDamage
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
+      propertyPath: data.talkPrefab
+      value: 
+      objectReference: {fileID: 2005301777429509969, guid: 369f34beb977cd242800c688beac5700, type: 3}
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: itemSelectPanel
       value: 

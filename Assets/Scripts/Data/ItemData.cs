@@ -24,4 +24,14 @@ public class ItemData
 
     public float[] damages;
     public float[] speeds;
+
+    [Header("공격 아이템 Prefab")]
+    public GameObject bookPrefab;
+    public GameObject talkPrefab;
+    public GameObject barPrefab;
+
+    [Header("Talk 사거리 속성")]
+    public float rangeIncreasePerLevel = 3f;
+    public float baseRange = 3f;
+    public float maxRange = 30f;
 }

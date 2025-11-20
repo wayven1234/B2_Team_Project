@@ -1,2 +1,12 @@
 fileFormatVersion: 2
 guid: 2e28c9743627d7c46af8622bb260d612
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bookAttackPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
