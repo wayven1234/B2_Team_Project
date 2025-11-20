@@ -175,7 +175,7 @@ public class Weapon : MonoBehaviour
         }
 
         float currentRange = currentData.baseRange +
-                            (currentData.rangeIncreasePerLevel * currentData.level);
+                             (currentData.rangeIncreasePerLevel * currentData.level);
         currentRange = Mathf.Min(currentRange, currentData.maxRange);
 
         const float PROJECTILE_SPEED = 5f;
