@@ -217,7 +217,12 @@ public class Weapon : MonoBehaviour
 
         if (barPrefab != null)
         {
-            GameObject effect = Instantiate(barPrefab, transform.position, Quaternion.identity);
+            Vector3 spawnPosition = player.transform.position;
+
+            GameObject effect = Instantiate(
+                barPrefab,
+                spawnPosition,
+                Quaternion.identity);
 
             BarAttackEffect barEffectScript = effect.GetComponent<BarAttackEffect>();
             if (barEffectScript != null)
