@@ -22,7 +22,14 @@ public class HealthItemSpawn : MonoBehaviour
     {
         if (GameManager.instance == null) return;
 
-        currentStageType = GameManager.instance.GetStageType();
+        StageData stageData = GameManager.instance.GetCurrentStageData();
+        if (stageData == null)
+        {
+            Debug.LogError("Stage Data를 GameManager에서 로드하지 못했습니다.");
+            return;
+        }
+
+        currentStageType = stageData.stageType;
 
         if (currentStageType == StageData.StageType.Normal)
         {

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 000d0d11c6e311e4ea4bffd0fa809b43
+guid: 12ca1281a12e49948b51f7ea3c68ae36
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8608898408381856587
-    second: "\uC880\uBE44 1_0"
+      213: 7161880412506275453
+    second: HealthEnemy_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,40 +96,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC880\uBE44 1_0"
+      name: HealthEnemy_0
       rect:
         serializedVersion: 2
-        x: 61
-        y: 77
-        width: 800
-        height: 1338
+        x: 1087
+        y: 59
+        width: 956
+        height: 1421
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b4bb6039d73f87770800000000000000
-      internalID: 8608898408381856587
+      spriteID: d7eb3473a4c146360800000000000000
+      internalID: 7161880412506275453
       vertices: []
       indices: 
       edges: []
@@ -138,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f40024aaf7346b14dbb349aa0a1af557
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uC880\uBE44 1_0": 8608898408381856587
+      HealthEnemy_0: 7161880412506275453
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

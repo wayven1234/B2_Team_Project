@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6638228133927792578}
   - component: {fileID: 6304696754622911045}
   m_Layer: 7
-  m_Name: Enemy11
+  m_Name: BoyEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,10 +49,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _expPrefab: {fileID: 1684785021082954965, guid: 679597dd9d5b08d45af9e88741aa0e7c, type: 3}
   playerTag: Player
-  maxHealth: 10
-  currentHealth: 10
-  moveSpeed: 1.5
-  damage: 15
+  maxHealth: 40
+  currentHealth: 40
+  moveSpeed: 5.5
+  damage: 7
+  stoppingDistance: 0.5
+  separationRadius: 0.5
+  separationForce: 1
 --- !u!212 &8940202964230228456
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -97,12 +100,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8608898408381856587, guid: 000d0d11c6e311e4ea4bffd0fa809b43, type: 3}
+  m_Sprite: {fileID: 6650159408189877107, guid: 75fcceb0f87a339449f64c28cee2a6a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 7.0999994, y: 13.334541}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -169,6 +172,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.35506344, y: 0}
-  m_Size: {x: 6.22468, y: 13.38}
+  m_Offset: {x: 0.15363884, y: -2.86792}
+  m_Size: {x: 3.68581, y: 7.5987015}
   m_Direction: 0

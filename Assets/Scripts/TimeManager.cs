@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
@@ -11,13 +10,13 @@ public class TimeManager : MonoBehaviour
 
     [Header("연결")]
     public PlayerController _playerCnt; // PlayerController 연결
-    public TextMeshProUGUI _timeText;   // TimeText 연결
+    public TextMeshProUGUI _timeText;    // TimeText 연결
 
     [Header("현재 상태")]
     public bool _isTimeOver = false;    // 시간 종료 여부
 
     // 비공개
-    private float _displayTime;         // UI에 표시될 계산된 시간
+    private float _displayTime;          // UI에 표시될 계산된 시간
     private float _times;               // 게임 시작 후 누적 시간
     private bool _isGameClearCalled = false; // GameClear() 호출 여부
 
@@ -42,7 +41,6 @@ public class TimeManager : MonoBehaviour
         if (GameManager.instance == null) return;
         if (GameManager.instance.currentGameState != GameState.Playing)
         {
-            Debug.Log("TimeManager: Not Playing. Current State: " + GameManager.instance.currentGameState.ToString());
             return;
         }
 
@@ -90,24 +88,33 @@ public class TimeManager : MonoBehaviour
         _timeText.text = $"{minutes:D2}:{seconds:D2}";
     }
 
+    /// <summary>
+    /// 게임 시간이 모두 소진되었는지 확인하고, Stage/Game Clear 처리를 Game Manager에 요청합니다.
+    /// </summary>
     void CheckStageEnd()
     {
-        if (_playerCnt == null || GameManager.instance == null) return;
+        if (GameManager.instance == null) return;
 
-        if (GameManager.instance.currentGameState == GameState.GameOver)
+        // 이미 Game Over, Stage Clear 등 Playing 상태가 아니면 추가 처리하지 않습니다.
+        if (GameManager.instance.currentGameState != GameState.Playing)
         {
             return;
         }
 
-        if (_isTimeOver && !_isGameClearCalled && GameManager.instance.currentGameState == GameState.Playing)
+        // 시간이 종료되었고, 아직 StageClear 처리를 호출하지 않았을 때 (Stage 1~3: StageClear, Stage 4: GameClear)
+        if (_isTimeOver && !_isGameClearCalled)
         {
+            // 플레이어 관련 상태 처리 (예: 움직임 멈춤)
             if (_playerCnt != null)
             {
                 _playerCnt.GameStop();
             }
+
+            // GameManager에 Stage Clear 처리를 요청합니다.
+            // GameManager가 현재 Stage Index를 확인하여 GameClear/StageClear를 결정합니다.
             GameManager.instance.HandleStageClear();
 
-            _isGameClearCalled = true;
+            _isGameClearCalled = true; // 중복 호출 방지
         }
     }
 }

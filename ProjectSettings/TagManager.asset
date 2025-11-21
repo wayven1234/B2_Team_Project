@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - EXP
   - HealthItem
+  - SkillItem
   layers:
   - Default
   - TransparentFX

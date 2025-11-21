@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6815755816791978900}
   m_Layer: 0
   m_Name: BarItem
-  m_TagString: Untagged
+  m_TagString: SkillItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

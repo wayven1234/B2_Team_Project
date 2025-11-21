@@ -1,13 +1,14 @@
-using Mono.Cecil;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     [Header("스테이지 설정")]
-    [SerializeField] private StageData stageData;
+    [SerializeField] private StageDatabase stageDatabase;
+    private StageData currentStageData;
 
     [Header("UI 연결")]
     public GameObject stageClearPanel;
@@ -16,25 +17,55 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState;
     public int currentStageIndex = 1;
 
+    // [수정] 캐싱 변수 제거
+    // private EnemySpawn enemySpawn; 
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
+
+        LoadStageData(currentStageIndex);
     }
 
     private void Start()
     {
-        if (stageData != null)
+        if (currentStageData != null)
         {
-            Debug.Log("현재 스테이지 Type:" + stageData.stageType);
+            Debug.Log($"현재 스테이지 Type: {currentStageData.stageType} (Stage {currentStageIndex})");
         }
 
-        ChangeState(GameState.Playing);
+        Debug.Log("GameManager: Start() 완료.");
 
         if (stageClearPanel != null)
             stageClearPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// StageIndex를 기반으로 StageData를 로드하고 currentStageData에 저장합니다.
+    /// </summary>
+    public bool LoadStageData(int stageIndex)
+    {
+        if (stageDatabase == null)
+        {
+            Debug.LogError("Stage Database가 연결되지 않았습니다!");
+            return false;
+        }
+
+        // 배열 인덱스 (Stage 1 -> Index 0)
+        int arrayIndex = stageIndex - 1;
+
+        if (arrayIndex >= 0 && arrayIndex < stageDatabase.stages.Length)
+        {
+            currentStageData = stageDatabase.stages[arrayIndex];
+            Debug.Log($"Stage {stageIndex} 데이터 로드 완료.");
+            return true;
+        }
+
+        Debug.LogError($"Stage {stageIndex}의 데이터가 StageDatabase에 없습니다. (총 {stageDatabase.stages.Length}개)");
+        return false;
     }
 
     public void ChangeState(GameState newState)
@@ -48,26 +79,77 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Playing:
                 Time.timeScale = 1f;
+
+                // [수정] ChangeState 호출 시 EnemySpawn을 다시 찾습니다.
+                EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
+
+                if (enemySpawn != null)
+                {
+                    Debug.Log("GameManager: EnemySpawn 컴포넌트 찾음. 초기화 시작.");
+
+                    enemySpawn.enabled = true;
+
+                    // 1. Stage Data를 EnemySpawn에 직접 전달하여 초기화합니다.
+                    enemySpawn.Initialize(currentStageData);
+
+                    // 2. 스폰 코루틴을 명시적으로 시작합니다.
+                    enemySpawn.StartSpawning();
+                }
+                else
+                {
+                    Debug.LogError("GameManager: EnemySpawn 컴포넌트를 찾을 수 없습니다! 적 스폰 실패.");
+                }
                 break;
             case GameState.StageClear:
-                Time.timeScale = 0f;
-                break;
             case GameState.GameClear:
             case GameState.GameOver:
+                Time.timeScale = 0f;
+                CleanupSceneObjects();
+                break;
             case GameState.Paused:
                 Time.timeScale = 0f;
                 break;
         }
     }
 
-    public StageData.StageType GetStageType()
+    /// <summary>
+    /// 스테이지 클리어 또는 게임 오버 시 씬에 남아있는 모든 적, EXP, 아이템, 스킬 투사체를 제거하고 스폰을 중지합니다.
+    /// </summary>
+    void CleanupSceneObjects()
     {
-        return stageData.stageType;
+        // 1. Enemy Spawn 정지 및 비활성화
+        // [수정] 다시 FindFirstObjectByType 사용
+        EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
+        if (enemySpawn != null)
+        {
+            enemySpawn.StopAllCoroutines();
+            enemySpawn.enabled = false; // 비활성화하여 다음 씬 로드 전까지 확실히 멈춥니다.
+        }
+
+        // 2. 태그 기반 씬 오브젝트 정리
+        string[] tagsToClean = { "Enemy", "EXP", "HealthItem", "SkillItem" };
+
+        foreach (string tag in tagsToClean)
+        {
+            GameObject[] objectsToDestroy = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject obj in objectsToDestroy)
+            {
+                Destroy(obj);
+            }
+        }
+
+        Debug.Log("씬 오브젝트 정리 완료: Enemy, EXP, HealthItem, SkillItem 제거 및 EnemySpawn 정지.");
+    }
+
+    public StageData GetCurrentStageData()
+    {
+        return currentStageData;
     }
 
     public void HandleStageClear()
     {
-        bool isFinalStage = (currentStageIndex == 4);
+        // 최종 스테이지 여부를 전체 스테이지 길이와 비교
+        bool isFinalStage = (currentStageIndex == stageDatabase.stages.Length);
 
         if (isFinalStage)
         {
@@ -77,7 +159,6 @@ public class GameManager : MonoBehaviour
         {
             ChangeState(GameState.StageClear);
 
-            // StageClear 시 Panel 활성화 로직 추가 (기존 ExecuteStageClear의 내용)
             if (stageClearPanel != null)
             {
                 stageClearPanel.SetActive(true);
@@ -86,6 +167,22 @@ public class GameManager : MonoBehaviour
             {
                 Debug.LogError("Stage Clear Panel이 GameManager에 연결되지 않았습니다. UI를 띄울 수 없습니다.");
             }
+        }
+    }
+
+    /// <summary>
+    /// Stage Clear Panel에서 다음 스테이지 버튼을 눌렀을 때 호출됩니다.
+    /// </summary>
+    public void AdvanceToNextStage(string nextSceneName)
+    {
+        if (currentStageIndex < stageDatabase.stages.Length)
+        {
+            currentStageIndex++; // 스테이지 인덱스 증가
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("Final stage reached. Cannot advance further.");
         }
     }
 }

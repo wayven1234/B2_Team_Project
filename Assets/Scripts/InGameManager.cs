@@ -41,7 +41,8 @@ public class InGameManager : MonoBehaviour
 
         player = PlayerController.instance;
 
-        yield return new WaitForSeconds(0.1f);
+        // [수정] 0.1f 딜레이를 제거하거나, 한 프레임만 기다리도록 수정
+        // yield return new WaitForSeconds(0.1f); // 삭제
 
         hpLvPanel.SetActive(true);
         timePanel.SetActive(true);
