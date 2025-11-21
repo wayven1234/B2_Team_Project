@@ -80,15 +80,10 @@ public class GameManager : MonoBehaviour
             case GameState.Playing:
                 Time.timeScale = 1f;
 
-                // [수정] ChangeState 호출 시 EnemySpawn을 다시 찾습니다.
                 EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
 
                 if (enemySpawn != null)
                 {
-                    Debug.Log("GameManager: EnemySpawn 컴포넌트 찾음. 초기화 시작.");
-
-                    enemySpawn.enabled = true;
-
                     // 1. Stage Data를 EnemySpawn에 직접 전달하여 초기화합니다.
                     enemySpawn.Initialize(currentStageData);
 

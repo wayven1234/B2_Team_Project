@@ -1026,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 647109946}
     - target: {fileID: 4891676205833023545, guid: 20f1769441fd12f49b1e81166d4b1786, type: 3}
       propertyPath: _gameTime
-      value: 90
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5358067049489057690, guid: 20f1769441fd12f49b1e81166d4b1786, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

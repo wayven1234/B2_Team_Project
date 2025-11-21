@@ -36,20 +36,14 @@ public class InGameButtonManager : MonoBehaviour
 
         Debug.Log("InGameButtonManager: Awake 함수 실행 시작.");
 
-        // [수정] 모든 패널 초기 비활성화 로직을 Awake로 이동
+        // 모든 패널 초기 비활성화
         escPanel.SetActive(false);
         setPanel.SetActive(false);
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(false);
         itemLevelUpPanel.SetActive(false);
 
-        if (GameManager.instance == null)
-        {
-            Debug.LogError("InGameButtonManager: GameManager 인스턴스를 찾을 수 없습니다. (Critical Error)");
-            return;
-        }
-
-        // [수정] Awake에서 코루틴을 시작하여 Start()보다 먼저 실행되도록 강제
+        // [핵심 수정] StageStartFlow 코루틴 시작
         StartCoroutine(StageStartFlow());
     }
 
@@ -70,8 +64,13 @@ public class InGameButtonManager : MonoBehaviour
         // Esc 키 처리 (일시 정지)
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            escPanel.SetActive(!escPanel.activeSelf);    // Esc 키를 누르면 Esc 창 토글
-            setPanel.SetActive(false);                   // Esc 창이 켜질 때 설정창 끄기
+            // Esc 창이 열려있지 않고, 캐릭터/아이템 선택창도 열려있지 않을 때만 Esc 창 토글
+            bool isSelectionPanelActive = characterSelectionPanel.activeSelf || itemSelectionPanel.activeSelf || itemLevelUpPanel.activeSelf;
+            if (!isSelectionPanelActive)
+            {
+                escPanel.SetActive(!escPanel.activeSelf);    // Esc 키를 누르면 Esc 창 토글
+                setPanel.SetActive(false);                   // Esc 창이 켜질 때 설정창 끄기
+            }
         }
 
         // 현재 켜져 있는 패널이 있는지 확인
@@ -98,17 +97,24 @@ public class InGameButtonManager : MonoBehaviour
         }
     }
 
-    // [수정] 스테이지 시작 흐름을 관리하는 코루틴
     IEnumerator StageStartFlow()
     {
-        // [추가] GameManager가 Awake를 끝낼 때까지 한 프레임 대기 (안전장치)
-        yield return null;
-
-        if (GameManager.instance == null)
+        // =========================================================================
+        // 1. GameManager 인스턴스 초기화 대기 (가장 중요한 수정)
+        // =========================================================================
+        Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 시작.");
+        while (GameManager.instance == null)
         {
-            Debug.LogError("StageStartFlow: GameManager 인스턴스를 찾을 수 없습니다.");
-            yield break;
+            // GameManager가 Awake를 끝내고 instance를 설정할 때까지 매 프레임 대기합니다.
+            Debug.LogWarning("InGameButtonManager: GameManager 인스턴스를 기다리는 중...");
+            yield return null;
         }
+
+        Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 완료.");
+
+        // =========================================================================
+        // 2. 스테이지 시작 로직 실행
+        // =========================================================================
 
         // 이전에 선택된 캐릭터가 있는지 확인 (씬 전환 시 유지)
         if (selectedPlayerPrefab == null)
@@ -116,12 +122,12 @@ public class InGameButtonManager : MonoBehaviour
             // 1. Stage 1 (첫 진입): 
             characterSelectionPanel.SetActive(true);
             GameManager.instance.ChangeState(GameState.Paused);
-            Debug.Log("InGameButtonManager: Stage 1 진입 -> Paused 상태로 전환.");
+            Debug.Log("InGameButtonManager: Stage 1 진입 -> Paused 상태로 전환 및 캐릭터 선택창 활성화.");
         }
         else
         {
             // 2. Stage 2/3/4 (다음 스테이지 로드):
-            Debug.Log("InGameButtonManager: Stage 2+ 진입. 플레이어 스폰 대기.");
+            Debug.Log("InGameButtonManager: Stage 2+ 진입. 플레이어 스폰 및 게임 시작.");
 
             // SpawnPlayerCoroutine이 완료될 때까지 안전하게 대기
             yield return StartCoroutine(SpawnPlayerCoroutine(selectedPlayerPrefab));
@@ -130,8 +136,9 @@ public class InGameButtonManager : MonoBehaviour
             EnemySpawn enemySpawn = Object.FindFirstObjectByType<EnemySpawn>();
             if (enemySpawn != null)
             {
-                // EnemySpawn 초기화
+                // EnemySpawn 초기화 (GameManager의 StageData를 전달)
                 enemySpawn.enabled = true;
+                // GameManager.instance가 null이 아니므로 안전하게 호출 가능
                 enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
                 enemySpawn.StartSpawning();
                 Debug.Log("InGameButtonManager: EnemySpawn 초기화 및 스폰 시작 완료.");
@@ -141,11 +148,9 @@ public class InGameButtonManager : MonoBehaviour
                 Debug.LogError("InGameButtonManager: EnemySpawn 컴포넌트를 찾을 수 없습니다. 스폰 실패.");
             }
 
-            // ChangeState 호출 직전에 로그를 찍어 실행 보장
-            Debug.Log("InGameButtonManager: Stage 2+ 진입 -> Playing 상태로 전환 요청.");
-
-            // [핵심 해결] 이 줄이 실행되면 모든 것이 시작됩니다.
+            // [핵심 해결] 게임 상태를 Playing으로 변경
             GameManager.instance.ChangeState(GameState.Playing);
+            Debug.Log("InGameButtonManager: Stage 2+ 진입 -> GameState Playing 으로 변경 완료");
         }
     }
 
@@ -158,7 +163,18 @@ public class InGameButtonManager : MonoBehaviour
         // 1. 아이템 선택창을 끈다
         itemSelectionPanel.SetActive(false);
 
-        // 2. Update() 함수가 자동으로 GameState를 Playing으로 변경할 것입니다.
+        // 2. EnemySpawn 초기화 및 스폰 시작 (Stage 1에서만 실행)
+        EnemySpawn enemySpawn = Object.FindFirstObjectByType<EnemySpawn>();
+        if (enemySpawn != null && GameManager.instance != null)
+        {
+            enemySpawn.enabled = true;
+            enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
+            enemySpawn.StartSpawning();
+            Debug.Log("OnItemSelectionConfirmed: EnemySpawn 시작 완료.");
+        }
+
+        // 3. Update() 함수가 패널이 비활성화된 것을 감지하고 GameState를 Playing으로 변경합니다.
+        // 또는 명시적으로 호출할 수도 있지만, 현재 로직에서는 Update가 처리합니다.
     }
 
     public void OnMainButtonClick()
@@ -211,7 +227,10 @@ public class InGameButtonManager : MonoBehaviour
 
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
-        GameManager.instance.ChangeState(GameState.Paused);
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ChangeState(GameState.Paused); // 아이템 선택하는 동안 Paused 유지
+        }
     }
 
     public void OnBoyCharacterSelect()
@@ -221,7 +240,10 @@ public class InGameButtonManager : MonoBehaviour
 
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(true);
-        GameManager.instance.ChangeState(GameState.Paused);
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ChangeState(GameState.Paused); // 아이템 선택하는 동안 Paused 유지
+        }
     }
 
     // [유지] 코루틴으로 변경하여 캐릭터 생성 후 한 프레임 대기
@@ -268,6 +290,12 @@ public class InGameButtonManager : MonoBehaviour
         if (PlayerController.instance != null)
         {
             PlayerController.instance.OnLevelUp -= HandlePlayerLevelUp;
+        }
+
+        // [추가] 인스턴스가 파괴될 때 정적 변수도 정리합니다.
+        if (instance == this)
+        {
+            instance = null;
         }
     }
 
