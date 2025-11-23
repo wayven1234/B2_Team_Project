@@ -89,7 +89,7 @@ public class InGameButtonManager : MonoBehaviour
         }
         else
         {
-            // 위의 패널이 *모두* 꺼져 있을 때만 Playing 상태로 변경
+            // 위의 패널이 모두 꺼져 있을 때만 Playing 상태로 변경
             if (GameManager.instance.currentGameState != GameState.Playing)
             {
                 GameManager.instance.ChangeState(GameState.Playing);
@@ -99,24 +99,14 @@ public class InGameButtonManager : MonoBehaviour
 
     IEnumerator StageStartFlow()
     {
-        // =========================================================================
-        // 1. GameManager 인스턴스 초기화 대기 (가장 중요한 수정)
-        // =========================================================================
-        Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 시작.");
+        //Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 시작.");
         while (GameManager.instance == null)
         {
-            // GameManager가 Awake를 끝내고 instance를 설정할 때까지 매 프레임 대기합니다.
-            Debug.LogWarning("InGameButtonManager: GameManager 인스턴스를 기다리는 중...");
             yield return null;
         }
 
-        Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 완료.");
+        //Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 완료.");
 
-        // =========================================================================
-        // 2. 스테이지 시작 로직 실행
-        // =========================================================================
-
-        // 이전에 선택된 캐릭터가 있는지 확인 (씬 전환 시 유지)
         if (selectedPlayerPrefab == null)
         {
             // 1. Stage 1 (첫 진입): 
@@ -129,28 +119,29 @@ public class InGameButtonManager : MonoBehaviour
             // 2. Stage 2/3/4 (다음 스테이지 로드):
             Debug.Log("InGameButtonManager: Stage 2+ 진입. 플레이어 스폰 및 게임 시작.");
 
+            // Stage Clear Panel 비활성화: 씬 로드 후 즉시 닫습니다.
+            if (GameManager.instance.stageClearPanel != null)
+            {
+                GameManager.instance.stageClearPanel.SetActive(false);
+            }
+
             // SpawnPlayerCoroutine이 완료될 때까지 안전하게 대기
             yield return StartCoroutine(SpawnPlayerCoroutine(selectedPlayerPrefab));
 
-            // EnemySpawn 초기화 및 스폰 시작
+            // EnemySpawn 초기화 및 스폰 정보 전달
             EnemySpawn enemySpawn = Object.FindFirstObjectByType<EnemySpawn>();
-            if (enemySpawn != null)
+            if (enemySpawn != null && GameManager.instance != null)
             {
-                // EnemySpawn 초기화 (GameManager의 StageData를 전달)
                 enemySpawn.enabled = true;
-                // GameManager.instance가 null이 아니므로 안전하게 호출 가능
+                // [필수] EnemySpawn.Initialize만 여기서 호출하여 Stage Data를 전달합니다.
                 enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
-                enemySpawn.StartSpawning();
-                Debug.Log("InGameButtonManager: EnemySpawn 초기화 및 스폰 시작 완료.");
-            }
-            else
-            {
-                Debug.LogError("InGameButtonManager: EnemySpawn 컴포넌트를 찾을 수 없습니다. 스폰 실패.");
+                // StartSpawning 호출은 ChangeState(Playing)에 위임
             }
 
-            // [핵심 해결] 게임 상태를 Playing으로 변경
-            GameManager.instance.ChangeState(GameState.Playing);
-            Debug.Log("InGameButtonManager: Stage 2+ 진입 -> GameState Playing 으로 변경 완료");
+            // [핵심 수정] 이중 전환을 막기 위해 여기서 ChangeState(Playing) 호출을 제거합니다.
+            // Update() 함수가 모든 패널이 꺼진 것을 보고 ChangeState(Playing)을 호출하도록 위임합니다.
+            // GameManager.instance.ChangeState(GameState.Playing); // 이 코드 제거
+            Debug.Log("InGameButtonManager: Stage 2+ 진입 -> Update()에게 상태 전환을 위임.");
         }
     }
 
@@ -164,17 +155,20 @@ public class InGameButtonManager : MonoBehaviour
         itemSelectionPanel.SetActive(false);
 
         // 2. EnemySpawn 초기화 및 스폰 시작 (Stage 1에서만 실행)
-        EnemySpawn enemySpawn = Object.FindFirstObjectByType<EnemySpawn>();
-        if (enemySpawn != null && GameManager.instance != null)
-        {
-            enemySpawn.enabled = true;
-            enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
-            enemySpawn.StartSpawning();
-            Debug.Log("OnItemSelectionConfirmed: EnemySpawn 시작 완료.");
-        }
+        // Stage 1에서 ItemSelectionPanel이 닫힐 때, Update()가 Playing으로 전환합니다.
+        // Playing 상태로 전환되는 GameManager.ChangeState 내부에 EnemySpawn 시작 로직이 포함되어 있습니다.
+        // 따라서 여기서 StartSpawning은 제거하고 Update()에 위임합니다.
+
+        // EnemySpawn enemySpawn = Object.FindFirstObjectByType<EnemySpawn>();
+        // if (enemySpawn != null && GameManager.instance != null)
+        // {
+        //     enemySpawn.enabled = true;
+        //     enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
+        //     enemySpawn.StartSpawning();
+        //     Debug.Log("OnItemSelectionConfirmed: EnemySpawn 시작 완료.");
+        // }
 
         // 3. Update() 함수가 패널이 비활성화된 것을 감지하고 GameState를 Playing으로 변경합니다.
-        // 또는 명시적으로 호출할 수도 있지만, 현재 로직에서는 Update가 처리합니다.
     }
 
     public void OnMainButtonClick()

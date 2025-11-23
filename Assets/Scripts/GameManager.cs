@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public int currentStageIndex = 1;
 
     // [수정] 캐싱 변수 제거
-    // private EnemySpawn enemySpawn; 
+    // private EnemySpawn enemySpawn;  
 
     private void Awake()
     {
@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         LoadStageData(currentStageIndex);
+
+        // [수정] 초기 게임 상태를 명시적으로 Paused로 설정
+        currentGameState = GameState.Paused;
     }
 
     private void Start()
@@ -79,6 +82,9 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Playing:
                 Time.timeScale = 1f;
+
+                // [수정] TimeManager 초기화를 ChangeState 내에 통합
+                InitializeTimeManager();
 
                 EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
 
@@ -178,6 +184,23 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Final stage reached. Cannot advance further.");
+        }
+    }
+
+    /// <summary>
+    /// TimeManager를 씬에서 찾아 타이머를 초기화합니다.
+    /// </summary>
+    private void InitializeTimeManager()
+    {
+        TimeManager tm = FindFirstObjectByType<TimeManager>();
+
+        if (tm != null)
+        {
+            tm.ResetTimer();
+        }
+        else
+        {
+            Debug.LogError("GameManager: TimeManager를 씬에서 찾을 수 없습니다.");
         }
     }
 }

@@ -101,7 +101,7 @@ public class TimeManager : MonoBehaviour
             return;
         }
 
-        // 시간이 종료되었고, 아직 StageClear 처리를 호출하지 않았을 때 (Stage 1~3: StageClear, Stage 4: GameClear)
+        // 시간이 종료되었고, 아직 StageClear 처리를 호출하지 않았을 때
         if (_isTimeOver && !_isGameClearCalled)
         {
             // 플레이어 관련 상태 처리 (예: 움직임 멈춤)
@@ -116,5 +116,22 @@ public class TimeManager : MonoBehaviour
 
             _isGameClearCalled = true; // 중복 호출 방지
         }
+    }
+
+    /// <summary>
+    /// GameManager가 다음 스테이지로 전환될 때 타이머를 초기 상태로 초기화합니다.
+    /// </summary>
+    public void ResetTimer()
+    {
+        // [수정] _times도 0.0f로 초기화하여 누적 시간 초기화 보장
+        _times = 0.0f;
+        _isTimeOver = false;
+        _isGameClearCalled = false;
+
+        if (_isCountDown)
+            _displayTime = _gameTime;
+
+        UpdateUIText();
+        Debug.Log("TimeManager: ResetTimer() 호출됨. 시간 재설정 완료.");
     }
 }
