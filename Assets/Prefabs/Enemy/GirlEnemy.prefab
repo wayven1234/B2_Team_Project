@@ -53,9 +53,11 @@ MonoBehaviour:
   currentHealth: 35
   moveSpeed: 7
   damage: 5
+  currentStageType: 0
   stoppingDistance: 0.5
   separationRadius: 0.5
   separationForce: 1
+  attackInterval: 1
 --- !u!212 &8940202964230228456
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &6304696754622911045
 CapsuleCollider2D:

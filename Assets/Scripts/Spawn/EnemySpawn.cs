@@ -155,7 +155,12 @@ public class EnemySpawn : MonoBehaviour
         int randomIndex = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomIndex];
 
-        Instantiate(enemyToSpawn, spawnPoint.position, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyToSpawn, spawnPoint.position, Quaternion.identity);
+        Enemy enemyScript = newEnemy.GetComponent<Enemy>();
+        if (enemyScript != null)
+        {
+            enemyScript.currentStageType = currentStageData.stageType;
+        }
     }
 
     void SpawnForNormal(GameObject enemyToSpawn)
@@ -167,7 +172,12 @@ public class EnemySpawn : MonoBehaviour
 
         Vector2 spawnPosition = new Vector2(randomX, randomY);
 
-        Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+        Enemy enemyScript = newEnemy.GetComponent<Enemy>();
+        if (enemyScript != null)
+        {
+            enemyScript.currentStageType = currentStageData.stageType;
+        }
     }
 
     /// <summary>

@@ -8,17 +8,25 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _expPrefab;
     [SerializeField] private string playerTag = "Player";
 
-    public float maxHealth; 
+    public float maxHealth;
     public float currentHealth;
 
     public float moveSpeed = 1f; // 이동 속도
     public float damage;
 
+    // [수정/추가] EnemySpawn에서 설정해야 하는 현재 스테이지 타입
+    public StageData.StageType currentStageType = StageData.StageType.Normal;
+
     [Header("추적 설정")]
     public float stoppingDistance = 0.5f;
 
     public float separationRadius = 0.5f; // 다른 적을 감지할 반경
-    public float separationForce = 3f;    // 밀어내는 힘의 세기 (클수록 강하게 밀어냄)
+    public float separationForce = 3f;    // 밀어내는 힘의 세기
+
+    // [추가] 연속 공격 설정
+    [Header("공격 설정")]
+    public float attackInterval = 1f;
+    private float attackTimer;
 
     private Rigidbody2D rb;      // Rigidbody2D 참조
 
@@ -26,10 +34,14 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        attackTimer = 0f;    // 공격 타이머 초기화
     }
 
     void FixedUpdate()
     {
+        // 1. 공격 타이머 업데이트
+        if (attackTimer > 0f) attackTimer -= Time.fixedDeltaTime;
+
         if (GameManager.instance != null && GameManager.instance.currentGameState != GameState.Playing)
         {
             // 게임이 멈췄다면 적도 움직임을 멈춥니다.
@@ -42,37 +54,68 @@ public class Enemy : MonoBehaviour
         if (player == null)
         {
             player = PlayerController.instance;
-
-            // 플레이어가 파괴되었거나 아직 찾을 수 없다면 더 이상 움직이지 않습니다.
             if (player == null)
             {
                 if (rb != null)
                     rb.linearVelocity = Vector2.zero; // 멈춤 처리
                 return;
             }
-
             Debug.Log(gameObject.name + ": Player 추적 시작");
         }
 
         Vector2 targetPosition = player.transform.position;
         Vector2 currentPosition = transform.position;
         Vector2 toPlayer = targetPosition - currentPosition;
-        float distance = toPlayer.magnitude;
-
         Vector2 finalMoveVector = Vector2.zero;
 
-        // 3. 플레이어 추적 및 이동 (Playing 상태일 때만 실행됨)
-        // 플레이어까지의 방향 벡터 구하기
-        if (distance > stoppingDistance)
+        // Wall 충돌 감지 플래그 (분리 힘 처리 시 사용)
+        bool isAgainstWall = false;
+
+        // 3. Stage Type에 따른 이동 로직 분기
+        if (currentStageType == StageData.StageType.Vertical)
         {
-            // 멈춤 거리에 도달하지 않았다면 플레이어 쪽으로 이동 벡터를 추가
-            Vector2 directionToPlayer = toPlayer.normalized;
-            finalMoveVector += directionToPlayer * moveSpeed;
+            // Vertical Stage: 수평 이동 및 Wall 충돌 방지 로직
+            float horizontalDirection = Mathf.Sign(toPlayer.x);
+            Vector2 directionToTarget = new Vector2(horizontalDirection, 0f);
+
+            int wallLayerMask = LayerMask.GetMask("Wall");
+            // Enemy의 크기에 맞게 Raycast 거리를 조정 (예시: 0.6f)
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition, directionToTarget, 0.6f, wallLayerMask);
+
+            if (hit.collider == null)
+            {
+                finalMoveVector += directionToTarget * moveSpeed;
+            }
+            else
+            {
+                // Wall에 닿기 직전이라면 플래그 설정
+                isAgainstWall = true;
+            }
+        }
+        else // Normal Stage: 기존 전방위 추적 로직
+        {
+            float distance = toPlayer.magnitude;
+
+            if (distance > stoppingDistance)
+            {
+                Vector2 directionToPlayer = toPlayer.normalized;
+                finalMoveVector += directionToPlayer * moveSpeed;
+            }
         }
 
+        // 4. 분리 힘 계산 및 합산 (두 모드 공통 적용)
         Vector2 separationVector = CalculateSeparationForce();
+
+        // [핵심 수정] Vertical Stage Wall에 막혀 있다면, 수직 분리 힘(Y축)을 무시합니다.
+        if (isAgainstWall)
+        {
+            // Wall에 닿았으므로 Y축 움직임은 차단하고 X축 분리 힘만 허용
+            separationVector.y = 0f;
+        }
+
         finalMoveVector += separationVector;
 
+        // 5. 최종 이동 벡터 제한
         if (finalMoveVector.magnitude > moveSpeed)
         {
             // Vector2.ClampMagnitude를 사용하여 벡터의 최대 길이를 제한합니다.
@@ -92,7 +135,6 @@ public class Enemy : MonoBehaviour
         Vector2 separation = Vector2.zero;
 
         // "Enemy" 레이어를 대상으로 separationRadius 반경 내의 콜라이더를 감지
-        // Physics2D.OverlapCircleAll를 사용하려면 모든 Enemy 프리팹의 Layer를 "Enemy"로 설정해야 합니다.
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, separationRadius, LayerMask.GetMask("Enemy"));
 
         foreach (var hit in hitColliders)
@@ -100,7 +142,7 @@ public class Enemy : MonoBehaviour
             // 1. 자기 자신 제외
             if (hit.gameObject == gameObject) continue;
 
-            // 2. 적 태그 확인 (Enemy 컴포넌트가 붙어있는지 확인하는 것이 더 안전할 수 있습니다.)
+            // 2. 적 태그 확인
             if (hit.CompareTag("Enemy"))
             {
                 Vector2 neighborPosition = (Vector2)hit.transform.position;
@@ -117,17 +159,18 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        // 분리 벡터를 반환합니다.
         return separation;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    // [수정] OnTriggerStay2D를 사용하여 쿨타임 기반의 지속적인 피해를 줍니다.
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag(playerTag))
         {
-            if (player != null)
+            if (player != null && attackTimer <= 0f)
             {
                 player.TakeDamage(damage);
+                attackTimer = attackInterval; // 쿨타임 재설정
             }
         }
     }
