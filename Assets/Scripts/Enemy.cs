@@ -5,7 +5,6 @@ public class Enemy : MonoBehaviour
 {
     private PlayerController player;
 
-    [SerializeField] private GameObject _expPrefab;
     [SerializeField] private string playerTag = "Player";
 
     public float maxHealth;
@@ -185,7 +184,10 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Instantiate(_expPrefab, transform.position, Quaternion.identity);
+        if (PlayerController.instance != null)
+        {
+            PlayerController.instance.GainExperience();
+        }
 
         if (EnemyManager.instance != null)
             EnemyManager.instance.EnemyKilled();

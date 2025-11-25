@@ -52,6 +52,19 @@ public class ItemPrefab : MonoBehaviour
 
         data.level++;
 
+        LevelUpPanelLogic panelLogic = itemSelectPanel.GetComponent<LevelUpPanelLogic>();
+
+        if (panelLogic != null)
+        {
+            panelLogic.UpdateItemBar(data);
+        }
+        else
+        {
+            Debug.LogError("ItemPrefab: itemSelectPanel에서 LevelUpPanelLogic 컴포넌트를 찾을 수 없습니다. 연결을 확인해주세요.");
+        }
+
+        LevelUpPanelLogic.DecrementOpenCount();
+
         if (data.level >= data.maxLevel)
         {
             Button button = GetComponent<Button>();
