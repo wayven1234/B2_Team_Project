@@ -10971,8 +10971,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eb14eafbb584a41aa63c6f7a332b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTimeStage1: 90
+  targetTimeStage2: 120
+  targetTimeStage3: 60
+  targetTimeStage4: 300
   _isCountDown: 1
-  _gameTime: 1
+  _gameTime: 0
   _playerCnt: {fileID: 0}
   _timeText: {fileID: 3697764312134303128}
   _isTimeOver: 0

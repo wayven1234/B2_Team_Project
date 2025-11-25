@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 1f; // 이동 속도
     public float damage;
 
-    // [수정/추가] EnemySpawn에서 설정해야 하는 현재 스테이지 타입
     public StageData.StageType currentStageType = StageData.StageType.Normal;
 
     [Header("추적 설정")]
@@ -23,7 +22,6 @@ public class Enemy : MonoBehaviour
     public float separationRadius = 0.5f; // 다른 적을 감지할 반경
     public float separationForce = 3f;    // 밀어내는 힘의 세기
 
-    // [추가] 연속 공격 설정
     [Header("공격 설정")]
     public float attackInterval = 1f;
     private float attackTimer;
@@ -103,17 +101,16 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        // 4. 분리 힘 계산 및 합산 (두 모드 공통 적용)
-        Vector2 separationVector = CalculateSeparationForce();
+        //// 4. 분리 힘 계산 및 합산 (두 모드 공통 적용)
+        //Vector2 separationVector = CalculateSeparationForce();
 
-        // [핵심 수정] Vertical Stage Wall에 막혀 있다면, 수직 분리 힘(Y축)을 무시합니다.
-        if (isAgainstWall)
-        {
-            // Wall에 닿았으므로 Y축 움직임은 차단하고 X축 분리 힘만 허용
-            separationVector.y = 0f;
-        }
+        //if (isAgainstWall)
+        //{
+        //    // Wall에 닿았으므로 Y축 움직임은 차단하고 X축 분리 힘만 허용
+        //    separationVector.y = 0f;
+        //}
 
-        finalMoveVector += separationVector;
+        //finalMoveVector += separationVector;
 
         // 5. 최종 이동 벡터 제한
         if (finalMoveVector.magnitude > moveSpeed)
@@ -127,42 +124,41 @@ public class Enemy : MonoBehaviour
             rb.linearVelocity = finalMoveVector;
     }
 
-    /// <summary>
-    /// 주변의 다른 적들을 감지하고, 겹침을 피하기 위한 분리 힘(Vector)을 계산합니다.
-    /// </summary>
-    Vector2 CalculateSeparationForce()
-    {
-        Vector2 separation = Vector2.zero;
+    ///// <summary>
+    ///// 주변의 다른 적들을 감지하고, 겹침을 피하기 위한 분리 힘(Vector)을 계산합니다.
+    ///// </summary>
+    //Vector2 CalculateSeparationForce()
+    //{
+    //    Vector2 separation = Vector2.zero;
 
-        // "Enemy" 레이어를 대상으로 separationRadius 반경 내의 콜라이더를 감지
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, separationRadius, LayerMask.GetMask("Enemy"));
+    //    // "Enemy" 레이어를 대상으로 separationRadius 반경 내의 콜라이더를 감지
+    //    Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, separationRadius, LayerMask.GetMask("Enemy"));
 
-        foreach (var hit in hitColliders)
-        {
-            // 1. 자기 자신 제외
-            if (hit.gameObject == gameObject) continue;
+    //    foreach (var hit in hitColliders)
+    //    {
+    //        // 1. 자기 자신 제외
+    //        if (hit.gameObject == gameObject) continue;
 
-            // 2. 적 태그 확인
-            if (hit.CompareTag("Enemy"))
-            {
-                Vector2 neighborPosition = (Vector2)hit.transform.position;
-                Vector2 offset = (Vector2)transform.position - neighborPosition; // 밀어낼 방향 (자신 -> 이웃)
-                float distance = offset.magnitude;
+    //        // 2. 적 태그 확인
+    //        if (hit.CompareTag("Enemy"))
+    //        {
+    //            Vector2 neighborPosition = (Vector2)hit.transform.position;
+    //            Vector2 offset = (Vector2)transform.position - neighborPosition; // 밀어낼 방향 (자신 -> 이웃)
+    //            float distance = offset.magnitude;
 
-                if (distance > 0f)
-                {
-                    float strength = separationForce * (separationRadius - distance) / separationRadius;
+    //            if (distance > 0f)
+    //            {
+    //                float strength = separationForce * (separationRadius - distance) / separationRadius;
 
-                    // 정규화된 방향 벡터에 계산된 힘을 곱합니다.
-                    separation += offset.normalized * strength;
-                }
-            }
-        }
+    //                // 정규화된 방향 벡터에 계산된 힘을 곱합니다.
+    //                separation += offset.normalized * strength;
+    //            }
+    //        }
+    //    }
 
-        return separation;
-    }
+    //    return separation;
+    //}
 
-    // [수정] OnTriggerStay2D를 사용하여 쿨타임 기반의 지속적인 피해를 줍니다.
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag(playerTag))

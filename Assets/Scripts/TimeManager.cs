@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    [Header("Stage별 목표 시간 (Inspector에서 설정)")]
+    public float targetTimeStage1 = 90.0f; // Stage 1: 1분 30초
+    public float targetTimeStage2 = 120.0f; // Stage 2: 2분
+    public float targetTimeStage3 = 60.0f;  // Stage 3: 60초
+    public float targetTimeStage4 = 300.0f; // Stage 4: 5분
+
     // 공개
     [Header("시간 설정")]
     public bool _isCountDown = true;    // true: 카운트다운, false: 카운드업
@@ -16,17 +22,21 @@ public class TimeManager : MonoBehaviour
     public bool _isTimeOver = false;    // 시간 종료 여부
 
     // 비공개
-    private float _displayTime;          // UI에 표시될 계산된 시간
-    private float _times;               // 게임 시작 후 누적 시간
-    private bool _isGameClearCalled = false; // GameClear() 호출 여부
+    private float _displayTime;           // UI에 표시될 계산된 시간
+    private float _times;                // 게임 시작 후 누적 시간
+    private bool _isStageEndCalled = false; // Stage/Game Clear 호출 여부
+
+    public event System.Action OnTimeUp;
 
     // 이 오브젝트가 활성화될 때 (Start 대신 OnEnable 사용)
     private void OnEnable()
     {
+        LoadStageTime();
+
         // 타이머 초기화
         _times = 0.0f;
         _isTimeOver = false;
-        _isGameClearCalled = false;
+        _isStageEndCalled = false; // 변수명 통일
 
         if (_isCountDown)
             _displayTime = _gameTime;   // 카운트다운은 gameTime에서 시작
@@ -50,6 +60,38 @@ public class TimeManager : MonoBehaviour
         UpdateUIText();
         // 3. 게임 오버 조건 확인
         CheckStageEnd();
+    }
+
+    /// <summary>
+    /// 현재 스테이지 인덱스를 기반으로 _gameTime에 목표 시간을 설정합니다.
+    /// </summary>
+    void LoadStageTime()
+    {
+        if (GameManager.instance == null) return;
+
+        int currentStage = GameManager.instance.currentStageIndex;
+        _isCountDown = true;
+
+        switch (currentStage)
+        {
+            case 1:
+                _gameTime = targetTimeStage1;
+                break;
+            case 2:
+                _gameTime = targetTimeStage2;
+                break;
+            case 3:
+                _gameTime = targetTimeStage3;
+                break;
+            case 4:
+                _gameTime = targetTimeStage4;
+                break;
+            default:
+                _gameTime = 60.0f;
+                break;
+        }
+
+        Debug.Log($"TimeManager: Stage {currentStage} 목표 시간 {_gameTime}초로 설정.");
     }
 
     // 1. 시간 계산 함수
@@ -95,26 +137,37 @@ public class TimeManager : MonoBehaviour
     {
         if (GameManager.instance == null) return;
 
-        // 이미 Game Over, Stage Clear 등 Playing 상태가 아니면 추가 처리하지 않습니다.
-        if (GameManager.instance.currentGameState != GameState.Playing)
+        // Playing 상태가 아니거나 이미 처리했으면 리턴
+        if (GameManager.instance.currentGameState != GameState.Playing || _isStageEndCalled)
         {
             return;
         }
 
-        // 시간이 종료되었고, 아직 StageClear 처리를 호출하지 않았을 때
-        if (_isTimeOver && !_isGameClearCalled)
+        // 시간이 종료되었을 때
+        if (_isTimeOver)
         {
-            // 플레이어 관련 상태 처리 (예: 움직임 멈춤)
-            if (_playerCnt != null)
+            // 시간이 끝났음을 알리는 이벤트를 발생시킵니다. (SurvivalStageController에서 구독할 예정)
+            OnTimeUp?.Invoke();
+
+            // Stage 3이 아닌 경우에만 시간 만료를 클리어 조건으로 간주합니다.
+            if (GameManager.instance.currentStageIndex != 3)
             {
-                _playerCnt.GameStop();
+                // 플레이어 관련 상태 처리 (예: 움직임 멈춤)
+                if (_playerCnt != null)
+                {
+                    _playerCnt.GameStop();
+                }
+
+                // GameManager에 Stage Clear 처리를 요청합니다.
+                GameManager.instance.HandleStageClear();
+
+                _isStageEndCalled = true; // 중복 호출 방지
             }
-
-            // GameManager에 Stage Clear 처리를 요청합니다.
-            // GameManager가 현재 Stage Index를 확인하여 GameClear/StageClear를 결정합니다.
-            GameManager.instance.HandleStageClear();
-
-            _isGameClearCalled = true; // 중복 호출 방지
+            else
+            {
+                // Stage 3에서 시간이 끝났지만 킬 수 조건 미달성 시에는 게임 오버가 아닐 수 있으므로 
+                Debug.Log("TimeManager: Stage 3 시간 종료. 킬 수 조건 확인 중.");
+            }
         }
     }
 
@@ -123,10 +176,12 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void ResetTimer()
     {
+        LoadStageTime(); // 스테이지 전환 시 시간 재 로드
+
         // [수정] _times도 0.0f로 초기화하여 누적 시간 초기화 보장
         _times = 0.0f;
         _isTimeOver = false;
-        _isGameClearCalled = false;
+        _isStageEndCalled = false; // 변수명 통일
 
         if (_isCountDown)
             _displayTime = _gameTime;
