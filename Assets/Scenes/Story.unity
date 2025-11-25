@@ -365,7 +365,7 @@ MonoBehaviour:
   - {fileID: 163083027}
   - {fileID: 1961851698}
   _cutDelay: 3
-  _fadeSpeed: 1
+  _fadeSpeed: 5
   _fadePanel: {fileID: 1901180357}
 --- !u!1 &787146281
 GameObject:
