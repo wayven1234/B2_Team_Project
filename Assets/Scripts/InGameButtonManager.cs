@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections; // 코루틴 사용
+using System.Collections;
 
 public class InGameButtonManager : MonoBehaviour
 {
@@ -43,11 +43,9 @@ public class InGameButtonManager : MonoBehaviour
         itemSelectionPanel.SetActive(false);
         itemLevelUpPanel.SetActive(false);
 
-        // [핵심 수정] StageStartFlow 코루틴 시작
+        // StageStartFlow 코루틴 시작
         StartCoroutine(StageStartFlow());
     }
-
-    // [수정] Start() 함수를 제거했습니다.
 
     private void Update()
     {
@@ -69,7 +67,7 @@ public class InGameButtonManager : MonoBehaviour
             if (!isSelectionPanelActive)
             {
                 escPanel.SetActive(!escPanel.activeSelf);    // Esc 키를 누르면 Esc 창 토글
-                setPanel.SetActive(false);                   // Esc 창이 켜질 때 설정창 끄기
+                setPanel.SetActive(false);                    // Esc 창이 켜질 때 설정창 끄기
             }
         }
 
@@ -99,17 +97,14 @@ public class InGameButtonManager : MonoBehaviour
 
     IEnumerator StageStartFlow()
     {
-        //Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 시작.");
         while (GameManager.instance == null)
         {
             yield return null;
         }
 
-        //Debug.Log("InGameButtonManager: GameManager 인스턴스 확인 완료.");
-
         if (selectedPlayerPrefab == null)
         {
-            // 1. Stage 1 (첫 진입): 
+            // 1. Stage 1 (첫 진입): 캐릭터 선택창 활성화
             characterSelectionPanel.SetActive(true);
             GameManager.instance.ChangeState(GameState.Paused);
             Debug.Log("InGameButtonManager: Stage 1 진입 -> Paused 상태로 전환 및 캐릭터 선택창 활성화.");
@@ -133,14 +128,12 @@ public class InGameButtonManager : MonoBehaviour
             if (enemySpawn != null && GameManager.instance != null)
             {
                 enemySpawn.enabled = true;
-                // [필수] EnemySpawn.Initialize만 여기서 호출하여 Stage Data를 전달합니다.
+                // EnemySpawn.Initialize만 여기서 호출하여 Stage Data를 전달합니다.
                 enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
-                // StartSpawning 호출은 ChangeState(Playing)에 위임
             }
 
-            // [핵심 수정] 이중 전환을 막기 위해 여기서 ChangeState(Playing) 호출을 제거합니다.
+            GameManager.instance.ChangeState(GameState.Playing);
             // Update() 함수가 모든 패널이 꺼진 것을 보고 ChangeState(Playing)을 호출하도록 위임합니다.
-            // GameManager.instance.ChangeState(GameState.Playing); // 이 코드 제거
             Debug.Log("InGameButtonManager: Stage 2+ 진입 -> Update()에게 상태 전환을 위임.");
         }
     }
@@ -154,21 +147,7 @@ public class InGameButtonManager : MonoBehaviour
         // 1. 아이템 선택창을 끈다
         itemSelectionPanel.SetActive(false);
 
-        // 2. EnemySpawn 초기화 및 스폰 시작 (Stage 1에서만 실행)
-        // Stage 1에서 ItemSelectionPanel이 닫힐 때, Update()가 Playing으로 전환합니다.
-        // Playing 상태로 전환되는 GameManager.ChangeState 내부에 EnemySpawn 시작 로직이 포함되어 있습니다.
-        // 따라서 여기서 StartSpawning은 제거하고 Update()에 위임합니다.
-
-        // EnemySpawn enemySpawn = Object.FindFirstObjectByType<EnemySpawn>();
-        // if (enemySpawn != null && GameManager.instance != null)
-        // {
-        //     enemySpawn.enabled = true;
-        //     enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
-        //     enemySpawn.StartSpawning();
-        //     Debug.Log("OnItemSelectionConfirmed: EnemySpawn 시작 완료.");
-        // }
-
-        // 3. Update() 함수가 패널이 비활성화된 것을 감지하고 GameState를 Playing으로 변경합니다.
+        // 2. Update() 함수가 패널이 비활성화된 것을 감지하고 GameState를 Playing으로 변경합니다.
     }
 
     public void OnMainButtonClick()
@@ -176,7 +155,6 @@ public class InGameButtonManager : MonoBehaviour
         Time.timeScale = 1f;
         selectedPlayerPrefab = null; // 초기화
         SceneManager.LoadScene("TitleScene"); // 메인 화면 버튼 클릭 시 메인 화면으로 이동
-        // LevelUpPanelLogic.ResetOpenCount(); 
     }
 
     public void OnReplayButtonClick()
@@ -185,7 +163,6 @@ public class InGameButtonManager : MonoBehaviour
         selectedPlayerPrefab = null; // 초기화
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name); // 다시 시작 버튼 클릭 시 현재 씬 재시작
-        // LevelUpPanelLogic.ResetOpenCount(); 
     }
 
     public void OnGameExitButtonClick()
@@ -240,7 +217,6 @@ public class InGameButtonManager : MonoBehaviour
         }
     }
 
-    // [유지] 코루틴으로 변경하여 캐릭터 생성 후 한 프레임 대기
     IEnumerator SpawnPlayerCoroutine(GameObject playerPrefab)
     {
         if (playerPrefab == null)
@@ -257,7 +233,6 @@ public class InGameButtonManager : MonoBehaviour
         {
             PlayerController.instance.OnLevelUp -= HandlePlayerLevelUp;
             Destroy(PlayerController.instance.gameObject);
-            // 파괴 후 한 프레임 기다려 PlayerController.instance가 null이 되는 것을 확실히 보장
             yield return null;
         }
 
@@ -269,6 +244,8 @@ public class InGameButtonManager : MonoBehaviour
 
         if (PlayerController.instance != null)
         {
+            PlayerController.instance.LoadPlayerData();
+
             // 이벤트 연결
             PlayerController.instance.OnLevelUp += HandlePlayerLevelUp;
         }
@@ -277,6 +254,12 @@ public class InGameButtonManager : MonoBehaviour
     void HandlePlayerLevelUp()
     {
         itemSelectionPanel.SetActive(true);
+
+        // 레벨업 패널이 열렸으므로 게임 상태를 Paused로 변경
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ChangeState(GameState.Paused);
+        }
     }
 
     void OnDestroy()
@@ -286,7 +269,6 @@ public class InGameButtonManager : MonoBehaviour
             PlayerController.instance.OnLevelUp -= HandlePlayerLevelUp;
         }
 
-        // [추가] 인스턴스가 파괴될 때 정적 변수도 정리합니다.
         if (instance == this)
         {
             instance = null;
@@ -320,6 +302,7 @@ public class InGameButtonManager : MonoBehaviour
     public void OnLevelUpPanelCloseButtonClick()
     {
         itemLevelUpPanel.SetActive(false);
+        itemSelectionPanel.SetActive(true);
     }
 
     public void OnItemSelectionPanelCloseButtonClick()

@@ -11015,6 +11015,8 @@ MonoBehaviour:
   stageClearPanel: {fileID: 3431083576473747593}
   currentGameState: 0
   currentStageIndex: 1
+  playerLevel: 1
+  isFirstStageLoad: 1
 --- !u!114 &8816036653006707870
 MonoBehaviour:
   m_ObjectHideFlags: 0

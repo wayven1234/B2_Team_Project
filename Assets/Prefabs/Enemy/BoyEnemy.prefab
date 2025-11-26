@@ -47,9 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9556274f107244c48a43dd4ced945ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _expPrefab: {fileID: 1684785021082954965, guid: 679597dd9d5b08d45af9e88741aa0e7c, type: 3}
   playerTag: Player
-  maxHealth: 40
+  maxHealth: 5
   currentHealth: 40
   moveSpeed: 5.5
   damage: 7

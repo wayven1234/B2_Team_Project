@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,20 +18,33 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState;
     public int currentStageIndex = 1;
 
-    // [수정] 캐싱 변수 제거
-    // private EnemySpawn enemySpawn;  
+    [Header("플레이어 지속 데이터")]
+    public int playerLevel = 1;
+    public Dictionary<ItemData.ItemType, int> weaponLevels = new Dictionary<ItemData.ItemType, int>();
+    public bool isFirstStageLoad = true;
 
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            // 씬 로드 이벤트 구독
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
         else
             Destroy(gameObject);
 
         LoadStageData(currentStageIndex);
 
-        // [수정] 초기 게임 상태를 명시적으로 Paused로 설정
         currentGameState = GameState.Paused;
+    }
+
+    private void OnDestroy()
+    {
+        // 오브젝트 파괴 시 이벤트 구독 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
@@ -44,6 +58,18 @@ public class GameManager : MonoBehaviour
 
         if (stageClearPanel != null)
             stageClearPanel.SetActive(false);
+    }
+
+    // 씬 로드 완료 이벤트 핸들러: 다음 스테이지 데이터 및 시간 로드
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 다음 스테이지 데이터 로드
+        LoadStageData(currentStageIndex);
+
+        // [핵심] TimeManager 초기화 (새로운 스테이지 시간에 맞춥니다)
+        InitializeTimeManager();
+
+        Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
     }
 
     /// <summary>
@@ -83,17 +109,13 @@ public class GameManager : MonoBehaviour
             case GameState.Playing:
                 Time.timeScale = 1f;
 
-                // [수정] TimeManager 초기화를 ChangeState 내에 통합
-                InitializeTimeManager();
+                // TimeManager 초기화는 OnSceneLoaded에서 처리됩니다.
 
                 EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
 
                 if (enemySpawn != null)
                 {
-                    // 1. Stage Data를 EnemySpawn에 직접 전달하여 초기화합니다.
                     enemySpawn.Initialize(currentStageData);
-
-                    // 2. 스폰 코루틴을 명시적으로 시작합니다.
                     enemySpawn.StartSpawning();
                 }
                 else
@@ -118,16 +140,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void CleanupSceneObjects()
     {
-        // 1. Enemy Spawn 정지 및 비활성화
-        // [수정] 다시 FindFirstObjectByType 사용
         EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
         if (enemySpawn != null)
         {
             enemySpawn.StopAllCoroutines();
-            enemySpawn.enabled = false; // 비활성화하여 다음 씬 로드 전까지 확실히 멈춥니다.
+            enemySpawn.enabled = false;
         }
 
-        // 2. 태그 기반 씬 오브젝트 정리
         string[] tagsToClean = { "Enemy", "EXP", "HealthItem", "SkillItem" };
 
         foreach (string tag in tagsToClean)
@@ -149,8 +168,12 @@ public class GameManager : MonoBehaviour
 
     public void HandleStageClear()
     {
-        // 최종 스테이지 여부를 전체 스테이지 길이와 비교
         bool isFinalStage = (currentStageIndex == stageDatabase.stages.Length);
+
+        // 씬 이동 전에 플레이어 데이터 저장
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+            player.SavePlayerData();
 
         if (isFinalStage)
         {
@@ -188,10 +211,11 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TimeManager를 씬에서 찾아 타이머를 초기화합니다.
+    /// TimeManager를 씬에서 찾아 타이머를 초기화합니다. (Stage 전환 시 호출)
     /// </summary>
     private void InitializeTimeManager()
     {
+        // 씬 로드가 완료된 후 TimeManager를 찾아 초기화합니다.
         TimeManager tm = FindFirstObjectByType<TimeManager>();
 
         if (tm != null)
@@ -200,7 +224,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GameManager: TimeManager를 씬에서 찾을 수 없습니다.");
+            // TimeManager가 아직 씬에 생성되지 않았을 수 있습니다. 경고로 처리합니다.
+            Debug.LogWarning("GameManager: TimeManager를 씬에서 찾을 수 없습니다. (다음 프레임에 생성될 수 있습니다)");
         }
     }
 }

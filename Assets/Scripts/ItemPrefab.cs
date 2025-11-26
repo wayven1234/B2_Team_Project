@@ -13,11 +13,11 @@ public class ItemPrefab : MonoBehaviour
     TMP_Text text;
 
     private SpriteRenderer spriteRenderer;
- 
+
     void Awake()
     {
         Image[] images = GetComponentsInChildren<Image>();
-        
+
         if (images.Length > 1)
         {
             image = images[1];
@@ -72,6 +72,20 @@ public class ItemPrefab : MonoBehaviour
                 button.interactable = false;
         }
 
-        itemSelectPanel.SetActive(false);
+        // [핵심 수정] 남은 레벨업 기회 확인 및 패널 재활성화
+        if (LevelUpPanelLogic.GetOpenCount() > 0)
+        {
+            // 남은 기회가 있으면 패널을 닫지 않고 즉시 다시 활성화하여 다음 선택 기회 제공
+            itemSelectPanel.SetActive(true);
+            Debug.Log("ItemPrefab: 다음 레벨업 기회가 남아 있어 패널을 유지합니다.");
+        }
+        else
+        {
+            // 남은 기회가 없으면 패널을 닫고 게임을 재개합니다.
+            if (panelLogic != null)
+                panelLogic.OnItemSelectFinish();
+            else
+                itemSelectPanel.SetActive(false);
+        }
     }
 }

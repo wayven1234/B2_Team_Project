@@ -47,9 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9556274f107244c48a43dd4ced945ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _expPrefab: {fileID: 1684785021082954965, guid: 679597dd9d5b08d45af9e88741aa0e7c, type: 3}
   playerTag: Player
-  maxHealth: 90
+  maxHealth: 5
   currentHealth: 90
   moveSpeed: 3.5
   damage: 15
@@ -170,7 +169,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

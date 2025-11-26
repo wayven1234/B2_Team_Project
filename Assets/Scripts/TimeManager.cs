@@ -22,27 +22,30 @@ public class TimeManager : MonoBehaviour
     public bool _isTimeOver = false;    // 시간 종료 여부
 
     // 비공개
-    private float _displayTime;           // UI에 표시될 계산된 시간
-    private float _times;                // 게임 시작 후 누적 시간
+    private float _displayTime;             // UI에 표시될 계산된 시간
+    private float _times = -1f;             // -1f은 초기화 전 상태를 의미합니다.
     private bool _isStageEndCalled = false; // Stage/Game Clear 호출 여부
 
     public event System.Action OnTimeUp;
 
-    // 이 오브젝트가 활성화될 때 (Start 대신 OnEnable 사용)
+    // 이 오브젝트가 활성화될 때 (GameManager에서 ResetTimer 호출 예정)
     private void OnEnable()
     {
-        LoadStageTime();
+        if (_times < 0)
+        {
+            // ResetTimer가 호출되지 않았을 경우, 수동으로 초기화
+            LoadStageTime();
 
-        // 타이머 초기화
-        _times = 0.0f;
-        _isTimeOver = false;
-        _isStageEndCalled = false; // 변수명 통일
+            _times = 0.0f;
+            _isTimeOver = false;
+            _isStageEndCalled = false;
 
-        if (_isCountDown)
-            _displayTime = _gameTime;   // 카운트다운은 gameTime에서 시작
+            if (_isCountDown)
+                _displayTime = _gameTime;
+        }
 
-        // 텍스트가 연결되어 있다면 UI도 즉시 업데이트
         UpdateUIText();
+        Debug.Log("TimeManager: OnEnable 호출. 초기화는 GameManager의 OnSceneLoaded 이벤트에 위임.");
     }
 
     // 이 오브젝트가 활성화되어 있는 동안 매 프레임 호출
@@ -97,15 +100,12 @@ public class TimeManager : MonoBehaviour
     // 1. 시간 계산 함수
     void TimeCalculation()
     {
-        // 시간이 이미 끝났으면 계산 중지
         if (_isTimeOver) return;
 
-        // 누적 시간 증가
         _times += Time.deltaTime;
 
         if (_isCountDown)
         {
-            // 카운트다운
             _displayTime = _gameTime - _times;
             if (_displayTime <= 0.0f)
             {
@@ -118,15 +118,12 @@ public class TimeManager : MonoBehaviour
     // 2. UI 텍스트 MM:SS 형식으로 업데이트 하는 함수
     void UpdateUIText()
     {
-        // _timeText가 Inspector에서 연결되지 않았다면 실행하지 않음
         if (_timeText == null) return;
 
-        // 소수점 버리고 정수로 변환
         int totalSeconds = (int)_displayTime;
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
 
-        // "D2" 서식을 사용해 항상 2자리로 표시 (예: "00:00")
         _timeText.text = $"{minutes:D2}:{seconds:D2}";
     }
 
@@ -137,35 +134,28 @@ public class TimeManager : MonoBehaviour
     {
         if (GameManager.instance == null) return;
 
-        // Playing 상태가 아니거나 이미 처리했으면 리턴
         if (GameManager.instance.currentGameState != GameState.Playing || _isStageEndCalled)
         {
             return;
         }
 
-        // 시간이 종료되었을 때
         if (_isTimeOver)
         {
-            // 시간이 끝났음을 알리는 이벤트를 발생시킵니다. (SurvivalStageController에서 구독할 예정)
             OnTimeUp?.Invoke();
 
-            // Stage 3이 아닌 경우에만 시간 만료를 클리어 조건으로 간주합니다.
             if (GameManager.instance.currentStageIndex != 3)
             {
-                // 플레이어 관련 상태 처리 (예: 움직임 멈춤)
                 if (_playerCnt != null)
                 {
                     _playerCnt.GameStop();
                 }
 
-                // GameManager에 Stage Clear 처리를 요청합니다.
                 GameManager.instance.HandleStageClear();
 
                 _isStageEndCalled = true; // 중복 호출 방지
             }
             else
             {
-                // Stage 3에서 시간이 끝났지만 킬 수 조건 미달성 시에는 게임 오버가 아닐 수 있으므로 
                 Debug.Log("TimeManager: Stage 3 시간 종료. 킬 수 조건 확인 중.");
             }
         }
@@ -176,17 +166,16 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void ResetTimer()
     {
-        LoadStageTime(); // 스테이지 전환 시 시간 재 로드
+        LoadStageTime(); // 현재 Stage Index에 맞는 시간 재 로드
 
-        // [수정] _times도 0.0f로 초기화하여 누적 시간 초기화 보장
         _times = 0.0f;
         _isTimeOver = false;
-        _isStageEndCalled = false; // 변수명 통일
+        _isStageEndCalled = false;
 
         if (_isCountDown)
             _displayTime = _gameTime;
 
         UpdateUIText();
-        Debug.Log("TimeManager: ResetTimer() 호출됨. 시간 재설정 완료.");
+        Debug.Log($"TimeManager: ResetTimer() 호출됨. Stage {GameManager.instance.currentStageIndex} 시간 재설정 완료.");
     }
 }
