@@ -88,4 +88,9 @@ public class ItemPrefab : MonoBehaviour
                 itemSelectPanel.SetActive(false);
         }
     }
+
+    public ItemData GetData()
+    {
+        return data;
+    }
 }

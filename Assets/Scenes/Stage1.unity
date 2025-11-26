@@ -9842,7 +9842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &6984057619594842897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11029,7 +11029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eb14eafbb584a41aa63c6f7a332b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTimeStage1: 10
+  targetTimeStage1: 90
   targetTimeStage2: 120
   targetTimeStage3: 60
   targetTimeStage4: 300

@@ -8,7 +8,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    private ItemData currentData;   // 무기 데이터 참조
+    // private ItemData currentData;   // 무기 데이터 참조
+    public ItemData currentData;
+
     public float currentSpeed;
     public float currentDamage;
 

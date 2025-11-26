@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 public class InGameButtonManager : MonoBehaviour
 {
@@ -244,7 +245,18 @@ public class InGameButtonManager : MonoBehaviour
 
         if (PlayerController.instance != null)
         {
-            PlayerController.instance.LoadPlayerData();
+            // 1. [수정] 씬에서 모든 ItemPrefab을 찾아 ItemData 목록을 추출합니다. (LINQ 사용)
+            // **ItemPrefab 스크립트에 public ItemData GetData() 메서드가 있어야 합니다.**
+            ItemPrefab[] itemPrefabsInScene = FindObjectsByType<ItemPrefab>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            ItemData[] allItemData = itemPrefabsInScene
+                .Select(ip => ip.GetData()) // GetData()는 ItemPrefab에 추가되어야 함
+                .Where(data => data != null)
+                .Distinct()
+                .ToArray();
+
+            // 2. [오류 CS7036 해결] LoadPlayerData에 allItemData 인수를 전달합니다.
+            PlayerController.instance.LoadPlayerData(allItemData);
 
             // 이벤트 연결
             PlayerController.instance.OnLevelUp += HandlePlayerLevelUp;
