@@ -23,16 +23,13 @@ public class LevelUpPanelLogic : MonoBehaviour
         }
 
         // 1개 이하일 때는 버튼 숨김 (강제 선택 유도)
-        if (panelOpenCount <= 1)
+        if (panelOpenCount == 0)
         {
             LevelUpPanelButton.gameObject.SetActive(false);
-            Debug.Log($"LevelUpPanelButton: 비활성화 (Count: {panelOpenCount})");
         }
-        // 2개 이상일 때는 버튼 활성화 (나중에 선택 가능)
-        else
+        else if (panelOpenCount > 0)
         {
             LevelUpPanelButton.gameObject.SetActive(true);
-            Debug.Log($"LevelUpPanelButton: 활성화 (Count: {panelOpenCount})");
         }
     }
 

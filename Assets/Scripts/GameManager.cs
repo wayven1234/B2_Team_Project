@@ -66,10 +66,52 @@ public class GameManager : MonoBehaviour
         // 다음 스테이지 데이터 로드
         LoadStageData(currentStageIndex);
 
+        stageClearPanel = FindObjectInSceneRecursively(scene, "StageClearPanel");
+
+        if (stageClearPanel != null)
+        {
+            stageClearPanel.SetActive(false); // 찾은 후 다시 비활성화 상태로 둠 (기본 상태)
+            Debug.Log("GameManager: StageClearPanel을 씬에서 찾아 연결했습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("GameManager: 씬에서 'StageClearPanel'을 찾을 수 없습니다. UI 연결 실패.");
+        }
+
         // [핵심] TimeManager 초기화 (새로운 스테이지 시간에 맞춥니다)
         InitializeTimeManager();
 
         Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
+    }
+
+    /// <summary>
+    /// 씬의 모든 루트 오브젝트와 그 자식까지 재귀적으로 탐색하여 비활성화된 오브젝트도 찾습니다.
+    /// </summary>
+    private GameObject FindObjectInSceneRecursively(Scene scene, string objectName)
+    {
+        // 씬의 모든 루트 오브젝트를 가져옵니다.
+        GameObject[] rootObjects = scene.GetRootGameObjects();
+
+        foreach (GameObject root in rootObjects)
+        {
+            // 루트 오브젝트 자체 검사
+            if (root.name == objectName)
+            {
+                return root;
+            }
+
+            // 비활성화된 자식 오브젝트까지 포함하여 탐색합니다.
+            Transform[] children = root.GetComponentsInChildren<Transform>(true);
+
+            foreach (Transform child in children)
+            {
+                if (child.name == objectName)
+                {
+                    return child.gameObject;
+                }
+            }
+        }
+        return null;
     }
 
     /// <summary>

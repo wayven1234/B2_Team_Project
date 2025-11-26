@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8859902191239881798
+--- !u!1 &3538228656762564026
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,70 +8,62 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 824564350574732860}
-  - component: {fileID: 2688146576818326314}
-  - component: {fileID: 3965027070342405894}
-  - component: {fileID: 3473201352835821069}
-  - component: {fileID: 500704194638351672}
-  - component: {fileID: 4665562939634100698}
-  m_Layer: 6
-  m_Name: Player_Girl
-  m_TagString: Player
+  - component: {fileID: 8337759653617686600}
+  - component: {fileID: 3138783100739995439}
+  - component: {fileID: 8940202964230228456}
+  - component: {fileID: 6638228133927792578}
+  - component: {fileID: 6304696754622911045}
+  m_Layer: 7
+  m_Name: MathEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &824564350574732860
+--- !u!4 &8337759653617686600
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859902191239881798}
+  m_GameObject: {fileID: 3538228656762564026}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
+  m_LocalScale: {x: 0.125, y: 0.125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2688146576818326314
+--- !u!114 &3138783100739995439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859902191239881798}
+  m_GameObject: {fileID: 3538228656762564026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63783d31573f87c4ea6fb953e75915a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9556274f107244c48a43dd4ced945ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData:
-    characterType: 0
-    maxHealth: 230
-    moveSpeed: 2
-  girlAnimController: {fileID: 9100000, guid: 2a4313a9bb403f847aae28f992b1c0db, type: 2}
-  boyAnimController: {fileID: 9100000, guid: ca7cba2c7c2851347b4dae475a58b294, type: 2}
-  itemSprite: {fileID: -6687243199115631265, guid: 75ec0d367b027ec4aa4b410ea08fe9d3, type: 3}
-  startLevel: 0
-  maxLevel: 12
-  expOrbsPerLevel: 20
-  healthPotionHealAmount: 100
-  itemTag: HealthItem
-  currentHealth: 230
-  currentLevel: 0
-  itemUI: 0
-  currentExpCount: 0
-  currentAnimationState: 
---- !u!212 &3965027070342405894
+  playerTag: Player
+  maxHealth: 5
+  currentHealth: 40
+  moveSpeed: 5.5
+  damage: 7
+  currentStageType: 0
+  stoppingDistance: 0.5
+  separationRadius: 0.5
+  separationForce: 1
+  attackInterval: 1
+--- !u!212 &8940202964230228456
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859902191239881798}
+  m_GameObject: {fileID: 3538228656762564026}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -108,26 +100,26 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 8279441396250644107, guid: 7b1e02dbda7ed3940a1bec9cbe51b2ec, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -2493244873222607213, guid: 9209637609be4c449b61c71018a5eb82, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 7.0999994, y: 13.334541}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3473201352835821069
+--- !u!50 &6638228133927792578
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859902191239881798}
+  m_GameObject: {fileID: 3538228656762564026}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -139,21 +131,21 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &500704194638351672
+--- !u!70 &6304696754622911045
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859902191239881798}
+  m_GameObject: {fileID: 3538228656762564026}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -177,32 +169,10 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.32, y: 6.1}
+  m_Offset: {x: 0.4540434, y: -2.5174475}
+  m_Size: {x: 5.3881054, y: 8.299646}
   m_Direction: 0
---- !u!95 &4665562939634100698
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859902191239881798}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2a4313a9bb403f847aae28f992b1c0db, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

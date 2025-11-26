@@ -10,6 +10,7 @@ TagManager:
   - EXP
   - HealthItem
   - SkillItem
+  - StageClearPanel
   layers:
   - Default
   - TransparentFX

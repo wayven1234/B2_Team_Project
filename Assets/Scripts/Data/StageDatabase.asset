@@ -35,3 +35,29 @@ MonoBehaviour:
     normalSpawnInterval: 2
     verticalInitialDelay: 5
     verticalSpawnInterval: 2.5
+  - stageType: 0
+    enemies:
+    - enemyPrefab: {fileID: 3538228656762564026, guid: 42c243583f39a36448163e5826798c65, type: 3}
+      spawnChance: 1
+    - enemyPrefab: {fileID: 3538228656762564026, guid: c70461dd03e75cb4da8ecf16ccf3c64d, type: 3}
+      spawnChance: 1
+    normalInitialDelay: 5
+    normalSpawnInterval: 1.5
+    verticalInitialDelay: 5
+    verticalSpawnInterval: 2.5
+  - stageType: 0
+    enemies:
+    - enemyPrefab: {fileID: 3538228656762564026, guid: bffeff64ba22a60448b684a9918d9a54, type: 3}
+      spawnChance: 1
+    - enemyPrefab: {fileID: 3538228656762564026, guid: 41e414f36b14f2340a9cc97e8899ee6c, type: 3}
+      spawnChance: 1
+    - enemyPrefab: {fileID: 3538228656762564026, guid: 42c243583f39a36448163e5826798c65, type: 3}
+      spawnChance: 1
+    - enemyPrefab: {fileID: 3538228656762564026, guid: d34c11cd7198d78408f8d80fe3f4c285, type: 3}
+      spawnChance: 1
+    - enemyPrefab: {fileID: 3538228656762564026, guid: c70461dd03e75cb4da8ecf16ccf3c64d, type: 3}
+      spawnChance: 1
+    normalInitialDelay: 1
+    normalSpawnInterval: 1
+    verticalInitialDelay: 5
+    verticalSpawnInterval: 2.5

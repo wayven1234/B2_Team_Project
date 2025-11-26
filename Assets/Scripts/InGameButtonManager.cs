@@ -37,12 +37,29 @@ public class InGameButtonManager : MonoBehaviour
 
         Debug.Log("InGameButtonManager: Awake 함수 실행 시작.");
 
+        if (itemLevelUpPanel == null)
+        {
+            // 씬에서 PersistentPanel 스크립트가 붙은 오브젝트를 찾아 연결
+            PersistentPanel persistentPanel = FindFirstObjectByType<PersistentPanel>();
+            if (persistentPanel != null)
+            {
+                itemLevelUpPanel = persistentPanel.gameObject;
+            }
+            else
+            {
+                Debug.LogError("PersistentPanel (ItemLevelUpPanel) 오브젝트를 씬에서 찾을 수 없습니다.");
+            }
+        }
+
         // 모든 패널 초기 비활성화
         escPanel.SetActive(false);
         setPanel.SetActive(false);
         characterSelectionPanel.SetActive(false);
         itemSelectionPanel.SetActive(false);
-        itemLevelUpPanel.SetActive(false);
+        if (itemLevelUpPanel != null)
+        {
+            itemLevelUpPanel.SetActive(false);
+        }
 
         // StageStartFlow 코루틴 시작
         StartCoroutine(StageStartFlow());
@@ -265,6 +282,9 @@ public class InGameButtonManager : MonoBehaviour
 
     void HandlePlayerLevelUp()
     {
+        characterSelectionPanel.SetActive(false);
+        itemLevelUpPanel.SetActive(false);
+
         itemSelectionPanel.SetActive(true);
 
         // 레벨업 패널이 열렸으므로 게임 상태를 Paused로 변경

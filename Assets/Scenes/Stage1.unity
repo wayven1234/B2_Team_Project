@@ -4946,6 +4946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2062347488}
+  - component: {fileID: 2062347491}
   - component: {fileID: 2062347490}
   - component: {fileID: 2062347489}
   m_Layer: 5
@@ -5013,6 +5014,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062347487}
   m_CullTransparentMesh: 1
+--- !u!114 &2062347491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062347487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0258dd685c863f5498f4df2c471b3e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2066704347
 GameObject:
   m_ObjectHideFlags: 0
@@ -7431,7 +7444,7 @@ GameObject:
   - component: {fileID: 113263066430004604}
   m_Layer: 5
   m_Name: StageClearPanel
-  m_TagString: Untagged
+  m_TagString: StageClearPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
