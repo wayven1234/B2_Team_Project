@@ -16,17 +16,12 @@ public class InGameButtonManager : MonoBehaviour
     [SerializeField] private GameObject boyPlayerPrefab;
     [SerializeField] private Transform playerSpawnPoint;
 
-    // Esc
-    [SerializeField] private GameObject escPanel;    // Esc 창
-    // Setting
-    [SerializeField] private GameObject setPanel;    // 설정창
-
-    [SerializeField] private GameObject characterSelectionPanel;
-    [SerializeField] private GameObject itemSelectionPanel;
-    [SerializeField] private GameObject itemLevelUpPanel;
-
-    [Header("게임 종료/클리어 패널")]
-    [SerializeField] private GameObject stageClearPanel;
+    private GameObject escPanel;
+    private GameObject setPanel;
+    private GameObject characterSelectionPanel;
+    private GameObject itemSelectionPanel;
+    private GameObject itemLevelUpPanel;
+    private GameObject stageClearPanel;
 
     public string nextSceneName;
 
@@ -35,41 +30,50 @@ public class InGameButtonManager : MonoBehaviour
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
-        Debug.Log("InGameButtonManager: Awake 함수 실행 시작.");
-
-        if (itemLevelUpPanel == null)
+        Canvas persistentCanvas = FindFirstObjectByType<PersistentPanel>(FindObjectsInactive.Include)?.GetComponent<Canvas>();
+        if (persistentCanvas == null)
         {
-            // 씬에서 PersistentPanel 스크립트가 붙은 오브젝트를 찾아 연결
-            PersistentPanel persistentPanel = FindFirstObjectByType<PersistentPanel>();
-            if (persistentPanel != null)
-            {
-                itemLevelUpPanel = persistentPanel.gameObject;
-            }
-            else
-            {
-                Debug.LogError("PersistentPanel (ItemLevelUpPanel) 오브젝트를 씬에서 찾을 수 없습니다.");
-            }
+            Debug.LogError("InGameButtonManager: Persistent Canvas를 찾을 수 없습니다.");
+            return;
         }
 
-        // 모든 패널 초기 비활성화
-        escPanel.SetActive(false);
-        setPanel.SetActive(false);
-        characterSelectionPanel.SetActive(false);
-        itemSelectionPanel.SetActive(false);
-        if (itemLevelUpPanel != null)
-        {
-            itemLevelUpPanel.SetActive(false);
-        }
+        escPanel = FindChildRecursive(persistentCanvas.transform, "EscPanel");
+        setPanel = FindChildRecursive(persistentCanvas.transform, "SetPanel");
+        characterSelectionPanel = FindChildRecursive(persistentCanvas.transform, "CharacterSelectionPanel");
+        itemSelectionPanel = FindChildRecursive(persistentCanvas.transform, "ItemSelectionPanel");
+        itemLevelUpPanel = FindChildRecursive(persistentCanvas.transform, "ItemLevelUpPanel");
+        stageClearPanel = FindChildRecursive(persistentCanvas.transform, "StageClearPanel");
 
-        // StageStartFlow 코루틴 시작
+        if (escPanel != null) escPanel.SetActive(false);
+        if (setPanel != null) setPanel.SetActive(false);
+        if (characterSelectionPanel != null) characterSelectionPanel.SetActive(false);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
+        if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(false);
+        if (stageClearPanel != null) stageClearPanel.SetActive(false);
+
         StartCoroutine(StageStartFlow());
+    }
+
+    private GameObject FindChildRecursive(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name) return child.gameObject;
+            GameObject found = FindChildRecursive(child, name);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    private bool IsPanelActive(GameObject panel)
+    {
+        return panel != null && panel.activeSelf;
     }
 
     private void Update()
     {
         if (GameManager.instance == null) return;
 
-        // Stage Clear/Game Over 상태에서는 입력 무시
         if (GameManager.instance.currentGameState == GameState.GameOver ||
         GameManager.instance.currentGameState == GameState.GameClear ||
         GameManager.instance.currentGameState == GameState.StageClear)
@@ -77,24 +81,22 @@ public class InGameButtonManager : MonoBehaviour
             return;
         }
 
-        // Esc 키 처리 (일시 정지)
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Esc 창이 열려있지 않고, 캐릭터/아이템 선택창도 열려있지 않을 때만 Esc 창 토글
-            bool isSelectionPanelActive = characterSelectionPanel.activeSelf || itemSelectionPanel.activeSelf || itemLevelUpPanel.activeSelf;
+            bool isSelectionPanelActive = IsPanelActive(characterSelectionPanel) || IsPanelActive(itemSelectionPanel) || IsPanelActive(itemLevelUpPanel);
+
             if (!isSelectionPanelActive)
             {
-                escPanel.SetActive(!escPanel.activeSelf);    // Esc 키를 누르면 Esc 창 토글
-                setPanel.SetActive(false);                    // Esc 창이 켜질 때 설정창 끄기
+                if (escPanel != null) escPanel.SetActive(!escPanel.activeSelf);
+                if (setPanel != null) setPanel.SetActive(false);
             }
         }
 
-        // 현재 켜져 있는 패널이 있는지 확인
-        bool isAnyPausePanelActive = escPanel.activeSelf ||
-                                     setPanel.activeSelf ||
-                                     characterSelectionPanel.activeSelf ||
-                                     itemSelectionPanel.activeSelf ||
-                                     itemLevelUpPanel.activeSelf;
+        bool isAnyPausePanelActive = IsPanelActive(escPanel) ||
+                                     IsPanelActive(setPanel) ||
+                                     IsPanelActive(characterSelectionPanel) ||
+                                     IsPanelActive(itemSelectionPanel) ||
+                                     IsPanelActive(itemLevelUpPanel);
 
         if (isAnyPausePanelActive)
         {
@@ -105,7 +107,6 @@ public class InGameButtonManager : MonoBehaviour
         }
         else
         {
-            // 위의 패널이 모두 꺼져 있을 때만 Playing 상태로 변경
             if (GameManager.instance.currentGameState != GameState.Playing)
             {
                 GameManager.instance.ChangeState(GameState.Playing);
@@ -123,7 +124,7 @@ public class InGameButtonManager : MonoBehaviour
         if (selectedPlayerPrefab == null)
         {
             // 1. Stage 1 (첫 진입): 캐릭터 선택창 활성화
-            characterSelectionPanel.SetActive(true);
+            if (characterSelectionPanel != null) characterSelectionPanel.SetActive(true);
             GameManager.instance.ChangeState(GameState.Paused);
             Debug.Log("InGameButtonManager: Stage 1 진입 -> Paused 상태로 전환 및 캐릭터 선택창 활성화.");
         }
@@ -132,10 +133,10 @@ public class InGameButtonManager : MonoBehaviour
             // 2. Stage 2/3/4 (다음 스테이지 로드):
             Debug.Log("InGameButtonManager: Stage 2+ 진입. 플레이어 스폰 및 게임 시작.");
 
-            // Stage Clear Panel 비활성화: 씬 로드 후 즉시 닫습니다.
-            if (GameManager.instance.stageClearPanel != null)
+            // [수정] Stage Clear Panel 비활성화: 로컬 변수(Awake에서 찾은)를 사용합니다.
+            if (stageClearPanel != null)
             {
-                GameManager.instance.stageClearPanel.SetActive(false);
+                stageClearPanel.SetActive(false);
             }
 
             // SpawnPlayerCoroutine이 완료될 때까지 안전하게 대기
@@ -163,7 +164,7 @@ public class InGameButtonManager : MonoBehaviour
     public void OnItemSelectionConfirmed()
     {
         // 1. 아이템 선택창을 끈다
-        itemSelectionPanel.SetActive(false);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
 
         // 2. Update() 함수가 패널이 비활성화된 것을 감지하고 GameState를 Playing으로 변경합니다.
     }
@@ -194,19 +195,19 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnSetButtonClick()
     {
-        escPanel.SetActive(false);
-        setPanel.SetActive(true);
+        if (escPanel != null) escPanel.SetActive(false);
+        if (setPanel != null) setPanel.SetActive(true);
         GameManager.instance.ChangeState(GameState.Paused);
     }
 
     public void OnCloseButtonClick()
     {
-        escPanel.SetActive(false); // 닫기 버튼 클릭 시 Esc 창 끄기
+        if (escPanel != null) escPanel.SetActive(false); // 닫기 버튼 클릭 시 Esc 창 끄기
     }
 
     public void OnSetExitButtonClick()
     {
-        setPanel.SetActive(false); // 설정창 닫기 버튼 클릭 시 설정창 끄기
+        if (setPanel != null) setPanel.SetActive(false); // 설정창 닫기 버튼 클릭 시 설정창 끄기
     }
 
     public void OnGirlCharacterSelect()
@@ -214,8 +215,8 @@ public class InGameButtonManager : MonoBehaviour
         selectedPlayerPrefab = girlPlayerPrefab;
         StartCoroutine(SpawnPlayerCoroutine(girlPlayerPrefab)); // 코루틴으로 호출
 
-        characterSelectionPanel.SetActive(false);
-        itemSelectionPanel.SetActive(true);
+        if (characterSelectionPanel != null) characterSelectionPanel.SetActive(false);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(true);
         if (GameManager.instance != null)
         {
             GameManager.instance.ChangeState(GameState.Paused); // 아이템 선택하는 동안 Paused 유지
@@ -227,8 +228,8 @@ public class InGameButtonManager : MonoBehaviour
         selectedPlayerPrefab = boyPlayerPrefab;
         StartCoroutine(SpawnPlayerCoroutine(boyPlayerPrefab)); // 코루틴으로 호출
 
-        characterSelectionPanel.SetActive(false);
-        itemSelectionPanel.SetActive(true);
+        if (characterSelectionPanel != null) characterSelectionPanel.SetActive(false);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(true);
         if (GameManager.instance != null)
         {
             GameManager.instance.ChangeState(GameState.Paused); // 아이템 선택하는 동안 Paused 유지
@@ -246,7 +247,6 @@ public class InGameButtonManager : MonoBehaviour
         else
             Debug.LogWarning("PlayerSpawnPoint가 할당되지 않았습니다.");
 
-        // 기존 플레이어 정리
         if (PlayerController.instance != null)
         {
             PlayerController.instance.OnLevelUp -= HandlePlayerLevelUp;
@@ -254,38 +254,33 @@ public class InGameButtonManager : MonoBehaviour
             yield return null;
         }
 
-        // 새 플레이어 생성
         Instantiate(playerPrefab, spawnPos, Quaternion.identity);
 
-        // 새 플레이어의 Awake/Start 완료 및 instance 설정 대기
         yield return null;
 
         if (PlayerController.instance != null)
         {
-            // 1. [수정] 씬에서 모든 ItemPrefab을 찾아 ItemData 목록을 추출합니다. (LINQ 사용)
-            // **ItemPrefab 스크립트에 public ItemData GetData() 메서드가 있어야 합니다.**
             ItemPrefab[] itemPrefabsInScene = FindObjectsByType<ItemPrefab>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             ItemData[] allItemData = itemPrefabsInScene
-                .Select(ip => ip.GetData()) // GetData()는 ItemPrefab에 추가되어야 함
+                .Select(ip => ip.GetData())
                 .Where(data => data != null)
-                .Distinct()
+                .GroupBy(data => data.type)
+                .Select(g => g.First())
                 .ToArray();
 
-            // 2. [오류 CS7036 해결] LoadPlayerData에 allItemData 인수를 전달합니다.
             PlayerController.instance.LoadPlayerData(allItemData);
 
-            // 이벤트 연결
             PlayerController.instance.OnLevelUp += HandlePlayerLevelUp;
         }
     }
 
     void HandlePlayerLevelUp()
     {
-        characterSelectionPanel.SetActive(false);
-        itemLevelUpPanel.SetActive(false);
+        if (characterSelectionPanel != null) characterSelectionPanel.SetActive(false);
+        if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(false);
 
-        itemSelectionPanel.SetActive(true);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(true);
 
         // 레벨업 패널이 열렸으므로 게임 상태를 Paused로 변경
         if (GameManager.instance != null)
@@ -326,20 +321,20 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnLevelUpPanelButtonClick()
     {
-        itemLevelUpPanel.SetActive(true);
-        itemSelectionPanel.SetActive(false);
+        if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(true);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
         GameManager.instance.ChangeState(GameState.Paused);
     }
 
     public void OnLevelUpPanelCloseButtonClick()
     {
-        itemLevelUpPanel.SetActive(false);
-        itemSelectionPanel.SetActive(true);
+        if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(false);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(true);
     }
 
     public void OnItemSelectionPanelCloseButtonClick()
     {
-        itemSelectionPanel.SetActive(false);
+        if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
     }
 
     public void OnNextStageButtonClick()
@@ -351,6 +346,18 @@ public class InGameButtonManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene(nextSceneName);
+        }
+    }
+
+    public void ShowStageClearPanel()
+    {
+        if (stageClearPanel != null)
+        {
+            stageClearPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("InGameButtonManager: StageClearPanel을 찾지 못했습니다.");
         }
     }
 }

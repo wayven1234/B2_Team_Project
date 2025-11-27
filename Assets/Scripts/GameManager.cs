@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StageDatabase stageDatabase;
     private StageData currentStageData;
 
-    [Header("UI 연결")]
-    public GameObject stageClearPanel;
+    [Header("UI 연결 (Scene 로직에 위임됨)")]
+    private GameObject stageClearPanel; // private으로 유지
 
     [Header("현재 게임 상태")]
     public GameState currentGameState;
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("플레이어 지속 데이터")]
     public int playerLevel = 1;
     public Dictionary<ItemData.ItemType, int> weaponLevels = new Dictionary<ItemData.ItemType, int>();
+    public int playerItemCount = 0;
     public bool isFirstStageLoad = true;
 
     private void Awake()
@@ -55,32 +56,13 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("GameManager: Start() 완료.");
-
-        if (stageClearPanel != null)
-            stageClearPanel.SetActive(false);
     }
 
     // 씬 로드 완료 이벤트 핸들러: 다음 스테이지 데이터 및 시간 로드
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 다음 스테이지 데이터 로드
         LoadStageData(currentStageIndex);
-
-        stageClearPanel = FindObjectInSceneRecursively(scene, "StageClearPanel");
-
-        if (stageClearPanel != null)
-        {
-            stageClearPanel.SetActive(false); // 찾은 후 다시 비활성화 상태로 둠 (기본 상태)
-            Debug.Log("GameManager: StageClearPanel을 씬에서 찾아 연결했습니다.");
-        }
-        else
-        {
-            Debug.LogWarning("GameManager: 씬에서 'StageClearPanel'을 찾을 수 없습니다. UI 연결 실패.");
-        }
-
-        // [핵심] TimeManager 초기화 (새로운 스테이지 시간에 맞춥니다)
         InitializeTimeManager();
-
         Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
     }
 
@@ -225,13 +207,18 @@ public class GameManager : MonoBehaviour
         {
             ChangeState(GameState.StageClear);
 
-            if (stageClearPanel != null)
+            // [수정] Stage Clear Panel을 띄우는 로직을 InGameButtonManager에게 위임
+            InGameButtonManager buttonManager = FindFirstObjectByType<InGameButtonManager>();
+
+            if (buttonManager != null)
             {
-                stageClearPanel.SetActive(true);
+                // InGameButtonManager의 ShowStageClearPanel 함수를 호출합니다.
+                buttonManager.ShowStageClearPanel();
             }
             else
             {
-                Debug.LogError("Stage Clear Panel이 GameManager에 연결되지 않았습니다. UI를 띄울 수 없습니다.");
+                // InGameButtonManager는 매 씬마다 새로 생성되므로, 이 로그는 심각한 오류입니다.
+                Debug.LogError("InGameButtonManager를 찾을 수 없습니다. Stage Clear Panel을 띄울 수 없습니다.");
             }
         }
     }

@@ -2,37 +2,25 @@ using UnityEngine;
 
 public class PersistentPanel : MonoBehaviour
 {
-    // 정적 변수를 선언하여 유일한 인스턴스를 저장합니다.
-    private static PersistentPanel instance;
-
     private void Awake()
     {
-        // 1. 유일성 검사 (Singleton Check)
-        // 씬에서 이 타입의 다른 인스턴스가 이미 존재하는지 확인합니다.
-        // FindAnyObjectByType이 Deprecated된 FindObjectOfType보다 빠릅니다.
-        if (instance == null)
-        {
-            // 아직 인스턴스가 없다면, 현재 오브젝트를 인스턴스로 지정하고 DontDestroyOnLoad를 적용합니다.
-            instance = this;
+        // Unity에서 권장하는 FindObjectsByType을 사용합니다.
+        // SortMode.None을 사용하여 성능을 최적화합니다.
+        PersistentPanel[] existingPanels = FindObjectsByType<PersistentPanel>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
 
-            // 이 오브젝트와 그 하위 요소들을 씬이 바뀌어도 파괴하지 않도록 설정
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
+        // 현재 씬에서 이 스크립트를 가진 오브젝트가 1개 초과로 발견되면,
+        // 현재 로드된 오브젝트를 파괴하여 중복을 방지합니다.
+        if (existingPanels.Length > 1)
         {
-            // 이미 인스턴스가 존재한다면, 새로 생성된 오브젝트(중복)를 즉시 파괴합니다.
-            // (새 씬이 로드될 때마다 이 오브젝트가 씬에 배치되어 있다면 실행됩니다.)
-            Debug.LogWarning("PersistentPanel: 중복 인스턴스가 발견되어 파괴되었습니다.");
-            Destroy(this.gameObject);
+            // 이 컴포넌트가 붙은 게임 오브젝트를 파괴합니다.
+            Destroy(gameObject);
+            return;
         }
-    }
 
-    // 오브젝트가 파괴될 때 정적 인스턴스를 초기화하여 씬 전환 시 오류를 방지합니다.
-    private void OnDestroy()
-    {
-        if (instance == this)
-        {
-            instance = null;
-        }
+        // 씬 전환 시 파괴되지 않도록 설정합니다.
+        DontDestroyOnLoad(gameObject);
     }
 }

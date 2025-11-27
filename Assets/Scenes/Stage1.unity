@@ -4946,7 +4946,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2062347488}
-  - component: {fileID: 2062347491}
   - component: {fileID: 2062347490}
   - component: {fileID: 2062347489}
   m_Layer: 5
@@ -5014,18 +5013,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062347487}
   m_CullTransparentMesh: 1
---- !u!114 &2062347491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062347487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0258dd685c863f5498f4df2c471b3e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2066704347
 GameObject:
   m_ObjectHideFlags: 0
@@ -5491,15 +5478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76974a0ac47be146bdc391132230fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpLvPanel: {fileID: 12344626476894708}
-  timePanel: {fileID: 8532788589566437457}
-  itemPanel: {fileID: 6073387828346230897}
-  closeButton: {fileID: 5650875244623658021}
-  healthBarScript: {fileID: 9139156928834889503}
-  levelBarScript: {fileID: 486493937317607764}
-  itemImageSlots:
-  - {fileID: 3175467035856388506}
-  - {fileID: 7572604146076461369}
 --- !u!1 &724842674232206551
 GameObject:
   m_ObjectHideFlags: 0
@@ -5541,12 +5519,19 @@ MonoBehaviour:
   girlPlayerPrefab: {fileID: 8859902191239881798, guid: e757f63ce113fb5468301423decb0ac1, type: 3}
   boyPlayerPrefab: {fileID: 2272978327260621230, guid: 6536812bab207354a93f4c8424e5dec0, type: 3}
   playerSpawnPoint: {fileID: 459265030}
-  escPanel: {fileID: 5668330496613676274}
-  setPanel: {fileID: 2066704347}
-  characterSelectionPanel: {fileID: 8055424066165376373}
-  itemSelectionPanel: {fileID: 6969375209478390342}
-  itemLevelUpPanel: {fileID: 2062347487}
-  stageClearPanel: {fileID: 3431083576473747593}
+  mainButton: {fileID: 1934318779633242255}
+  replayButton: {fileID: 7955715181209986559}
+  gameExitButton: {fileID: 4774923579244487040}
+  setButton: {fileID: 2159303896414081675}
+  closeButton: {fileID: 7546092589245413070}
+  setExitButton: {fileID: 1818593708}
+  girlSelectButton: {fileID: 5461690915293561768}
+  boySelectButton: {fileID: 4232290476869359085}
+  itemSelectConfirmButton: {fileID: 0}
+  levelUpPanelOpenButton: {fileID: 6697099125982669013}
+  levelUpPanelCloseButton: {fileID: 817249953}
+  itemSelectionPanelCloseButton: {fileID: 0}
+  nextStageButton: {fileID: 7505277496662417850}
   nextSceneName: Stage2
 --- !u!114 &769228213015426377
 MonoBehaviour:
@@ -9203,6 +9188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7397085844434857506}
+  - component: {fileID: 7397085844434857507}
   - component: {fileID: 2847133231695004669}
   - component: {fileID: 439500709184680154}
   - component: {fileID: 357686078858185099}
@@ -10043,6 +10029,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &7397085844434857507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5819768025799531444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0258dd685c863f5498f4df2c471b3e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7416433721594310915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11025,10 +11023,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageDatabase: {fileID: 11400000, guid: 0194625ac9b2e3e46986b7152a329b7b, type: 2}
-  stageClearPanel: {fileID: 3431083576473747593}
   currentGameState: 0
   currentStageIndex: 1
   playerLevel: 1
+  playerItemCount: 0
   isFirstStageLoad: 1
 --- !u!114 &8816036653006707870
 MonoBehaviour:
@@ -11042,7 +11040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eb14eafbb584a41aa63c6f7a332b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTimeStage1: 90
+  targetTimeStage1: 2
   targetTimeStage2: 120
   targetTimeStage3: 60
   targetTimeStage4: 300
