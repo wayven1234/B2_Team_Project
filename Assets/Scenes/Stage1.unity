@@ -7156,7 +7156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366329e8d1496db45bfc19a58d9d9176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KillTargetStage3: 1
+  KillTargetStage3: 100
   killCountText: {fileID: 0}
 --- !u!4 &2056548849
 Transform:
@@ -13267,9 +13267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eb14eafbb584a41aa63c6f7a332b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTimeStage1: 2
-  targetTimeStage2: 2
-  targetTimeStage3: 5
+  targetTimeStage1: 90
+  targetTimeStage2: 120
+  targetTimeStage3: 60
   targetTimeStage4: 300
   _isCountDown: 1
   _gameTime: 0

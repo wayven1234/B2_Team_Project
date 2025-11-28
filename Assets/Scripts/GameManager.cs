@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private StageData currentStageData;
 
     [Header("UI 연결 (Scene 로직에 위임됨)")]
-    private GameObject stageClearPanel; // private으로 유지
+    private GameObject stageClearPanel;
     private GameObject gameOverPanel;
     private GameObject gameClearPanel;
 
@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     public int playerItemCount = 0;
     public bool isFirstStageLoad = true;
 
+    [Header("Retry 복구 지점 데이터")]
+    private int savedPlayerLevel = 1;
+    private Dictionary<ItemData.ItemType, int> savedWeaponLevels = new Dictionary<ItemData.ItemType, int>();
+    private int savedPlayerCount = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -33,7 +38,6 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // 씬 로드 이벤트 구독
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -46,7 +50,6 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // 오브젝트 파괴 시 이벤트 구독 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -60,7 +63,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager: Start() 완료.");
     }
 
-    // 씬 로드 완료 이벤트 핸들러: 다음 스테이지 데이터 및 시간 로드
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "TitleScene")
@@ -82,6 +84,11 @@ public class GameManager : MonoBehaviour
         {
             InGameButtonManager.instance.StartNextStageFlow();
         }
+
+        if (InGameButtonManager.instance != null)
+    {
+        InGameButtonManager.instance.ResetAllPanelsAndState();
+    }
 
         Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
     }
@@ -105,18 +112,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private GameObject FindObjectInSceneRecursively(Scene scene, string objectName)
     {
-        // 씬의 모든 루트 오브젝트를 가져옵니다.
         GameObject[] rootObjects = scene.GetRootGameObjects();
 
         foreach (GameObject root in rootObjects)
         {
-            // 루트 오브젝트 자체 검사
             if (root.name == objectName)
             {
                 return root;
             }
 
-            // 비활성화된 자식 오브젝트까지 포함하여 탐색합니다.
             Transform[] children = root.GetComponentsInChildren<Transform>(true);
 
             foreach (Transform child in children)
@@ -141,7 +145,6 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
-        // 배열 인덱스 (Stage 1 -> Index 0)
         int arrayIndex = stageIndex - 1;
 
         if (arrayIndex >= 0 && arrayIndex < stageDatabase.stages.Length)
@@ -167,13 +170,11 @@ public class GameManager : MonoBehaviour
             case GameState.Playing:
                 Time.timeScale = 1f;
 
-                // TimeManager 초기화는 OnSceneLoaded에서 처리됩니다.
-
                 EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
 
                 if (enemySpawn != null)
                 {
-                    enemySpawn.Initialize(currentStageData);
+                    enemySpawn.Initialize(currentStageData, currentStageIndex);
                     enemySpawn.StartSpawning();
                 }
                 else
@@ -230,14 +231,45 @@ public class GameManager : MonoBehaviour
         return currentStageData;
     }
 
+    /// <summary>
+    /// 다음 스테이지 진입 전, 현재 플레이어 데이터를 복구 지점에 저장합니다.
+    /// </summary>
+    public void SaveCheckpointData()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+            player.SavePlayerData();
+
+        savedPlayerLevel = playerLevel;
+        savedPlayerCount = playerItemCount;
+
+        savedWeaponLevels.Clear();
+        foreach (var pair in weaponLevels)
+            savedWeaponLevels[pair.Key] = pair.Value;
+
+        Debug.Log($"[Checkpoint Save] Stage {currentStageIndex} 클리어 데이터 백업 완료.");
+    }
+
+    /// <summary>
+    /// 게임 오버 시 호출되어 복구 지점 데이터로 현재 데이터를 덮어씁니다.
+    /// </summary>
+    public void RestoreCheckpointData()
+    {
+        playerLevel = savedPlayerLevel;
+        playerItemCount = savedPlayerCount;
+
+        weaponLevels.Clear();
+        foreach (var pair in savedWeaponLevels)
+            weaponLevels.Add(pair.Key, pair.Value);
+
+        Debug.Log($"[Checkpoint Restore] Stage {currentStageIndex} 시작 상태로 데이터 복원 완료.");
+    }
+
     public void HandleStageClear()
     {
         bool isFinalStage = (currentStageIndex == stageDatabase.stages.Length);
 
-        // 씬 이동 전에 플레이어 데이터 저장
-        PlayerController player = FindFirstObjectByType<PlayerController>();
-        if (player != null)
-            player.SavePlayerData();
+        SaveCheckpointData();
 
         if (isFinalStage)
         {
@@ -247,20 +279,29 @@ public class GameManager : MonoBehaviour
         {
             ChangeState(GameState.StageClear);
 
-            // [수정] Stage Clear Panel을 띄우는 로직을 InGameButtonManager에게 위임
-            // InGameButtonManager buttonManager = FindFirstObjectByType<InGameButtonManager>();
-
             if (InGameButtonManager.instance != null)
             {
-                // InGameButtonManager의 ShowStageClearPanel 함수를 호출합니다.
                 InGameButtonManager.instance.ShowStageClearPanel();
             }
             else
             {
-                // InGameButtonManager는 매 씬마다 새로 생성되므로, 이 로그는 심각한 오류입니다.
                 Debug.LogError("InGameButtonManager를 찾을 수 없습니다. Stage Clear Panel을 띄울 수 없습니다.");
             }
         }
+    }
+
+    /// <summary>
+    /// Retry 버튼 클릭 시 현재 씬을 복원된 데이터로 다시 로드합니다.
+    /// </summary>
+    public void StartRetryFlow()
+    {
+        RestoreCheckpointData();
+
+        Time.timeScale = 1f;
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+
+        Debug.Log($"[Retry] 씬 재시작 요청: {currentScene.name} (Stage {currentStageIndex} 복원)");
     }
 
     /// <summary>
@@ -268,21 +309,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void AdvanceToNextStageByCurrentIndex()
     {
-        // 다음 스테이지 번호 (현재 + 1)
         int nextStageNumber = currentStageIndex + 1;
 
         if (nextStageNumber <= stageDatabase.stages.Length)
         {
-            // 다음 씬 이름 형식: "Stage2", "Stage3", ...
             string nextSceneName = "Stage" + nextStageNumber.ToString();
 
-            currentStageIndex = nextStageNumber; // 스테이지 인덱스 증가
+            currentStageIndex = nextStageNumber;
             SceneManager.LoadScene(nextSceneName);
             Debug.Log($"씬 전환 요청: {nextSceneName}");
         }
         else
         {
-            // 최종 스테이지를 이미 클리어했을 때
             Debug.LogWarning("Final stage reached. Cannot advance further.");
         }
     }
@@ -292,7 +330,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitializeTimeManager()
     {
-        // 씬 로드가 완료된 후 TimeManager를 찾아 초기화합니다.
         TimeManager tm = FindFirstObjectByType<TimeManager>();
 
         if (tm != null)
@@ -301,7 +338,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // TimeManager가 아직 씬에 생성되지 않았을 수 있습니다. 경고로 처리합니다.
             Debug.LogWarning("GameManager: TimeManager를 씬에서 찾을 수 없습니다. (다음 프레임에 생성될 수 있습니다)");
         }
     }

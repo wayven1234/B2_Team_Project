@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    // private ItemData currentData;   // 무기 데이터 참조
     public ItemData currentData;
 
     public float currentSpeed;
@@ -57,27 +56,12 @@ public class Weapon : MonoBehaviour
             {
                 case ItemData.ItemType.Book:
                     BookAttack(BOOK_RANGE, BOOK_ANGLE);
-                    // 책으로 때리는거 구현
-                    //Debug.Log("ItemData.ItemType.Book : " + currentSpeed);
-                    //// ObjectFindByTag ("Player"); [플레이어 1개만 가져옴]
-                    //// ObjectsFindByTags("Enemy"); [몬스터 태그를 가진 전체를 리스트로 가져옴]
-                    //for(int i = 0; i < enemy.count; i++)
-                    //{
-                    //    float d = Vector2.Distance(player.transfrom.position, enemy[i].transfrom.position);
-                    //    if( d < "아이템의 사정거리라면")
-                    //    {
-                    //        "공격구현;"
-                    //    }
-                    //}
                     break;
                 case ItemData.ItemType.Talk:
                     TalkAttack();
-                    //Debug.Log("ItemData.ItemType.Talk : " + currentSpeed);
-                    // 말로 때리는거 구현
                     break;
                 case ItemData.ItemType.Bar:
                     BarAttack();
-                    //Debug.Log("ItemData.ItemType.Bar : " + currentSpeed);
                     break;
             }
             float cooltime = 1f / currentSpeed;
@@ -175,12 +159,10 @@ public class Weapon : MonoBehaviour
 
         if (nearestEnemy != null)
         {
-            // 2. 적이 있다면: 플레이어 -> 적 방향으로 공격 방향 설정
             attackDirection = (nearestEnemy.position - player.transform.position).normalized;
         }
         else
         {
-            // 3. 주변에 적이 없다면: 플레이어가 바라보는 방향 사용
             attackDirection = player.GetLastMoveDirection();
         }
 
@@ -193,7 +175,6 @@ public class Weapon : MonoBehaviour
 
         if (talkPrefab != null)
         {
-            // MathF.Atan2 대신 Mathf.Atan2를 사용해야 합니다. (using System이 아닌 UnityEngine.Mathf 사용)
             float rotationZ = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
 
             Vector3 spawnPosition = player.transform.position;
@@ -201,7 +182,7 @@ public class Weapon : MonoBehaviour
             GameObject projectile = Instantiate(
                 talkPrefab,
                 spawnPosition,
-                Quaternion.Euler(0, 0, rotationZ + 90)); // 스프라이트 방향에 따라 +90 또는 -90 조정
+                Quaternion.Euler(0, 0, rotationZ + 90));
 
             TalkAttackEffect talkEffectScript = projectile.GetComponent<TalkAttackEffect>();
             if (talkEffectScript != null)
@@ -209,7 +190,6 @@ public class Weapon : MonoBehaviour
                 float finalDamage = currentDamage + player.GetSkillDamageBonus();
                 Sprite talkSprite = currentData.icon;
 
-                // 투사체 설정 함수 호출
                 talkEffectScript.TalkSetupAttack(finalDamage, talkSprite, attackDirection, calculatedLifetime);
             }
         }
@@ -238,7 +218,7 @@ public class Weapon : MonoBehaviour
             if (barEffectScript != null)
             {
                 float finalDamage = currentDamage + player.GetSkillDamageBonus();
-                Sprite barSprite = currentData.icon; // ItemData의 icon을 사용
+                Sprite barSprite = currentData.icon;
 
                 barEffectScript.BarSetupAttack(finalDamage, barSprite);
 
@@ -249,23 +229,7 @@ public class Weapon : MonoBehaviour
                 }
             }
 
-            // 3. 이펙트 파괴
             Destroy(effect, BAR_LIFETIME);
         }
-
-        //Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(player.transform.position, BAR_RANGE);
-
-        //foreach (Collider2D collider in enemiesInRange)
-        //{
-        //    if (collider.CompareTag(ENEMY_TAG))
-        //    {
-        //        Enemy enemy = collider.GetComponent<Enemy>();
-        //        if (enemy != null)
-        //        {
-        //            float finalDamage = currentDamage + player.GetSkillDamageBonus();
-        //            enemy.TakeDamage(finalDamage);
-        //        }
-        //    }
-        //}
     }
 }

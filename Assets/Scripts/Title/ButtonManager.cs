@@ -100,13 +100,13 @@ public class ButtonManager : MonoBehaviour
 
     public void OnMainButtonClick()
     {
-        SceneManager.LoadScene("TitleScene"); // 메인 화면 버튼 클릭 시 메인 화면으로 이동
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void OnReplayButtonClick()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name); // 다시 시작 버튼 클릭 시 현재 씬 재시작
+        SceneManager.LoadScene(currentScene.name);
     }
 
     public void OnGameExitButtonClick()
@@ -122,12 +122,12 @@ public class ButtonManager : MonoBehaviour
 
     public void OnCloseButtonClick()
     {
-        escPanel.SetActive(false); // 닫기 버튼 클릭 시 Esc 창 끄기
+        escPanel.SetActive(false);
     }
 
     public void OnSetButtonClick()
     {
-        escPanel.SetActive(false);  // 설정 버튼 클릭 시 Esc 창 끄기
-        setPanel.SetActive(true);   // 설정 버튼 클릭 시 설정창 활성화
+        escPanel.SetActive(false);
+        setPanel.SetActive(true);
     }
 }

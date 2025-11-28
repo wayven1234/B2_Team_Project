@@ -13,7 +13,6 @@ public class LevelUpPanelLogic : MonoBehaviour
 
     void OnEnable()
     {
-        // 디버그로 현재 카운트 확인
         Debug.Log($"LevelUpPanelLogic OnEnable: 현재 패널 카운트 = {panelOpenCount}");
 
         if (LevelUpPanelButton == null)
@@ -22,7 +21,6 @@ public class LevelUpPanelLogic : MonoBehaviour
             return;
         }
 
-        // 1개 이하일 때는 버튼 숨김 (강제 선택 유도)
         if (panelOpenCount == 0)
         {
             LevelUpPanelButton.gameObject.SetActive(false);
@@ -35,10 +33,8 @@ public class LevelUpPanelLogic : MonoBehaviour
 
     public void UpdateItemBar(ItemData data)
     {
-        // 1. Fill Amount 계산: (현재 레벨 / 최대 레벨)
         float fillAmount = (float)data.level / data.maxLevel;
 
-        // 2. ItemType에 따라 올바른 Bar를 찾아 업데이트합니다.
         switch (data.type)
         {
             case ItemData.ItemType.Talk:
@@ -59,15 +55,14 @@ public class LevelUpPanelLogic : MonoBehaviour
     public static void ResetOpenCount()
     {
         panelOpenCount = 0;
+        Debug.Log("LevelUpPanelLogic: ResetOpenCount 호출. Count가 0으로 초기화되었습니다.");
     }
 
-    // ItemPrefab이 카운트에 접근할 수 있는 함수
     public static int GetOpenCount()
     {
         return panelOpenCount;
     }
 
-    // ItemPrefab이 카운트를 감소시킬 수 있는 함수
     public static void DecrementOpenCount()
     {
         if (panelOpenCount > 0)
@@ -83,10 +78,9 @@ public class LevelUpPanelLogic : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        // GameManager의 Update()가 모든 패널 상태를 감지하고 Playing으로 전환하도록 위임
         if (GameManager.instance == null)
         {
-            Time.timeScale = 1f; // 안전 장치
+            Time.timeScale = 1f;
         }
     }
 

@@ -11,11 +11,11 @@ public class ItemData
     }
 
     [Header("아이템 설정")]
-    public ItemType type;       // 아이템
-    public string display;      // 아이템 이름
-    public Sprite icon;         // 아이템 이미지
-    [HideInInspector] public int level;           // 아이템 레벨
-    public int maxLevel = 4;    // 최대 레벨 (4로 고정)
+    public ItemType type;
+    public string display;
+    public Sprite icon;
+    [HideInInspector] public int level;
+    public int maxLevel = 4;
 
 
     [Header("레벨당 속성")]

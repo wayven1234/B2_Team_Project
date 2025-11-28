@@ -28,24 +28,4 @@ public class CharacterData
         else
             return 0f;
     }
-
-
-//    private void test()
-//    {
-//        // 초기화
-//        dictSkillLevel.Clear();
-//        dictSkillLevel.Add(ItemData.ItemType.Talk, 0);
-//        dictSkillLevel.Add(ItemData.ItemType.Book, 0);
-//        dictSkillLevel.Add(ItemData.ItemType.Bar, 0);
-
-//        // 레벨업
-//        dictSkillLevel[Talk]++;
-
-
-//        // 스킬레벨 판정 및 구현
-//        if (dictSkillLevel[Talk] > 0)
-//        {
-
-//        }
-//    }
 }

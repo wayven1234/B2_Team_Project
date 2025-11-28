@@ -20,7 +20,6 @@ public class TalkAttackEffect : MonoBehaviour
     {
         damageAmount = damage;
 
-        // 1. 스프라이트 설정
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null && effectSprite != null)
         {
@@ -28,7 +27,6 @@ public class TalkAttackEffect : MonoBehaviour
             sr.sortingOrder = ATTACK_EFFECT_ORDER;
         }
 
-        // 2. 투사체 이동 시작
         if (rb != null)
         {
             rb.linearVelocity = direction * PROJECTILE_SPEED;
@@ -45,12 +43,8 @@ public class TalkAttackEffect : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(damageAmount);
-                // 관통 공격이므로 투사체를 파괴하지 않고 다음 적에게 이동
                 Debug.Log($"[TALK HIT - PIERCE] {other.name} took {damageAmount} damage.");
             }
         }
-
-        // 맵 끝 경계 등에 닿았을 때 투사체를 파괴하는 로직이 필요할 수 있습니다.
-        // (예: if (other.CompareTag("Wall")) { Destroy(gameObject); })
     }
 }

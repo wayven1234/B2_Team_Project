@@ -39,7 +39,6 @@ public class BookAttackEffect : MonoBehaviour
 
             float angleToEnemy = Vector2.Angle(attackDirection, directionToTarget);
 
-            // Book 아이템 전용 부채꼴 각도 검사 로직
             if (angleToEnemy <= BOOK_ANGLE / 2f)
             {
                 Enemy enemy = other.GetComponent<Enemy>();

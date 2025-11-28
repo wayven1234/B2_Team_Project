@@ -5,12 +5,10 @@ using System.Linq;
 
 public class InGameManager : MonoBehaviour
 {
-    // 필드를 private으로 변경하고 코드로 찾도록 합니다.
     private GameObject hpLvPanel;
     private GameObject timePanel;
     private GameObject closeButton;
 
-    // 스크립트/슬롯 변수
     private PlayerHealthBar healthBarScript;
     private PlayerLevelBar levelBarScript;
     private Image[] itemImageSlots;
@@ -20,7 +18,6 @@ public class InGameManager : MonoBehaviour
 
     private void Awake()
     {
-        // 1. Persistent Canvas 찾기
         persistentCanvas = FindFirstObjectByType<PersistentPanel>(FindObjectsInactive.Include)?.GetComponent<Canvas>();
         if (persistentCanvas == null)
         {
@@ -28,23 +25,18 @@ public class InGameManager : MonoBehaviour
             return;
         }
 
-        // 2. UI 요소 이름으로 찾기 (Hierarchy 이름을 확인하고 수정)
         hpLvPanel = FindChildRecursive(persistentCanvas.transform, "HPLVPanel");
         timePanel = FindChildRecursive(persistentCanvas.transform, "Time");
         closeButton = FindChildRecursive(persistentCanvas.transform, "CloseButton");
 
-        // 3. UI 스크립트 컴포넌트 찾기
         healthBarScript = FindFirstObjectByType<PlayerHealthBar>(FindObjectsInactive.Include);
         levelBarScript = FindFirstObjectByType<PlayerLevelBar>(FindObjectsInactive.Include);
 
-        // 4. [핵심 수정] 아이템 슬롯 Image 배열 찾기 (ItemPanel -> HealthItem -> Slot 구조 가정)
         GameObject itemPanelContainer = FindChildRecursive(persistentCanvas.transform, "ItemPanel");
 
         if (itemPanelContainer != null)
         {
-            // ItemPanel의 하위 자식들(HealthItem -> Slot)에 있는 모든 Image 컴포넌트를 가져옵니다.
             itemImageSlots = itemPanelContainer.GetComponentsInChildren<Image>(true)
-                                               // ItemPanel 자체나 HealthItem 컨테이너에 Image가 붙어있을 경우 제외합니다.
                                                .Where(img => img.transform.parent.name.Contains("Slot") || img.transform.parent.name.Contains("HealthItem"))
                                                .OrderBy(img => img.name)
                                                .ToArray();
@@ -66,7 +58,6 @@ public class InGameManager : MonoBehaviour
     {
         if (persistentCanvas == null) return;
 
-        // 찾은 UI 요소들을 초기 비활성화 상태로 만듭니다.
         if (hpLvPanel != null) hpLvPanel.SetActive(false);
         if (timePanel != null) timePanel.SetActive(false);
         if (closeButton != null) closeButton.SetActive(false);
@@ -88,7 +79,6 @@ public class InGameManager : MonoBehaviour
         if (timePanel != null) timePanel.SetActive(true);
         if (closeButton != null) closeButton.SetActive(true);
 
-        // PlayerController에게 UI 연결
         if (player != null && healthBarScript != null)
         {
             player.LinkUI(healthBarScript, levelBarScript, itemImageSlots);
@@ -99,7 +89,6 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    // [추가] 재귀적으로 자식 오브젝트를 찾는 헬퍼 함수
     private GameObject FindChildRecursive(Transform parent, string name)
     {
         foreach (Transform child in parent)

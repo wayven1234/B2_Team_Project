@@ -34,7 +34,6 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 매 스테이지 시작 시 킬 카운트 리셋
         ResetKillCount();
 
         UpdateKillCountUI();
