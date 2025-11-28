@@ -48,8 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
+  wallLayerName: Wall
+  wallAttackDistance: 0.6
   maxHealth: 5
-  currentHealth: 35
+  currentHealth: 0
   moveSpeed: 7
   damage: 5
   currentStageType: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6638228133927792578}
   - component: {fileID: 6304696754622911045}
   m_Layer: 7
-  m_Name: MathEnemy
+  m_Name: BossEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2493244873222607213, guid: 9209637609be4c449b61c71018a5eb82, type: 3}
+  m_Sprite: {fileID: -3699697277425479114, guid: ed54f1ca98c60fd4ca64e09dea69a1c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -175,6 +175,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.4540434, y: -2.5174475}
-  m_Size: {x: 5.3881054, y: 8.299646}
+  m_Offset: {x: 1.4474525, y: -1.8209066}
+  m_Size: {x: 8.604328, y: 10.878618}
   m_Direction: 0

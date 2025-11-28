@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
     private PlayerController player;
 
     [SerializeField] private string playerTag = "Player";
+    [SerializeField] private string wallLayerName = "Wall";
+    [SerializeField] private float wallAttackDistance = 0.6f;
 
     public float maxHealth;
     public float currentHealth;
@@ -66,7 +68,7 @@ public class Enemy : MonoBehaviour
         Vector2 finalMoveVector = Vector2.zero;
 
         // Wall 충돌 감지 플래그 (분리 힘 처리 시 사용)
-        bool isAgainstWall = false;
+        // bool isAgainstWall = false;
 
         // 3. Stage Type에 따른 이동 로직 분기
         if (currentStageType == StageData.StageType.Vertical)
@@ -75,18 +77,27 @@ public class Enemy : MonoBehaviour
             float horizontalDirection = Mathf.Sign(toPlayer.x);
             Vector2 directionToTarget = new Vector2(horizontalDirection, 0f);
 
-            int wallLayerMask = LayerMask.GetMask("Wall");
+            int wallLayerMask = LayerMask.GetMask(wallLayerName);
+            float raycastDistance = 0.6f;
+
+            Vector3 rayStart = transform.position;
+            Vector3 rayDirection = directionToTarget;
+            Color rayColor = Color.red;
+
             // Enemy의 크기에 맞게 Raycast 거리를 조정 (예시: 0.6f)
-            RaycastHit2D hit = Physics2D.Raycast(currentPosition, directionToTarget, 0.6f, wallLayerMask);
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition, directionToTarget, wallAttackDistance, wallLayerMask);
 
             if (hit.collider == null)
             {
+                Debug.DrawRay(rayStart, rayDirection * raycastDistance, rayColor);
+
                 finalMoveVector += directionToTarget * moveSpeed;
             }
             else
             {
-                // Wall에 닿기 직전이라면 플래그 설정
-                isAgainstWall = true;
+                Debug.DrawRay(rayStart, rayDirection * hit.distance, rayColor);
+
+                HandleWallAttack(hit.collider.gameObject);
             }
         }
         else // Normal Stage: 기존 전방위 추적 로직
@@ -157,6 +168,29 @@ public class Enemy : MonoBehaviour
 
     //    return separation;
     //}
+
+    /// <summary>
+    /// Raycast로 감지된 Wall 오브젝트에 피해를 줍니다.
+    /// </summary>
+    void HandleWallAttack(GameObject wallObject)
+    {
+        if (attackTimer <= 0f)
+        {
+            // Wall 오브젝트에서 Stage2Wall 컴포넌트를 직접 찾아 TakeDamage 호출
+            Stage2Wall wall = wallObject.GetComponent<Stage2Wall>();
+
+            if (wall != null)
+            {
+                wall.TakeDamage(damage);
+                attackTimer = attackInterval; // 쿨타임 재설정
+                Debug.Log($"{gameObject.name}이 Stage2Wall에 {damage} 피해를 입혔습니다.");
+            }
+            else
+            {
+                Debug.LogError($"Wall 오브젝트 {wallObject.name}에서 Stage2Wall 컴포넌트를 찾을 수 없습니다.");
+            }
+        }
+    }
 
     private void OnTriggerStay2D(Collider2D other)
     {

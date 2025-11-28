@@ -29,4 +29,10 @@ public class StageData
     [Header("Vertical Stage 전용")]
     public float verticalInitialDelay = 5f;
     public float verticalSpawnInterval = 2f;
+
+    [Header("Boss Stage 전용 설정")]
+    public bool isBossStage = false;
+    public GameObject bossPrefab;
+    [Tooltip("보스가 스폰되기까지 대기하는 시간 (2분 30초 = 150초")]
+    public float bossSpawnDelay = 150f;
 }

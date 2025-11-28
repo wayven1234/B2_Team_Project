@@ -63,6 +63,12 @@ public class GameManager : MonoBehaviour
     // 씬 로드 완료 이벤트 핸들러: 다음 스테이지 데이터 및 시간 로드
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "TitleScene")
+        {
+            Debug.Log("GameManager: TitleScene 로드 감지. 모든 DontDestroyOnLoad 오브젝트 파괴를 시작합니다.");
+            CleanupPersistentObjects();
+            return;
+        }
         LoadStageData(currentStageIndex);
         InitializeTimeManager();
 
@@ -78,6 +84,20 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
+    }
+
+    private void CleanupPersistentObjects()
+    {
+        if (EnemyManager.instance != null)
+            Destroy(EnemyManager.instance.gameObject);
+        if (InGameButtonManager.instance != null)
+            Destroy(InGameButtonManager.instance.gameObject);
+
+        PersistentPanel persistentPanel = FindFirstObjectByType<PersistentPanel>();
+        if (persistentPanel != null)
+            Destroy(persistentPanel.gameObject);
+
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -166,6 +186,12 @@ public class GameManager : MonoBehaviour
             case GameState.GameOver:
                 Time.timeScale = 0f;
                 CleanupSceneObjects();
+
+                if (newState == GameState.GameClear && InGameButtonManager.instance != null)
+                    InGameButtonManager.instance.ShowGameClearPanel();
+                else if (newState == GameState.GameOver && InGameButtonManager.instance != null)
+                    InGameButtonManager.instance.ShowGameOverPanel();
+
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f;
