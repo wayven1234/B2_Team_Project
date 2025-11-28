@@ -22,15 +22,32 @@ public class InGameButtonManager : MonoBehaviour
     private GameObject itemSelectionPanel;
     private GameObject itemLevelUpPanel;
     private GameObject stageClearPanel;
+    private GameObject gameOverPanel;
+    private GameObject gameClearPanel;
 
     public string nextSceneName;
 
+    public void StartNextStageFlow()
+    {
+        // 코루틴 중복 실행 방지를 위해 기존 코루틴을 중지하고 시작할 수도 있지만,
+        // 현재는 씬 로드 시 한 번만 호출되므로 바로 시작합니다.
+        StartCoroutine(StageStartFlow());
+    }
+
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        Canvas persistentCanvas = FindFirstObjectByType<PersistentPanel>(FindObjectsInactive.Include)?.GetComponent<Canvas>();
+            Canvas persistentCanvas = FindFirstObjectByType<PersistentPanel>(FindObjectsInactive.Include)?.GetComponent<Canvas>();
         if (persistentCanvas == null)
         {
             Debug.LogError("InGameButtonManager: Persistent Canvas를 찾을 수 없습니다.");
@@ -43,6 +60,8 @@ public class InGameButtonManager : MonoBehaviour
         itemSelectionPanel = FindChildRecursive(persistentCanvas.transform, "ItemSelectionPanel");
         itemLevelUpPanel = FindChildRecursive(persistentCanvas.transform, "ItemLevelUpPanel");
         stageClearPanel = FindChildRecursive(persistentCanvas.transform, "StageClearPanel");
+        gameOverPanel = FindChildRecursive(persistentCanvas.transform, "GameOverPanel");
+        gameClearPanel = FindChildRecursive(persistentCanvas.transform, "GameClearPanel");
 
         if (escPanel != null) escPanel.SetActive(false);
         if (setPanel != null) setPanel.SetActive(false);
@@ -50,8 +69,18 @@ public class InGameButtonManager : MonoBehaviour
         if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
         if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(false);
         if (stageClearPanel != null) stageClearPanel.SetActive(false);
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (gameClearPanel != null) gameClearPanel.SetActive(false);
 
-        StartCoroutine(StageStartFlow());
+        if (GameManager.instance != null && GameManager.instance.currentStageIndex == 1)
+        {
+            StartCoroutine(StageStartFlow());
+        }
+    }
+
+    public void SetPlayerSpawnPoint(Transform newSpawnPoint)
+    {
+        playerSpawnPoint = newSpawnPoint;
     }
 
     private GameObject FindChildRecursive(Transform parent, string name)
@@ -148,7 +177,7 @@ public class InGameButtonManager : MonoBehaviour
             {
                 enemySpawn.enabled = true;
                 // EnemySpawn.Initialize만 여기서 호출하여 Stage Data를 전달합니다.
-                enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
+                // enemySpawn.Initialize(GameManager.instance.GetCurrentStageData());
             }
 
             GameManager.instance.ChangeState(GameState.Playing);
@@ -341,7 +370,7 @@ public class InGameButtonManager : MonoBehaviour
     {
         if (GameManager.instance != null)
         {
-            GameManager.instance.AdvanceToNextStage(nextSceneName);
+            GameManager.instance.AdvanceToNextStageByCurrentIndex();
         }
         else
         {
@@ -358,6 +387,30 @@ public class InGameButtonManager : MonoBehaviour
         else
         {
             Debug.LogError("InGameButtonManager: StageClearPanel을 찾지 못했습니다.");
+        }
+    }
+
+    public void ShowGameOverPanel()
+    {
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("InGameButtonManager: GameOverPanel을 찾지 못했습니다.");
+        }
+    }
+
+    public void ShowGameClearPanel()
+    {
+        if (gameClearPanel != null)
+        {
+            gameClearPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("InGameButtonManager: GameClearPanel을 찾지 못했습니다.");
         }
     }
 }

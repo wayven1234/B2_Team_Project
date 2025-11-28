@@ -11,6 +11,8 @@ TagManager:
   - HealthItem
   - SkillItem
   - StageClearPanel
+  - PlayerSpawnPoint
+  - GameOverPanel
   layers:
   - Default
   - TransparentFX

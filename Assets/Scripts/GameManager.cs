@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     [Header("UI 연결 (Scene 로직에 위임됨)")]
     private GameObject stageClearPanel; // private으로 유지
+    private GameObject gameOverPanel;
+    private GameObject gameClearPanel;
 
     [Header("현재 게임 상태")]
     public GameState currentGameState;
@@ -63,6 +65,18 @@ public class GameManager : MonoBehaviour
     {
         LoadStageData(currentStageIndex);
         InitializeTimeManager();
+
+        Transform spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint")?.transform;
+        if (InGameButtonManager.instance != null && spawnPoint != null)
+        {
+            InGameButtonManager.instance.SetPlayerSpawnPoint(spawnPoint);
+        }
+
+        if (currentStageIndex > 1 && InGameButtonManager.instance != null)
+        {
+            InGameButtonManager.instance.StartNextStageFlow();
+        }
+
         Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
     }
 
@@ -208,12 +222,12 @@ public class GameManager : MonoBehaviour
             ChangeState(GameState.StageClear);
 
             // [수정] Stage Clear Panel을 띄우는 로직을 InGameButtonManager에게 위임
-            InGameButtonManager buttonManager = FindFirstObjectByType<InGameButtonManager>();
+            // InGameButtonManager buttonManager = FindFirstObjectByType<InGameButtonManager>();
 
-            if (buttonManager != null)
+            if (InGameButtonManager.instance != null)
             {
                 // InGameButtonManager의 ShowStageClearPanel 함수를 호출합니다.
-                buttonManager.ShowStageClearPanel();
+                InGameButtonManager.instance.ShowStageClearPanel();
             }
             else
             {
@@ -224,17 +238,25 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Stage Clear Panel에서 다음 스테이지 버튼을 눌렀을 때 호출됩니다.
+    /// 현재 스테이지 인덱스를 기반으로 다음 씬을 계산하여 로드합니다.
     /// </summary>
-    public void AdvanceToNextStage(string nextSceneName)
+    public void AdvanceToNextStageByCurrentIndex()
     {
-        if (currentStageIndex < stageDatabase.stages.Length)
+        // 다음 스테이지 번호 (현재 + 1)
+        int nextStageNumber = currentStageIndex + 1;
+
+        if (nextStageNumber <= stageDatabase.stages.Length)
         {
-            currentStageIndex++; // 스테이지 인덱스 증가
+            // 다음 씬 이름 형식: "Stage2", "Stage3", ...
+            string nextSceneName = "Stage" + nextStageNumber.ToString();
+
+            currentStageIndex = nextStageNumber; // 스테이지 인덱스 증가
             SceneManager.LoadScene(nextSceneName);
+            Debug.Log($"씬 전환 요청: {nextSceneName}");
         }
         else
         {
+            // 최종 스테이지를 이미 클리어했을 때
             Debug.LogWarning("Final stage reached. Cannot advance further.");
         }
     }

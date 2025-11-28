@@ -142,21 +142,21 @@ public class TimeManager : MonoBehaviour
         if (_isTimeOver)
         {
             OnTimeUp?.Invoke();
+            _isStageEndCalled = true;
 
-            if (GameManager.instance.currentStageIndex != 3)
+            if (GameManager.instance.currentStageIndex == 3)
             {
-                if (_playerCnt != null)
-                {
-                    _playerCnt.GameStop();
-                }
-
-                GameManager.instance.HandleStageClear();
-
-                _isStageEndCalled = true; // 중복 호출 방지
+                if (EnemyManager.instance != null)
+                    EnemyManager.instance.CheckClearConditionOnTimeOut();
+                else
+                    Debug.LogError("EnemeyManager 인스턴트를 찾을 수 없습니다! Stage 3 클리어 조건 확인 실패.");
             }
             else
             {
-                Debug.Log("TimeManager: Stage 3 시간 종료. 킬 수 조건 확인 중.");
+                if (_playerCnt != null)
+                    _playerCnt.GameStop();
+
+                GameManager.instance.HandleStageClear();
             }
         }
     }
