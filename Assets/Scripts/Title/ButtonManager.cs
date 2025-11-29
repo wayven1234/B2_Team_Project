@@ -29,6 +29,12 @@ public class ButtonManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (difficultyWindow != null && difficultyWindow.activeSelf)
+            {
+                difficultyWindow.SetActive(false);
+                return;
+            }
+
             if (descriptionPanel != null && descriptionPanel.activeSelf)
             {
                 descriptionPanel.SetActive(false);
@@ -55,6 +61,11 @@ public class ButtonManager : MonoBehaviour
     public void OnStartButtonClick()
     {
         difficultyWindow?.SetActive(true);
+    }
+
+    public void OnDifficultyWindowCloseButtonClick()
+    {
+        difficultyWindow?.SetActive(false);
     }
 
     public void OnGameExButtonClick()
