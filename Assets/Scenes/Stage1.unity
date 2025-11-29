@@ -4790,17 +4790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc16280518971be4da3647a7b207edf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectList:
-  - id: VFX_Player_Heal
-    prefab: {fileID: 6450990467028735698, guid: 9394022962745f749b7175504e7fdd13, type: 3}
-  - id: TalkShotEffect
-    prefab: {fileID: 2247631435929266529, guid: 446d73a2aa6665b4bb762c97fb34ea30, type: 3}
-  - id: BookStartEffect
-    prefab: {fileID: 502567863218377269, guid: 81a5223efd76bf445840927249ddfdbb, type: 3}
-  - id: VFX_Weapon_Bar_Start
-    prefab: {fileID: 1349402484173807985, guid: f6b9b350f71c9b040af41aeddf225837, type: 3}
-  - id: EnemyAttack
-    prefab: {fileID: 8748566495200295411, guid: e11b4bcec2aeec04a867144f22edc653, type: 3}
 --- !u!4 &1121789758
 Transform:
   m_ObjectHideFlags: 0
@@ -7211,7 +7200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366329e8d1496db45bfc19a58d9d9176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KillTargetStage3: 100
+  KillTargetStage3: 1
   killCountText: {fileID: 0}
 --- !u!4 &2056548849
 Transform:
@@ -13322,9 +13311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eb14eafbb584a41aa63c6f7a332b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTimeStage1: 90
-  targetTimeStage2: 120
-  targetTimeStage3: 60
+  targetTimeStage1: 2
+  targetTimeStage2: 2
+  targetTimeStage3: 6
   targetTimeStage4: 300
   _isCountDown: 1
   _gameTime: 0
