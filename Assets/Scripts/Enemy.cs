@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
     [Header("공격 설정")]
     public float attackInterval = 1f;
     private float attackTimer;
+    [SerializeField] private GameObject enemyAttackEffectPrefab;
 
     private Rigidbody2D rb;
 
@@ -110,10 +112,10 @@ public class Enemy : MonoBehaviour
         if (rb != null)
             rb.linearVelocity = finalMoveVector;
     }
-    /// <summary>
-    /// Raycast로 감지된 Wall 오브젝트에 피해를 줍니다.
-    /// </summary>
-    void HandleWallAttack(GameObject wallObject)
+    /// <summary>
+    /// Raycast로 감지된 Wall 오브젝트에 피해를 줍니다.
+    /// </summary>
+    void HandleWallAttack(GameObject wallObject)
     {
         if (attackTimer <= 0f)
         {
@@ -123,6 +125,9 @@ public class Enemy : MonoBehaviour
             {
                 wall.TakeDamage(damage);
                 attackTimer = attackInterval;
+
+                SpawnAttackEffect(transform.position);
+
                 Debug.Log($"{gameObject.name}이 Stage2Wall에 {damage} 피해를 입혔습니다.");
             }
             else
@@ -140,6 +145,8 @@ public class Enemy : MonoBehaviour
             {
                 player.TakeDamage(damage);
                 attackTimer = attackInterval;
+
+                SpawnAttackEffect(player.transform.position);
             }
         }
     }
@@ -167,5 +174,32 @@ public class Enemy : MonoBehaviour
             EnemyManager.instance.EnemyKilled();
 
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Enemy 공격 이펙트를 생성하고 애니메이션을 시작합니다.
+    /// </summary>
+    void SpawnAttackEffect(Vector3 position)
+    {
+        if (enemyAttackEffectPrefab == null)
+        {
+            Debug.LogWarning("EnemyAttackEffect Prefab이 설정되지 않았습니다.");
+            return;
+        }
+
+        GameObject attackEffect = Instantiate(
+        enemyAttackEffectPrefab,
+        position,
+        Quaternion.identity);
+
+        // Enemy의 자식으로 설정하여 Enemy가 움직일 때 따라가게 할 수 있습니다. (선택 사항)
+        // attackEffect.transform.SetParent(this.transform); 
+
+        // 애니메이션 재생 함수 호출
+        EnemyAttackEffect effectScript = attackEffect.GetComponent<EnemyAttackEffect>();
+        if (effectScript != null)
+        {
+            effectScript.PlayAttackAnimation();
+        }
     }
 }

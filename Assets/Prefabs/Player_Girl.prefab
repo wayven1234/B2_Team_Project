@@ -55,6 +55,7 @@ MonoBehaviour:
   girlAnimController: {fileID: 9100000, guid: 2a4313a9bb403f847aae28f992b1c0db, type: 2}
   boyAnimController: {fileID: 9100000, guid: ca7cba2c7c2851347b4dae475a58b294, type: 2}
   itemSprite: {fileID: -6687243199115631265, guid: 75ec0d367b027ec4aa4b410ea08fe9d3, type: 3}
+  healEffectPrefab: {fileID: 6450990467028735698, guid: 9394022962745f749b7175504e7fdd13, type: 3}
   startLevel: 0
   maxLevel: 12
   expOrbsPerLevel: 20

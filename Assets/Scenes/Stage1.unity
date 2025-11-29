@@ -4761,6 +4761,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095427285}
   m_CullTransparentMesh: 1
+--- !u!1 &1121789756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1121789758}
+  - component: {fileID: 1121789757}
+  m_Layer: 0
+  m_Name: -EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1121789757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121789756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc16280518971be4da3647a7b207edf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectList:
+  - id: VFX_Player_Heal
+    prefab: {fileID: 6450990467028735698, guid: 9394022962745f749b7175504e7fdd13, type: 3}
+  - id: TalkShotEffect
+    prefab: {fileID: 2247631435929266529, guid: 446d73a2aa6665b4bb762c97fb34ea30, type: 3}
+  - id: BookStartEffect
+    prefab: {fileID: 502567863218377269, guid: 81a5223efd76bf445840927249ddfdbb, type: 3}
+  - id: VFX_Weapon_Bar_Start
+    prefab: {fileID: 1349402484173807985, guid: f6b9b350f71c9b040af41aeddf225837, type: 3}
+  - id: EnemyAttack
+    prefab: {fileID: 8748566495200295411, guid: e11b4bcec2aeec04a867144f22edc653, type: 3}
+--- !u!4 &1121789758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121789756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162684295
 GameObject:
   m_ObjectHideFlags: 0
@@ -13467,6 +13522,7 @@ SceneRoots:
   - {fileID: 6682678331124906412}
   - {fileID: 1536806767325913585}
   - {fileID: 2056548849}
+  - {fileID: 1121789758}
   - {fileID: 459265030}
   - {fileID: 4349711080900764650}
   - {fileID: 6658747579277983360}

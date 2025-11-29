@@ -8,23 +8,24 @@ public class BookAttackEffect : MonoBehaviour
     private const string ENEMY_TAG = "Enemy";
     private const float BOOK_ANGLE = 90f;
 
-    private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private Vector2 storedAttackDirection;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
-    public void BookSetupAttack(float damage, float range, Sprite effectSprite, Vector2 direction)
+    public void BookSetupAttack(float damage, float range, Vector2 direction)
     {
         damageAmount = damage;
 
         storedAttackDirection = direction;
 
-        if (spriteRenderer != null && effectSprite != null)
+        if (animator != null)
         {
-            spriteRenderer.sprite = effectSprite;
+            // 예: BookAttackEffect의 Animator Controller에 "BookStart"라는 Trigger가 있다면
+            // animator.SetTrigger("BookStart");
         }
     }
 

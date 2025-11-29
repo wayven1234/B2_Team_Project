@@ -1,0 +1,402 @@
+fileFormatVersion: 2
+guid: 2ba48983d0693e64799156e5dc69ebd1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3973261597896217858
+    second: HealthItemEffect_0
+  - first:
+      213: -2902176132796138626
+    second: HealthItemEffect_1
+  - first:
+      213: 167112549457843211
+    second: HealthItemEffect_2
+  - first:
+      213: 3024163799810699852
+    second: HealthItemEffect_3
+  - first:
+      213: -6919804091315335861
+    second: HealthItemEffect_4
+  - first:
+      213: 5671734721862283875
+    second: HealthItemEffect_5
+  - first:
+      213: 4740588752887605209
+    second: HealthItemEffect_6
+  - first:
+      213: -1697853719751799059
+    second: HealthItemEffect_7
+  - first:
+      213: 2149718843277665464
+    second: HealthItemEffect_8
+  - first:
+      213: 4817045096071851131
+    second: HealthItemEffect_9
+  - first:
+      213: 2511637365321664291
+    second: HealthItemEffect_10
+  - first:
+      213: 6734082329419032379
+    second: HealthItemEffect_11
+  - first:
+      213: 1044870282775951889
+    second: HealthItemEffect_12
+  - first:
+      213: -3337347256205717184
+    second: HealthItemEffect_13
+  - first:
+      213: 1843396855944060206
+    second: HealthItemEffect_14
+  - first:
+      213: -5677389093733482059
+    second: HealthItemEffect_15
+  - first:
+      213: 1281107324388344437
+    second: HealthItemEffect_16
+  - first:
+      213: 879479188457549018
+    second: HealthItemEffect_17
+  - first:
+      213: -6965018241493093146
+    second: HealthItemEffect_18
+  - first:
+      213: -2687350053142786766
+    second: HealthItemEffect_19
+  - first:
+      213: 7097869275163267730
+    second: HealthItemEffect_20
+  - first:
+      213: 6782645069713877023
+    second: HealthItemEffect_21
+  - first:
+      213: 9004967808160882065
+    second: HealthItemEffect_22
+  - first:
+      213: -995047021972551495
+    second: HealthItemEffect_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HealthItemEffect_0
+      rect:
+        serializedVersion: 2
+        x: 3620
+        y: 3
+        width: 1080
+        height: 1122
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2051e4e3f5cd32730800000000000000
+      internalID: 3973261597896217858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_3
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 1207
+        width: 928
+        height: 629
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c42ff4604fcf7f920800000000000000
+      internalID: 3024163799810699852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_4
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 1196
+        width: 1090
+        height: 599
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4dcad577dae7ff90800000000000000
+      internalID: -6919804091315335861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_5
+      rect:
+        serializedVersion: 2
+        x: 2081
+        y: 1172
+        width: 1133
+        height: 886
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 362b9dcedac06be40800000000000000
+      internalID: 5671734721862283875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_7
+      rect:
+        serializedVersion: 2
+        x: 3306
+        y: 1168
+        width: 1050
+        height: 886
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dee4e9999030078e0800000000000000
+      internalID: -1697853719751799059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_11
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 39
+        width: 1031
+        height: 935
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b37a14d2334447d50800000000000000
+      internalID: 6734082329419032379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_13
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 18
+        width: 1031
+        height: 944
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 041dbbd3a5c5fa1d0800000000000000
+      internalID: -3337347256205717184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthItemEffect_15
+      rect:
+        serializedVersion: 2
+        x: 2513
+        y: 0
+        width: 1031
+        height: 1123
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b1c65803bcd531b0800000000000000
+      internalID: -5677389093733482059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c1f873553357b7443bb3068459f7d08e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HealthItemEffect_0: 3973261597896217858
+      HealthItemEffect_1: -2902176132796138626
+      HealthItemEffect_10: 2511637365321664291
+      HealthItemEffect_11: 6734082329419032379
+      HealthItemEffect_12: 1044870282775951889
+      HealthItemEffect_13: -3337347256205717184
+      HealthItemEffect_14: 1843396855944060206
+      HealthItemEffect_15: -5677389093733482059
+      HealthItemEffect_16: 1281107324388344437
+      HealthItemEffect_17: 879479188457549018
+      HealthItemEffect_18: -6965018241493093146
+      HealthItemEffect_19: -2687350053142786766
+      HealthItemEffect_2: 167112549457843211
+      HealthItemEffect_20: 7097869275163267730
+      HealthItemEffect_21: 6782645069713877023
+      HealthItemEffect_22: 9004967808160882065
+      HealthItemEffect_23: -995047021972551495
+      HealthItemEffect_3: 3024163799810699852
+      HealthItemEffect_4: -6919804091315335861
+      HealthItemEffect_5: 5671734721862283875
+      HealthItemEffect_6: 4740588752887605209
+      HealthItemEffect_7: -1697853719751799059
+      HealthItemEffect_8: 2149718843277665464
+      HealthItemEffect_9: 4817045096071851131
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,386 @@
+fileFormatVersion: 2
+guid: 13efb0452546ff24ebc181623c16dec3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4416626697166243911
+    second: EnemyEffect_0
+  - first:
+      213: -4703482331621477367
+    second: EnemyEffect_1
+  - first:
+      213: 5797981888699776021
+    second: EnemyEffect_2
+  - first:
+      213: 2289117003416823127
+    second: EnemyEffect_3
+  - first:
+      213: 1237238948326339115
+    second: EnemyEffect_4
+  - first:
+      213: 2041691881554069470
+    second: EnemyEffect_5
+  - first:
+      213: -4883092073821988467
+    second: EnemyEffect_6
+  - first:
+      213: 813012336692960887
+    second: EnemyEffect_7
+  - first:
+      213: -6612800782770967322
+    second: EnemyEffect_8
+  - first:
+      213: -6607271029699036541
+    second: EnemyEffect_9
+  - first:
+      213: 4767771955081213135
+    second: EnemyEffect_10
+  - first:
+      213: -3468184668445566607
+    second: EnemyEffect_11
+  - first:
+      213: 3524045202647420592
+    second: EnemyEffect_12
+  - first:
+      213: 4828909759343490512
+    second: EnemyEffect_13
+  - first:
+      213: -6324173378184608846
+    second: EnemyEffect_14
+  - first:
+      213: 6808590997168261198
+    second: EnemyEffect_15
+  - first:
+      213: 8478154579174985443
+    second: EnemyEffect_16
+  - first:
+      213: 2106251662042627593
+    second: EnemyEffect_17
+  - first:
+      213: 4844942181389640724
+    second: EnemyEffect_18
+  - first:
+      213: -5604558829752420495
+    second: EnemyEffect_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyEffect_3
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 2325
+        width: 454
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75567fd49c394cf10800000000000000
+      internalID: 2289117003416823127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_4
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 2332
+        width: 429
+        height: 375
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b22f441b44e8b2110800000000000000
+      internalID: 1237238948326339115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_5
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 2144
+        width: 841
+        height: 605
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed744dce2fb855c10800000000000000
+      internalID: 2041691881554069470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_7
+      rect:
+        serializedVersion: 2
+        x: 2440
+        y: 1886
+        width: 1093
+        height: 970
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77e1896a966684b00800000000000000
+      internalID: 813012336692960887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_11
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 302
+        width: 1253
+        height: 1127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17998d55b688edfc0800000000000000
+      internalID: -3468184668445566607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_12
+      rect:
+        serializedVersion: 2
+        x: 1639
+        y: 106
+        width: 1687
+        height: 1467
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0be083cc07ce7e030800000000000000
+      internalID: 3524045202647420592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_13
+      rect:
+        serializedVersion: 2
+        x: 3394
+        y: 45
+        width: 1804
+        height: 1565
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d5f51a67dbb30340800000000000000
+      internalID: 4828909759343490512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyEffect_14
+      rect:
+        serializedVersion: 2
+        x: 5471
+        y: 22
+        width: 1856
+        height: 1633
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b30357c1d50c38a0800000000000000
+      internalID: -6324173378184608846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: fcfb6ab5a7d77e34c8b4dba0c744abee
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EnemyEffect_0: -4416626697166243911
+      EnemyEffect_1: -4703482331621477367
+      EnemyEffect_10: 4767771955081213135
+      EnemyEffect_11: -3468184668445566607
+      EnemyEffect_12: 3524045202647420592
+      EnemyEffect_13: 4828909759343490512
+      EnemyEffect_14: -6324173378184608846
+      EnemyEffect_15: 6808590997168261198
+      EnemyEffect_16: 8478154579174985443
+      EnemyEffect_17: 2106251662042627593
+      EnemyEffect_18: 4844942181389640724
+      EnemyEffect_19: -5604558829752420495
+      EnemyEffect_2: 5797981888699776021
+      EnemyEffect_3: 2289117003416823127
+      EnemyEffect_4: 1237238948326339115
+      EnemyEffect_5: 2041691881554069470
+      EnemyEffect_6: -4883092073821988467
+      EnemyEffect_7: 813012336692960887
+      EnemyEffect_8: -6612800782770967322
+      EnemyEffect_9: -6607271029699036541
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

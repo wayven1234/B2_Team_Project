@@ -21,6 +21,8 @@ public class Weapon : MonoBehaviour
     private const float BOOK_ANGLE = 90f;
     private const string ENEMY_TAG = "Enemy";
 
+    private Vector2 lastHorizontalDirection = Vector2.right;
+
     public void Init(ItemData data)
     {
         currentData = data;
@@ -86,7 +88,7 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-             attackDirection = player.GetLastMoveDirection();
+            attackDirection = player.GetLastMoveDirection();
         }
 
         if (bookPrefab != null)
@@ -96,20 +98,18 @@ public class Weapon : MonoBehaviour
             Vector3 spawnPositon = player.transform.position;
 
             GameObject effect = Instantiate(
-                bookPrefab,
-                spawnPositon,
-                Quaternion.Euler(0, 0, rotationZ - 90));
+              bookPrefab,
+              spawnPositon,
+              Quaternion.Euler(0, 0, rotationZ - 90));
 
             BookAttackEffect bookEffectScript = effect.GetComponent<BookAttackEffect>();
             if (bookEffectScript != null)
             {
                 float finalDamage = currentDamage + player.GetSkillDamageBonus();
 
-                Sprite bookSprite = currentData.icon;
-
                 if (bookEffectScript != null)
                 {
-                    bookEffectScript.BookSetupAttack(finalDamage, range, bookSprite, attackDirection);
+                    bookEffectScript.BookSetupAttack(finalDamage, range, attackDirection);
                 }
             }
 
@@ -167,7 +167,7 @@ public class Weapon : MonoBehaviour
         }
 
         float currentRange = currentData.baseRange +
-                             (currentData.rangeIncreasePerLevel * currentData.level);
+                  (currentData.rangeIncreasePerLevel * currentData.level);
         currentRange = Mathf.Min(currentRange, currentData.maxRange);
 
         const float PROJECTILE_SPEED = 5f;
@@ -180,17 +180,16 @@ public class Weapon : MonoBehaviour
             Vector3 spawnPosition = player.transform.position;
 
             GameObject projectile = Instantiate(
-                talkPrefab,
-                spawnPosition,
-                Quaternion.Euler(0, 0, rotationZ + 90));
+              talkPrefab,
+              spawnPosition,
+              Quaternion.Euler(0, 0, rotationZ + 180));
 
             TalkAttackEffect talkEffectScript = projectile.GetComponent<TalkAttackEffect>();
             if (talkEffectScript != null)
             {
                 float finalDamage = currentDamage + player.GetSkillDamageBonus();
-                Sprite talkSprite = currentData.icon;
 
-                talkEffectScript.TalkSetupAttack(finalDamage, talkSprite, attackDirection, calculatedLifetime);
+                talkEffectScript.TalkSetupAttack(finalDamage, attackDirection, calculatedLifetime);
             }
         }
         else
@@ -202,25 +201,46 @@ public class Weapon : MonoBehaviour
         PlayerController player = PlayerController.instance;
         if (player == null) return;
 
-        const float BAR_RANGE = 5f;
+        const float BAR_RANGE = 25f;
         const float BAR_LIFETIME = 0.3f;
+
+        Vector2 rawMoveDirection = player.GetLastMoveDirection();
+
+        Vector2 attackDirection;
+
+        if (Mathf.Abs(rawMoveDirection.x) > 0.01f)
+        {
+            lastHorizontalDirection = new Vector2(Mathf.Sign(rawMoveDirection.x), 0).normalized;
+
+            attackDirection = lastHorizontalDirection;
+        }
+        else
+        {
+            attackDirection = lastHorizontalDirection;
+        }
 
         if (barPrefab != null)
         {
-            Vector3 spawnPosition = player.transform.position;
+            Vector3 spawnPosition = player.transform.position +
+                                (Vector3)attackDirection;
+
+            float rotationZ = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+
+            float rotationOffset = -180f;
+
+            float finalRotationZ = rotationZ + rotationOffset;
 
             GameObject effect = Instantiate(
-                barPrefab,
-                spawnPosition,
-                Quaternion.identity);
+          barPrefab,
+          spawnPosition,
+          Quaternion.Euler(0, 0, finalRotationZ));
 
             BarAttackEffect barEffectScript = effect.GetComponent<BarAttackEffect>();
             if (barEffectScript != null)
             {
                 float finalDamage = currentDamage + player.GetSkillDamageBonus();
-                Sprite barSprite = currentData.icon;
 
-                barEffectScript.BarSetupAttack(finalDamage, barSprite);
+                barEffectScript.BarSetupAttack(finalDamage);
 
                 CircleCollider2D collider = effect.GetComponent<CircleCollider2D>();
                 if (collider != null)

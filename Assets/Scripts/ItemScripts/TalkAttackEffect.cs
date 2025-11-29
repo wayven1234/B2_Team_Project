@@ -8,28 +8,28 @@ public class TalkAttackEffect : MonoBehaviour
     private const float PROJECTILE_SPEED = 5f;
 
     private Rigidbody2D rb;
+    private Animator animator;
 
     private const int ATTACK_EFFECT_ORDER = 92;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
-    public void TalkSetupAttack(float damage, Sprite effectSprite, Vector2 direction, float lifetime)
+    public void TalkSetupAttack(float damage, Vector2 direction, float lifetime)
     {
         damageAmount = damage;
-
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr != null && effectSprite != null)
-        {
-            sr.sprite = effectSprite;
-            sr.sortingOrder = ATTACK_EFFECT_ORDER;
-        }
 
         if (rb != null)
         {
             rb.linearVelocity = direction * PROJECTILE_SPEED;
+        }
+
+        if (animator != null)
+        {
+            animator.SetTrigger("StartAttack");
         }
 
         Destroy(gameObject, lifetime);

@@ -1,0 +1,358 @@
+fileFormatVersion: 2
+guid: d0dd4086e28839149ab71f0298445ba6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2730258491217936608
+    second: BarEffect_0
+  - first:
+      213: 8152775040032759901
+    second: BarEffect_1
+  - first:
+      213: 7148183133024717645
+    second: BarEffect_2
+  - first:
+      213: -9018408911526948342
+    second: BarEffect_3
+  - first:
+      213: -301723326186950754
+    second: BarEffect_4
+  - first:
+      213: -1863029772662256479
+    second: BarEffect_5
+  - first:
+      213: 8814289724795702571
+    second: BarEffect_6
+  - first:
+      213: -6616023492035687199
+    second: BarEffect_7
+  - first:
+      213: 6325086957896778716
+    second: BarEffect_8
+  - first:
+      213: 7600108610886733166
+    second: BarEffect_9
+  - first:
+      213: -1458930788064042367
+    second: BarEffect_10
+  - first:
+      213: 3978632404030022933
+    second: BarEffect_11
+  - first:
+      213: 6205222578706392220
+    second: BarEffect_12
+  - first:
+      213: 992905533805674824
+    second: BarEffect_13
+  - first:
+      213: 4576214400513155709
+    second: BarEffect_14
+  - first:
+      213: -3812523989405473650
+    second: BarEffect_15
+  - first:
+      213: -5500893287287808165
+    second: BarEffect_16
+  - first:
+      213: 4391070957202216495
+    second: BarEffect_17
+  - first:
+      213: 2993816226562823947
+    second: BarEffect_18
+  - first:
+      213: 2131922970297745185
+    second: BarEffect_19
+  - first:
+      213: 4465859746417793535
+    second: BarEffect_20
+  - first:
+      213: -813682784756532799
+    second: BarEffect_21
+  - first:
+      213: -8082887793377306948
+    second: BarEffect_22
+  - first:
+      213: -1060757719130418979
+    second: BarEffect_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BarEffect_0
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 2030
+        width: 628
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02ff5f52e5c2c1ad0800000000000000
+      internalID: -2730258491217936608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BarEffect_1
+      rect:
+        serializedVersion: 2
+        x: 1459
+        y: 1665
+        width: 1548
+        height: 517
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d50e2d224b9742170800000000000000
+      internalID: 8152775040032759901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BarEffect_2
+      rect:
+        serializedVersion: 2
+        x: 3174
+        y: 1091
+        width: 847
+        height: 1054
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4b8061dfa2733360800000000000000
+      internalID: 7148183133024717645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BarEffect_5
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1912
+        width: 430
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ac4d72ea403526e0800000000000000
+      internalID: -1863029772662256479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BarEffect_16
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 0
+        width: 1554
+        height: 1136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f11ef33b6e8a3b0800000000000000
+      internalID: -5500893287287808165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BarEffect_23
+      rect:
+        serializedVersion: 2
+        x: 1729
+        y: 0
+        width: 1814
+        height: 643
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd05a7e797e6741f0800000000000000
+      internalID: -1060757719130418979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 4cc76bf851b1a5b469e374835f85f727
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BarEffect_0: -2730258491217936608
+      BarEffect_1: 8152775040032759901
+      BarEffect_10: -1458930788064042367
+      BarEffect_11: 3978632404030022933
+      BarEffect_12: 6205222578706392220
+      BarEffect_13: 992905533805674824
+      BarEffect_14: 4576214400513155709
+      BarEffect_15: -3812523989405473650
+      BarEffect_16: -5500893287287808165
+      BarEffect_17: 4391070957202216495
+      BarEffect_18: 2993816226562823947
+      BarEffect_19: 2131922970297745185
+      BarEffect_2: 7148183133024717645
+      BarEffect_20: 4465859746417793535
+      BarEffect_21: -813682784756532799
+      BarEffect_22: -8082887793377306948
+      BarEffect_23: -1060757719130418979
+      BarEffect_3: -9018408911526948342
+      BarEffect_4: -301723326186950754
+      BarEffect_5: -1863029772662256479
+      BarEffect_6: 8814289724795702571
+      BarEffect_7: -6616023492035687199
+      BarEffect_8: 6325086957896778716
+      BarEffect_9: 7600108610886733166
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

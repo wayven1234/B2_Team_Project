@@ -50,15 +50,16 @@ MonoBehaviour:
   playerTag: Player
   wallLayerName: Wall
   wallAttackDistance: 0.6
-  maxHealth: 5
+  maxHealth: 90
   currentHealth: 0
-  moveSpeed: 3.5
+  moveSpeed: 1.8
   damage: 15
   currentStageType: 0
   stoppingDistance: 0.5
   separationRadius: 0.5
   separationForce: 1
   attackInterval: 1
+  enemyAttackEffectPrefab: {fileID: 8748566495200295411, guid: e11b4bcec2aeec04a867144f22edc653, type: 3}
 --- !u!212 &8940202964230228456
 SpriteRenderer:
   m_ObjectHideFlags: 0
