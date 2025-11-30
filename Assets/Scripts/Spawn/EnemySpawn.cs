@@ -121,6 +121,10 @@ public class EnemySpawn : MonoBehaviour
     /// </summary>
     void SpawnBoss(GameObject bossToSpawn)
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayBGM(BGMType.Boss, forceRestart: true, useFade: true);
+        }
         if (mapBoundary == null)
         {
             Debug.LogError("Boss Spawn Failed: mapBoundary is null.");

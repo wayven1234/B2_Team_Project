@@ -75,6 +75,10 @@ public class Weapon : MonoBehaviour
 
     void BookAttack(float range, float angle)
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.BookAttack);
+        }
         PlayerController player = PlayerController.instance;
         if (player == null) return;
 
@@ -198,6 +202,10 @@ public class Weapon : MonoBehaviour
 
     void BarAttack()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.BarAttack);
+        }
         PlayerController player = PlayerController.instance;
         if (player == null) return;
 

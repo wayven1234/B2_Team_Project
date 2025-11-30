@@ -43,6 +43,10 @@ public class ItemPrefab : MonoBehaviour
 
     public void OnClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         PlayerController playerCnt = PlayerController.instance;
 
         if (playerCnt == null)

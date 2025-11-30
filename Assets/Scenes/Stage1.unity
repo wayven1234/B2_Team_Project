@@ -1174,7 +1174,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1121789759}
+        m_TargetAssemblyTypeName: AudioUIManager, Assembly-CSharp
+        m_MethodName: SetBGMVolume
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &436132265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,7 +1409,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1121789759}
+        m_TargetAssemblyTypeName: AudioUIManager, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &454545018
 GameObject:
   m_ObjectHideFlags: 0
@@ -4770,26 +4794,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1121789758}
-  - component: {fileID: 1121789757}
+  - component: {fileID: 1121789759}
   m_Layer: 0
-  m_Name: -EffectManager
+  m_Name: -AudioUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1121789757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121789756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc16280518971be4da3647a7b207edf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1121789758
 Transform:
   m_ObjectHideFlags: 0
@@ -4805,6 +4817,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1121789759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121789756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2621b92f7f6033b4b8c8c622ee55c5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 3dd44981b67edb94698f0042a54f2577, type: 2}
+  masterSlider: {fileID: 442608153}
+  bgmSlider: {fileID: 433375772}
+  sfxSlider: {fileID: 1583996234}
 --- !u!1 &1162684295
 GameObject:
   m_ObjectHideFlags: 0
@@ -5792,7 +5820,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1121789759}
+        m_TargetAssemblyTypeName: AudioUIManager, Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1698211665
 GameObject:
   m_ObjectHideFlags: 0
@@ -6372,7 +6412,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 739512147789517516}
         m_TargetAssemblyTypeName: InGameButtonManager, Assembly-CSharp
         m_MethodName: OnSetExitButtonClick
         m_Mode: 1
@@ -12285,14 +12325,14 @@ RectTransform:
   - {fileID: 7019825082999765432}
   - {fileID: 5912799270138763286}
   - {fileID: 7541061118509436487}
+  - {fileID: 4911267754033139420}
+  - {fileID: 1805119539}
+  - {fileID: 1005752137}
   - {fileID: 4689840693824997989}
   - {fileID: 2066704350}
   - {fileID: 2288862374169694452}
   - {fileID: 4926657925875452004}
   - {fileID: 2062347488}
-  - {fileID: 4911267754033139420}
-  - {fileID: 1805119539}
-  - {fileID: 1005752137}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

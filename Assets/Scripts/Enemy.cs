@@ -144,6 +144,10 @@ public class Enemy : MonoBehaviour
             if (player != null && attackTimer <= 0f)
             {
                 player.TakeDamage(damage);
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlaySFX(SFXType.EnemyAttack);
+                }
                 attackTimer = attackInterval;
 
                 SpawnAttackEffect(player.transform.position);

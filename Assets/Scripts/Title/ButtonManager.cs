@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -60,26 +61,46 @@ public class ButtonManager : MonoBehaviour
 
     public void OnStartButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         difficultyWindow?.SetActive(true);
     }
 
     public void OnDifficultyWindowCloseButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         difficultyWindow?.SetActive(false);
     }
 
     public void OnGameExButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         descriptionPanel?.SetActive(true);
     }
     
     public void OnSetButton()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         setPanel?.SetActive(true);
     }
 
     public void OnExitButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
@@ -89,39 +110,67 @@ public class ButtonManager : MonoBehaviour
 
     public void OnSetExitButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         setPanel?.SetActive(false);
     }
 
     public void OnNomalButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         SceneManager.LoadScene("Story");
     }
 
     public void OnNextButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         firstWindow?.SetActive(false);
         secondWindow?.SetActive(true);
     }
 
     public void OnBackButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         firstWindow?.SetActive(true);
         secondWindow?.SetActive(false);
     }
 
     public void OnMainButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         SceneManager.LoadScene("TitleScene");
     }
 
     public void OnReplayButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
 
     public void OnGameExitButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
 #if UNITY_EDITOR
         // 유니티 에디터에서 Play 모드 종료
         EditorApplication.isPlaying = false;
@@ -133,11 +182,19 @@ public class ButtonManager : MonoBehaviour
 
     public void OnCloseButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         escPanel.SetActive(false);
     }
 
     public void OnSetButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         escPanel.SetActive(false);
         setPanel.SetActive(true);
     }

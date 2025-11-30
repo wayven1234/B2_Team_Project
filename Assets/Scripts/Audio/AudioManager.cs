@@ -9,9 +9,9 @@ using static UnityEngine.Rendering.DebugUI;
 using System.Xml.Serialization;
 
 
-public enum BGMType { Title, Battle, Boss, Victory, GameOver }
+public enum BGMType { Title, Stage1, Stage2, Stage3, Stage4, Boss }
 
-public enum SFXType { UIButton, SummonButton, knightAttack, SwordknightAttack, ArcherAttack, CastleAttack, BaseAttack, BossAttack }
+public enum SFXType { ButtonClick, BookAttack, BarAttack, TalkAttack, EnemyAttack, CharacterWalk }
 
 [System.Serializable]
 public class BGMClipData
@@ -140,18 +140,35 @@ public class AudioManager : MonoBehaviour
 
         lastSceneName = scene.name;
 
+        BGMType newBGM = BGMType.Title; // 기본값 설정
+
         switch (scene.name)
         {
-            case "StartScene":
-                ;
-                PlayBGM(BGMType.Title, forceRestart: true);
+            case "TitleScene":
+                newBGM = BGMType.Title;
                 break;
 
-            case "InGameScene":
-                ;
-                PlayBGM(BGMType.Battle, forceRestart: true);
+            case "Stage1":
+                newBGM = BGMType.Stage1;
                 break;
+
+            case "Stage2":
+                newBGM = BGMType.Stage2;
+                break;
+
+            case "Stage3":
+                newBGM = BGMType.Stage3;
+                break;
+
+            case "Stage4":
+                newBGM = BGMType.Stage4;
+                break;
+
+            default:
+                return;
         }
+
+        PlayBGM(newBGM, forceRestart: true);
     }
 
 
@@ -181,15 +198,16 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (useFade && BGMPlayer.isPlaying) // 페이드 효과를 사용하고, 현재 BGM이 재생 중일 때만 페이드 인 아웃 효과 적용
+        if (useFade && BGMPlayer.isPlaying && BGMPlayer.clip != newClipData.clip) // 페이드 효과 사용, 재생 중, 그리고 클립이 다를 때만
         {
+            StopAllCoroutines();
             StartCoroutine(FadeInOutRoutine(newClipData));
         }
         else // BGM이 재생중이 아니거나, 페이드 효과를 사용하지 않을 경우 즉시 교체
         {
             BGMPlayer.Stop();
             BGMPlayer.clip = newClipData.clip;
-            BGMPlayer.volume = 0f;
+            BGMPlayer.volume = newClipData.volume;
             BGMPlayer.Play();
         }
 

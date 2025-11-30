@@ -11,6 +11,8 @@ public class AudioUIManager : MonoBehaviour
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
 
+    private const float MIN_DB = -80f;
+
     public void Start()
     {
         float master = PlayerPrefs.GetFloat("Master", 0.50005f);
@@ -32,21 +34,51 @@ public class AudioUIManager : MonoBehaviour
 
     public void SetMasterVolume(float value)
     {
-        audioMixer.SetFloat("Master", Mathf.Log10(value) * 20);
+        float db;
+        if (value <= 0.0001f)
+        {
+            db = MIN_DB;
+        }
+        else
+        {
+            db = Mathf.Log10(value) * 20;
+        }
+
+        audioMixer.SetFloat("Master", db);
         PlayerPrefs.SetFloat("Master", value);
-        PlayerPrefs.Save(); // 명시적 저장
+        PlayerPrefs.Save();
     }
 
     public void SetBGMVolume(float value)
     {
-        audioMixer.SetFloat("BGM", Mathf.Log10(value) * 20);
+        float db;
+        if (value <= 0.0001f)
+        {
+            db = MIN_DB;
+        }
+        else
+        {
+            db = Mathf.Log10(value) * 20;
+        }
+
+        audioMixer.SetFloat("BGM", db);
         PlayerPrefs.SetFloat("BGM", value);
         PlayerPrefs.Save();
     }
 
     public void SetSFXVolume(float value)
     {
-        audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20);
+        float db;
+        if (value <= 0.0001f)
+        {
+            db = MIN_DB;
+        }
+        else
+        {
+            db = Mathf.Log10(value) * 20;
+        }
+
+        audioMixer.SetFloat("SFX", db);
         PlayerPrefs.SetFloat("SFX", value);
         PlayerPrefs.Save();
     }

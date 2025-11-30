@@ -187,6 +187,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnMainButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         Time.timeScale = 1f;
         selectedPlayerPrefab = null;
         SceneManager.LoadScene("TitleScene");
@@ -194,6 +198,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnReplayButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (GameManager.instance != null)
         {
             GameManager.instance.StartRetryFlow();
@@ -208,6 +216,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnGameExitButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
@@ -217,6 +229,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnSetButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (escPanel != null) escPanel.SetActive(false);
         if (setPanel != null) setPanel.SetActive(true);
         GameManager.instance.ChangeState(GameState.Paused);
@@ -224,16 +240,28 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnCloseButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (escPanel != null) escPanel.SetActive(false);
     }
 
     public void OnSetExitButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (setPanel != null) setPanel.SetActive(false);
     }
 
     public void OnGirlCharacterSelect()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         selectedPlayerPrefab = girlPlayerPrefab;
         StartCoroutine(SpawnPlayerCoroutine(girlPlayerPrefab));
 
@@ -247,6 +275,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnBoyCharacterSelect()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         selectedPlayerPrefab = boyPlayerPrefab;
         StartCoroutine(SpawnPlayerCoroutine(boyPlayerPrefab));
 
@@ -327,6 +359,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnItemButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         PlayerController playerCnt = Object.FindFirstObjectByType<PlayerController>();
 
         if (playerCnt == null)
@@ -344,6 +380,10 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnLevelUpPanelButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(true);
         if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
         GameManager.instance.ChangeState(GameState.Paused);
@@ -351,17 +391,29 @@ public class InGameButtonManager : MonoBehaviour
 
     public void OnLevelUpPanelCloseButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (itemLevelUpPanel != null) itemLevelUpPanel.SetActive(false);
         if (itemSelectionPanel != null) itemSelectionPanel.SetActive(true);
     }
 
     public void OnItemSelectionPanelCloseButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (itemSelectionPanel != null) itemSelectionPanel.SetActive(false);
     }
 
     public void OnNextStageButtonClick()
     {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
         if (GameManager.instance != null)
         {
             GameManager.instance.AdvanceToNextStageByCurrentIndex();
