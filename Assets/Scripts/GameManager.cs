@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
 
                 if (enemySpawn != null)
                 {
+                    Debug.Log("asdfasdfasdfasdfasdfasdf");
                     enemySpawn.Initialize(currentStageData, currentStageIndex);
                     enemySpawn.StartSpawning();
                 }
@@ -208,7 +209,7 @@ public class GameManager : MonoBehaviour
         EnemySpawn enemySpawn = FindFirstObjectByType<EnemySpawn>();
         if (enemySpawn != null)
         {
-            enemySpawn.StopAllCoroutines();
+            //enemySpawn.StopAllCoroutines();
             enemySpawn.enabled = false;
         }
 
@@ -296,6 +297,16 @@ public class GameManager : MonoBehaviour
     public void StartRetryFlow()
     {
         RestoreCheckpointData();
+
+        if (currentStageIndex == 1)
+        {
+            InGameButtonManager.ClearSelectedPlayerPrefab();
+            LevelUpPanelLogic.ResetOpenCount(); // 추가로 LevelUpPanelLogic 카운트도 초기화합니다.
+
+            // currentStageIndex는 이미 1이므로 변경할 필요는 없으나,
+            // 혹시 모르니 Stage 1 데이터 재로드를 명시할 수도 있습니다.
+            // LoadStageData(1); 
+        }
 
         Time.timeScale = 1f;
         Scene currentScene = SceneManager.GetActiveScene();

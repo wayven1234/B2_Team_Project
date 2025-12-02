@@ -14,12 +14,25 @@ public class EnemySpawn : MonoBehaviour
     private Bounds mapBounds;
     private int currentStageIndex = -1;
 
+    private bool isBossSpawned = false;
+
+    private bool isComplete = false;
+
     public void Initialize(StageData stageData, int stageIndex)
     {
         if (GameManager.instance == null) return;
 
+        if (isComplete)
+        {
+            return;
+        }
+        isComplete = true;
+
+
         currentStageData = stageData;
         currentStageIndex = stageIndex;
+
+        isBossSpawned = false;
 
         if (currentStageData == null)
         {
@@ -73,8 +86,15 @@ public class EnemySpawn : MonoBehaviour
 
             if (currentStageIndex == 4 && currentStageData.bossEnemyPrefab != null)
             {
-                Debug.Log($"Stage 4 (번호 {currentStageIndex})입니다. 보스 스폰 타이머 ({currentStageData.bossSpawnTime}s)를 시작합니다.");
-                StartCoroutine(BossSpawnTimer(currentStageData.bossSpawnTime));
+                if (!isBossSpawned)
+                {
+                    Debug.Log($"Stage 4 (번호 {currentStageIndex})입니다. 보스 스폰 타이머 ({currentStageData.bossSpawnTime}s)를 시작합니다.");
+                    StartCoroutine(BossSpawnTimer(currentStageData.bossSpawnTime));
+                }
+                else
+                {
+                    Debug.Log("Stage 4: 보스는 이미 스폰되었거나 타이머가 실행 중입니다. 타이머 시작 건너뜀.");
+                }
             }
         }
         else
@@ -99,7 +119,8 @@ public class EnemySpawn : MonoBehaviour
     /// </summary>
     IEnumerator BossSpawnTimer(float delay)
     {
-        if (currentStageData.bossEnemyPrefab == null) yield break;
+        if (currentStageData.bossEnemyPrefab == null || isBossSpawned) yield break;
+        isBossSpawned = true;
 
         Debug.Log($"BossSpawnTimer: 총 {delay}s 후에 보스 스폰 예정.");
 
@@ -114,6 +135,10 @@ public class EnemySpawn : MonoBehaviour
         }
 
         SpawnBoss(currentStageData.bossEnemyPrefab);
+        
+        Debug.Log("Boss Spawned. BossSpawnTimer 종료.");
+
+        yield break;
     }
 
     /// <summary>
@@ -162,6 +187,22 @@ public class EnemySpawn : MonoBehaviour
 
             yield return new WaitForSeconds(interval);
         }
+    }
+
+    /// <summary>
+    /// 반복되는 일반 적 스폰 루프만 중지합니다. BossSpawnTimer에는 영향을 주지 않습니다.
+    /// </summary>
+    public void StopSpawnLoop()
+    {
+        // SpawnLoop 코루틴을 추적하는 변수를 사용하여 해당 코루틴만 중지할 수도 있지만,
+        // 현재는 StopAllCoroutines()이 모든 것을 멈추므로,
+        // BossSpawnTimer가 실행 중일 때는 StopAllCoroutines()을 호출하지 않도록
+        // GameManager에서 제어하는 것이 더 간단합니다.
+
+        // 이 메서드에서는 안전을 위해 StopAllCoroutines()을 호출하지 않거나
+        // SpawnLoop 코루틴만 StopCoroutine()으로 중단해야 합니다.
+
+        // *현재 구조에서는 2번 해결책이 더 간단하므로, 2번 해결책을 사용하세요.*
     }
 
     void SpawnEnemy()

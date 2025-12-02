@@ -169,6 +169,14 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        if (GameManager.instance != null && GameManager.instance.currentStageIndex == 4 && gameObject.name.Contains("BossEnemy"))
+        {
+            if (PlayerController.instance != null)
+            {
+                PlayerController.instance.GameClear();
+            }
+        }
+
         if (PlayerController.instance != null)
         {
             PlayerController.instance.GainExperience();

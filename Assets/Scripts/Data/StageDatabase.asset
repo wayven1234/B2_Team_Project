@@ -68,4 +68,4 @@ MonoBehaviour:
     verticalInitialDelay: 5
     verticalSpawnInterval: 2.5
     bossEnemyPrefab: {fileID: 3538228656762564026, guid: 54474dd295686be49838cd780d4ebfa4, type: 3}
-    bossSpawnTime: 14
+    bossSpawnTime: 150

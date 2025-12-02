@@ -31,13 +31,15 @@ public class HealthItemSpawn : MonoBehaviour
 
         currentStageType = stageData.stageType;
 
-        if (currentStageType == StageData.StageType.Normal)
+        if (mapBoundary != null)
         {
-            if (mapBoundary == null) return;
-
             mapBounds = mapBoundary.bounds;
-
+            // 모든 스테이지에서 스폰을 시도합니다.
             StartCoroutine(SpawnController());
+        }
+        else
+        {
+            Debug.LogError("mapBoundary가 HealthItemSpawn에 할당되지 않았습니다. 아이템 스폰이 불가능합니다.");
         }
     }
 

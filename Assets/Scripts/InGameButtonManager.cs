@@ -314,6 +314,17 @@ public class InGameButtonManager : MonoBehaviour
 
         if (PlayerController.instance != null)
         {
+            InGameManager inGameManager = FindFirstObjectByType<InGameManager>(FindObjectsInactive.Include);
+            if (inGameManager != null)
+            {
+                inGameManager.LinkUIToPlayer();
+                Debug.Log("InGameButtonManager: InGameManager를 통해 UI 연결 강제 호출.");
+            }
+            else
+            {
+                Debug.LogError("InGameManager를 찾을 수 없어 UI 연결을 할 수 없습니다.");
+            }
+
             ItemPrefab[] itemPrefabsInScene = FindObjectsByType<ItemPrefab>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             ItemData[] allItemData = itemPrefabsInScene
@@ -478,5 +489,11 @@ public class InGameButtonManager : MonoBehaviour
         }
 
         StartCoroutine(StageStartFlow());
+    }
+
+    public static void ClearSelectedPlayerPrefab()
+    {
+        selectedPlayerPrefab = null;
+        Debug.Log("InGameButtonManager: selectedPlayerPrefab 초기화 완료.");
     }
 }

@@ -62,32 +62,56 @@ public class InGameManager : MonoBehaviour
         if (timePanel != null) timePanel.SetActive(false);
         if (closeButton != null) closeButton.SetActive(false);
 
-        StartCoroutine(InitializeUI());
+        //StartCoroutine(InitializeUI());
+
+        // InGameButtonManager가 PlayerController 스폰 후 PlayerController.UpdateUIFromData()를 호출할 때
+        // PlayerController가 LinkUI를 스스로 호출하도록 Start()에 추가해 봅니다.
+        if (PlayerController.instance != null)
+        {
+            LinkUIToPlayer();
+        }
     }
 
-    IEnumerator InitializeUI()
+    public void LinkUIToPlayer()
     {
-        while (PlayerController.instance == null)
+        if (PlayerController.instance != null && healthBarScript != null)
         {
-            yield return null;
-        }
+            PlayerController.instance.LinkUI(healthBarScript, levelBarScript, itemImageSlots);
 
-        PlayerController player = PlayerController.instance;
-
-        // UI 활성화
-        if (hpLvPanel != null) hpLvPanel.SetActive(true);
-        if (timePanel != null) timePanel.SetActive(true);
-        if (closeButton != null) closeButton.SetActive(true);
-
-        if (player != null && healthBarScript != null)
-        {
-            player.LinkUI(healthBarScript, levelBarScript, itemImageSlots);
+            // UI 활성화 (이동)
+            if (hpLvPanel != null) hpLvPanel.SetActive(true);
+            if (timePanel != null) timePanel.SetActive(true);
+            if (closeButton != null) closeButton.SetActive(true);
         }
         else
         {
-            Debug.LogError("InGameManager: Player 또는 UI 스크립트를 찾지 못했습니다");
+            Debug.LogError("InGameManager: Player 또는 UI 스크립트를 찾지 못했습니다 (LinkUIToPlayer).");
         }
     }
+
+    //IEnumerator InitializeUI()
+    //{
+    //    while (PlayerController.instance == null)
+    //    {
+    //        yield return null;
+    //    }
+
+    //    PlayerController player = PlayerController.instance;
+
+    //    // UI 활성화
+    //    if (hpLvPanel != null) hpLvPanel.SetActive(true);
+    //    if (timePanel != null) timePanel.SetActive(true);
+    //    if (closeButton != null) closeButton.SetActive(true);
+
+    //    if (player != null && healthBarScript != null)
+    //    {
+    //        player.LinkUI(healthBarScript, levelBarScript, itemImageSlots);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("InGameManager: Player 또는 UI 스크립트를 찾지 못했습니다");
+    //    }
+    //}
 
     private GameObject FindChildRecursive(Transform parent, string name)
     {
