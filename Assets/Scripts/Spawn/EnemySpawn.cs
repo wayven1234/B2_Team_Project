@@ -14,25 +14,25 @@ public class EnemySpawn : MonoBehaviour
     private Bounds mapBounds;
     private int currentStageIndex = -1;
 
-    private bool isBossSpawned = false;
+    //private bool isBossSpawned = false;
 
-    private bool isComplete = false;
+    //private bool isComplete = false;
 
     public void Initialize(StageData stageData, int stageIndex)
     {
         if (GameManager.instance == null) return;
 
-        if (isComplete)
-        {
-            return;
-        }
-        isComplete = true;
+        //if (isComplete)
+        //{
+        //    return;
+        //}
+        //isComplete = true;
 
 
         currentStageData = stageData;
         currentStageIndex = stageIndex;
 
-        isBossSpawned = false;
+        //isBossSpawned = false;
 
         if (currentStageData == null)
         {
@@ -84,18 +84,18 @@ public class EnemySpawn : MonoBehaviour
             initialDelay = currentStageData.normalInitialDelay;
             spawnInterval = currentStageData.normalSpawnInterval;
 
-            if (currentStageIndex == 4 && currentStageData.bossEnemyPrefab != null)
-            {
-                if (!isBossSpawned)
-                {
-                    Debug.Log($"Stage 4 (번호 {currentStageIndex})입니다. 보스 스폰 타이머 ({currentStageData.bossSpawnTime}s)를 시작합니다.");
-                    StartCoroutine(BossSpawnTimer(currentStageData.bossSpawnTime));
-                }
-                else
-                {
-                    Debug.Log("Stage 4: 보스는 이미 스폰되었거나 타이머가 실행 중입니다. 타이머 시작 건너뜀.");
-                }
-            }
+            //if (currentStageIndex == 4 && currentStageData.bossEnemyPrefab != null)
+            //{
+            //    if (!isBossSpawned)
+            //    {
+            //        Debug.Log($"Stage 4 (번호 {currentStageIndex})입니다. 보스 스폰 타이머 ({currentStageData.bossSpawnTime}s)를 시작합니다.");
+            //        StartCoroutine(BossSpawnTimer(currentStageData.bossSpawnTime));
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("Stage 4: 보스는 이미 스폰되었거나 타이머가 실행 중입니다. 타이머 시작 건너뜀.");
+            //    }
+            //}
         }
         else
         {
@@ -117,58 +117,58 @@ public class EnemySpawn : MonoBehaviour
     /// <summary>
     /// Boss 스폰 타이머. 지정된 딜레이 후 Boss를 정확히 1회 스폰합니다.
     /// </summary>
-    IEnumerator BossSpawnTimer(float delay)
-    {
-        if (currentStageData.bossEnemyPrefab == null || isBossSpawned) yield break;
-        isBossSpawned = true;
+    //IEnumerator BossSpawnTimer(float delay)
+    //{
+    //    if (currentStageData.bossEnemyPrefab == null || isBossSpawned) yield break;
+    //    isBossSpawned = true;
 
-        Debug.Log($"BossSpawnTimer: 총 {delay}s 후에 보스 스폰 예정.");
+    //    Debug.Log($"BossSpawnTimer: 총 {delay}s 후에 보스 스폰 예정.");
 
-        float timeElapsed = 0f;
-        while (timeElapsed < delay)
-        {
-            if (GameManager.instance.currentGameState == GameState.Playing)
-            {
-                timeElapsed += Time.deltaTime;
-            }
-            yield return null;
-        }
+    //    float timeElapsed = 0f;
+    //    while (timeElapsed < delay)
+    //    {
+    //        if (GameManager.instance.currentGameState == GameState.Playing)
+    //        {
+    //            timeElapsed += Time.deltaTime;
+    //        }
+    //        yield return null;
+    //    }
 
-        SpawnBoss(currentStageData.bossEnemyPrefab);
+    //    SpawnBoss(currentStageData.bossEnemyPrefab);
         
-        Debug.Log("Boss Spawned. BossSpawnTimer 종료.");
+    //    Debug.Log("Boss Spawned. BossSpawnTimer 종료.");
 
-        yield break;
-    }
+    //    yield break;
+    //}
 
-    /// <summary>
-    /// Normal Stage의 적 스폰 로직을 사용하여 보스를 맵 내 랜덤 위치에 스폰합니다.
-    /// </summary>
-    void SpawnBoss(GameObject bossToSpawn)
-    {
-        if (AudioManager.instance != null)
-        {
-            AudioManager.instance.PlayBGM(BGMType.Boss, forceRestart: true, useFade: true);
-        }
-        if (mapBoundary == null)
-        {
-            Debug.LogError("Boss Spawn Failed: mapBoundary is null.");
-            return;
-        }
+    ///// <summary>
+    ///// Normal Stage의 적 스폰 로직을 사용하여 보스를 맵 내 랜덤 위치에 스폰합니다.
+    ///// </summary>
+    //void SpawnBoss(GameObject bossToSpawn)
+    //{
+    //    if (AudioManager.instance != null)
+    //    {
+    //        AudioManager.instance.PlayBGM(BGMType.Boss, forceRestart: true, useFade: true);
+    //    }
+    //    if (mapBoundary == null)
+    //    {
+    //        Debug.LogError("Boss Spawn Failed: mapBoundary is null.");
+    //        return;
+    //    }
 
-        float randomX = Random.Range(mapBounds.min.x, mapBounds.max.x);
-        float randomY = Random.Range(mapBounds.min.y, mapBounds.max.y);
+    //    float randomX = Random.Range(mapBounds.min.x, mapBounds.max.x);
+    //    float randomY = Random.Range(mapBounds.min.y, mapBounds.max.y);
 
-        Vector2 spawnPosition = new Vector2(randomX, randomY);
+    //    Vector2 spawnPosition = new Vector2(randomX, randomY);
 
-        GameObject newBoss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
-        Enemy bossScript = newBoss.GetComponent<Enemy>();
-        if (bossScript != null)
-        {
-            bossScript.currentStageType = currentStageData.stageType;
-        }
-        Debug.Log("Boss Spawned: " + bossToSpawn.name + " at " + spawnPosition);
-    }
+    //    GameObject newBoss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
+    //    Enemy bossScript = newBoss.GetComponent<Enemy>();
+    //    if (bossScript != null)
+    //    {
+    //        bossScript.currentStageType = currentStageData.stageType;
+    //    }
+    //    Debug.Log("Boss Spawned: " + bossToSpawn.name + " at " + spawnPosition);
+    //}
 
     /// <summary>
     /// 지정된 간격(interval)으로 적을 스폰하는 루프

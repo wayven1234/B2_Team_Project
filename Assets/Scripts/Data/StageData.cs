@@ -30,7 +30,7 @@ public class StageData
     public float verticalInitialDelay = 5f;
     public float verticalSpawnInterval = 2f;
 
-    [Header("Boss Enemy 설정")]
-    public GameObject bossEnemyPrefab;
-    public float bossSpawnTime = 150f;
+    //[Header("Boss Enemy 설정")]
+    //public GameObject bossEnemyPrefab;
+    //public float bossSpawnTime = 150f;
 }
