@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -15,9 +16,13 @@ public class AudioUIManager : MonoBehaviour
 
     public void Start()
     {
+        Debug.Log($"[AudioUIManager] Start executed in scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+
         float master = PlayerPrefs.GetFloat("Master", 0.50005f);
         float bgm = PlayerPrefs.GetFloat("BGM", 0.50005f);
         float sfx = PlayerPrefs.GetFloat("SFX", 0.50005f);
+
+        Debug.Log($"[AudioUIManager] Loaded Prefs: Master={master}, BGM={bgm}, SFX={sfx}");
 
         masterSlider.value = master;
         bgmSlider.value = bgm;
@@ -26,6 +31,8 @@ public class AudioUIManager : MonoBehaviour
         SetMasterVolume(master);
         SetBGMVolume(bgm);
         SetSFXVolume(sfx);
+
+        Debug.Log("[AudioUIManager] Event listeners added.");
 
         masterSlider.onValueChanged.AddListener(SetMasterVolume);
         bgmSlider.onValueChanged.AddListener(SetBGMVolume);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BarAttackEffect : MonoBehaviour
@@ -6,6 +7,7 @@ public class BarAttackEffect : MonoBehaviour
     private const string ENEMY_TAG = "Enemy";
 
     private Animator animator;
+    private HashSet<Collider2D> damagedEnemies = new HashSet<Collider2D>();
 
     private void Awake()
     {
@@ -30,12 +32,13 @@ public class BarAttackEffect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(ENEMY_TAG))
+        if (other.CompareTag(ENEMY_TAG) && !damagedEnemies.Contains(other))
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damageAmount);
+                damagedEnemies.Add(other); // 데미지 처리 후 목록에 추가 (중복 방지)
                 Debug.Log($"[BAR HIT - AOE] {other.name} took {damageAmount} damage.");
             }
         }

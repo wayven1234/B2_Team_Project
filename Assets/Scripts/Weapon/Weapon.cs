@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
-using Unity.Hierarchy;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -21,7 +19,7 @@ public class Weapon : MonoBehaviour
     private const float BOOK_ANGLE = 90f;
     private const string ENEMY_TAG = "Enemy";
 
-    private Vector2 lastHorizontalDirection = Vector2.right;
+    private Vector2 lastMoveDirection = Vector2.right;
 
     public void Init(ItemData data)
     {
@@ -211,26 +209,30 @@ public class Weapon : MonoBehaviour
 
         const float BAR_RANGE = 25f;
         const float BAR_LIFETIME = 0.3f;
+        const float BAR_TARGETING_RANGE = 25f;
 
-        Vector2 rawMoveDirection = player.GetLastMoveDirection();
-
+        Transform nearestEnemy = GetNearestEnemy(BAR_TARGETING_RANGE);
         Vector2 attackDirection;
 
-        if (Mathf.Abs(rawMoveDirection.x) > 0.01f)
+        if (nearestEnemy != null)
         {
-            lastHorizontalDirection = new Vector2(Mathf.Sign(rawMoveDirection.x), 0).normalized;
-
-            attackDirection = lastHorizontalDirection;
+            attackDirection = (nearestEnemy.position - player.transform.position).normalized;
         }
         else
         {
-            attackDirection = lastHorizontalDirection;
+            Vector2 rawMoveDirection = player.GetLastMoveDirection();
+
+            if (rawMoveDirection.sqrMagnitude > 0.01f)
+            {
+                lastMoveDirection = rawMoveDirection.normalized;
+            }
+
+            attackDirection = lastMoveDirection;
         }
 
         if (barPrefab != null)
         {
-            Vector3 spawnPosition = player.transform.position +
-                                (Vector3)attackDirection;
+            Vector3 spawnPosition = player.transform.position + (Vector3)attackDirection;
 
             float rotationZ = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
 
@@ -239,9 +241,9 @@ public class Weapon : MonoBehaviour
             float finalRotationZ = rotationZ + rotationOffset;
 
             GameObject effect = Instantiate(
-          barPrefab,
-          spawnPosition,
-          Quaternion.Euler(0, 0, finalRotationZ));
+                barPrefab,
+                spawnPosition,
+                Quaternion.Euler(0, 0, finalRotationZ));
 
             BarAttackEffect barEffectScript = effect.GetComponent<BarAttackEffect>();
             if (barEffectScript != null)
