@@ -14,6 +14,7 @@ TagManager:
   - PlayerSpawnPoint
   - GameOverPanel
   - GameClearPanel
+  - MapWall
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Player
   - Enemy
   - Wall
-  - 
+  - MapWall
   - 
   - 
   - 

@@ -3819,9 +3819,9 @@ GameObject:
   - component: {fileID: 975935028}
   - component: {fileID: 975935027}
   - component: {fileID: 975935026}
-  m_Layer: 0
-  m_Name: Wall
-  m_TagString: Untagged
+  m_Layer: 9
+  m_Name: MapWall
+  m_TagString: MapWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4158,7 +4158,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 49.812157, y: 33.199997}
+  m_Size: {x: 49, y: 32}
   m_EdgeRadius: 0
 --- !u!1 &1005752136
 GameObject:
@@ -7912,7 +7912,7 @@ PrefabInstance:
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.icon
       value: 
-      objectReference: {fileID: 7199705072138568028, guid: 99d90b28f5d991b4d9907a0a8310c366, type: 3}
+      objectReference: {fileID: 21300000, guid: 807f7734a3520f7459d9cd4438a7e175, type: 3}
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.type
       value: 0
@@ -8758,7 +8758,7 @@ PrefabInstance:
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.icon
       value: 
-      objectReference: {fileID: 2033960975386372411, guid: 70e8581ca4a221d42a3782dff4f46649, type: 3}
+      objectReference: {fileID: 21300000, guid: 89fc2795ced66124392f23a0cc1614df, type: 3}
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.type
       value: 2
@@ -10584,7 +10584,7 @@ PrefabInstance:
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.icon
       value: 
-      objectReference: {fileID: 720118652224413485, guid: 950068794b104f44f94c56875cc566a1, type: 3}
+      objectReference: {fileID: 21300000, guid: 8e85d5d8ee6b55249ba43df5576cd228, type: 3}
     - target: {fileID: -2401824323841659164, guid: 98982df8a0132a64e9c5c5eb184f4a4d, type: 3}
       propertyPath: data.type
       value: 1

@@ -29,12 +29,27 @@ public class Enemy : MonoBehaviour
     private float attackTimer;
     [SerializeField] private GameObject enemyAttackEffectPrefab;
 
+    private const string ENEMY_FRONT = "Move_Down";
+    private const string ENEMY_BACK = "Move_Up";
+    private const string ENEMY_LEFT = "Move_Left";
+    private const string ENEMY_RIGHT = "Move_Right";
+
+    private const string ENEMY_FRONT_IDLE = "Move_Down_Idle";
+    private const string ENEMY_BACK_IDLE = "Move_Up_Idle";
+    private const string ENEMY_LEFT_IDLE = "Move_Left_Idle";
+    private const string ENEMY_RIGHT_IDLE = "Move_Right_Idle";
+
+    private string currentAnimationState;
+    private int lastDirection = 1;
+
     private Rigidbody2D rb;
+    private Animator anim;
 
     private void Start()
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         attackTimer = 0f;
     }
 
@@ -111,7 +126,77 @@ public class Enemy : MonoBehaviour
 
         if (rb != null)
             rb.linearVelocity = finalMoveVector;
+
+        UpdateAnimation(finalMoveVector);
     }
+
+    void UpdateAnimation(Vector2 moveVector)
+    {
+        if (anim == null) return;
+
+        bool isMoving = moveVector.magnitude > 0.01f;
+        string targetAnimation = "";
+
+        if (!isMoving)
+        {
+            switch (lastDirection)
+            {
+                case 1: targetAnimation = ENEMY_FRONT_IDLE; break;
+                case 2: targetAnimation = ENEMY_BACK_IDLE; break;
+                case 3: targetAnimation = ENEMY_LEFT_IDLE; break;
+                case 4: targetAnimation = ENEMY_RIGHT_IDLE; break;
+                default: targetAnimation = ENEMY_FRONT_IDLE; break;
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(moveVector.y) > Mathf.Abs(moveVector.x))
+            {
+                if (moveVector.y < 0)
+                {
+                    targetAnimation = ENEMY_FRONT;
+                    lastDirection = 1;
+                }
+                else
+                {
+                    targetAnimation = ENEMY_BACK;
+                    lastDirection = 2;
+                }
+            }
+            else
+            {
+                if (moveVector.x < 0)
+                {
+                    targetAnimation = ENEMY_LEFT;
+                    lastDirection = 3;
+                }
+                else
+                {
+                    targetAnimation = ENEMY_RIGHT;
+                    lastDirection = 4;
+                }
+            }
+        }
+
+        if (!string.IsNullOrEmpty(targetAnimation))
+        {
+            ChangeAnimationState(targetAnimation);
+        }
+    }
+
+    private void ChangeAnimationState(string newAction)
+    {
+        string newState = newAction;
+
+        if (currentAnimationState == newState) return;
+
+        if (anim != null)
+        {
+            anim.Play(newState);
+            currentAnimationState = newState;
+        }
+    }
+
     /// <summary>
     /// Raycast로 감지된 Wall 오브젝트에 피해를 줍니다.
     /// </summary>

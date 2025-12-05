@@ -209,7 +209,7 @@ public class Weapon : MonoBehaviour
 
         const float BAR_RANGE = 25f;
         const float BAR_LIFETIME = 0.3f;
-        const float BAR_TARGETING_RANGE = 25f;
+        const float BAR_TARGETING_RANGE = 10f;
 
         Transform nearestEnemy = GetNearestEnemy(BAR_TARGETING_RANGE);
         Vector2 attackDirection;
