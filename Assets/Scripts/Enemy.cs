@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float wallAttackDistance = 0.6f;
 
     public float maxHealth;
-    public float currentHealth;
+    [SerializeField] protected float currentHealth;
 
     public float moveSpeed = 1f;
     public float damage;
@@ -29,21 +29,21 @@ public class Enemy : MonoBehaviour
     private float attackTimer;
     [SerializeField] private GameObject enemyAttackEffectPrefab;
 
-    private const string ENEMY_FRONT = "Move_Down";
-    private const string ENEMY_BACK = "Move_Up";
-    private const string ENEMY_LEFT = "Move_Left";
-    private const string ENEMY_RIGHT = "Move_Right";
+    protected const string ENEMY_FRONT = "Move_Down";
+    protected const string ENEMY_BACK = "Move_Up";
+    protected const string ENEMY_LEFT = "Move_Left";
+    protected const string ENEMY_RIGHT = "Move_Right";
 
-    private const string ENEMY_FRONT_IDLE = "Move_Down_Idle";
-    private const string ENEMY_BACK_IDLE = "Move_Up_Idle";
-    private const string ENEMY_LEFT_IDLE = "Move_Left_Idle";
-    private const string ENEMY_RIGHT_IDLE = "Move_Right_Idle";
+    protected const string ENEMY_FRONT_IDLE = "Move_Down_Idle";
+    protected const string ENEMY_BACK_IDLE = "Move_Up_Idle";
+    protected const string ENEMY_LEFT_IDLE = "Move_Left_Idle";
+    protected const string ENEMY_RIGHT_IDLE = "Move_Right_Idle";
 
-    private string currentAnimationState;
-    private int lastDirection = 1;
+    protected string currentAnimationState;
+    protected int lastDirection = 1;
 
     private Rigidbody2D rb;
-    private Animator anim;
+    protected Animator anim;
 
     private void Start()
     {
@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
         UpdateAnimation(finalMoveVector);
     }
 
-    void UpdateAnimation(Vector2 moveVector)
+    protected virtual void UpdateAnimation(Vector2 moveVector)
     {
         if (anim == null) return;
 
@@ -184,7 +184,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void ChangeAnimationState(string newAction)
+    protected void ChangeAnimationState(string newAction)
     {
         string newState = newAction;
 
@@ -240,7 +240,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
         Debug.Log($"Enemy took {damage} damage. Current HP: {currentHealth}");
@@ -252,7 +252,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Die()
+    protected void Die()
     {
         if (GameManager.instance != null && GameManager.instance.currentStageIndex == 4 && gameObject.name.Contains("BossEnemy"))
         {

@@ -25,7 +25,7 @@ public class InGameManager : MonoBehaviour
             return;
         }
 
-        hpLvPanel = FindChildRecursive(persistentCanvas.transform, "HPLVPanel");
+        hpLvPanel = FindChildRecursive(persistentCanvas.transform, "HpLvPanel");
         timePanel = FindChildRecursive(persistentCanvas.transform, "Time");
         closeButton = FindChildRecursive(persistentCanvas.transform, "CloseButton");
 

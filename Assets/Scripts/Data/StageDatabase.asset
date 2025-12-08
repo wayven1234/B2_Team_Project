@@ -22,11 +22,9 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 3538228656762564026, guid: 42c243583f39a36448163e5826798c65, type: 3}
       spawnChance: 1
     normalInitialDelay: 3
-    normalSpawnInterval: 2
+    normalSpawnInterval: 1
     verticalInitialDelay: 5
     verticalSpawnInterval: 2
-    bossEnemyPrefab: {fileID: 0}
-    bossSpawnTime: 150
   - stageType: 1
     enemies:
     - enemyPrefab: {fileID: 3538228656762564026, guid: bffeff64ba22a60448b684a9918d9a54, type: 3}
@@ -36,9 +34,7 @@ MonoBehaviour:
     normalInitialDelay: 5
     normalSpawnInterval: 2
     verticalInitialDelay: 3
-    verticalSpawnInterval: 2.5
-    bossEnemyPrefab: {fileID: 0}
-    bossSpawnTime: 150
+    verticalSpawnInterval: 0.5
   - stageType: 0
     enemies:
     - enemyPrefab: {fileID: 3538228656762564026, guid: d34c11cd7198d78408f8d80fe3f4c285, type: 3}
@@ -49,8 +45,6 @@ MonoBehaviour:
     normalSpawnInterval: 0.5
     verticalInitialDelay: 5
     verticalSpawnInterval: 2.5
-    bossEnemyPrefab: {fileID: 0}
-    bossSpawnTime: 150
   - stageType: 0
     enemies:
     - enemyPrefab: {fileID: 3538228656762564026, guid: bffeff64ba22a60448b684a9918d9a54, type: 3}
@@ -67,5 +61,3 @@ MonoBehaviour:
     normalSpawnInterval: 1
     verticalInitialDelay: 5
     verticalSpawnInterval: 2.5
-    bossEnemyPrefab: {fileID: 3538228656762564026, guid: 54474dd295686be49838cd780d4ebfa4, type: 3}
-    bossSpawnTime: 150

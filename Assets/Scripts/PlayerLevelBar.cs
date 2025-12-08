@@ -1,36 +1,54 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerLevelBar : MonoBehaviour
 {
     [SerializeField] private Image fillImage;
-    private float maxLevel;
-    private float currentLevel;
+    [SerializeField] private TextMeshProUGUI levelText;
 
-    public void Init(float maxLevelValue)
+    private float maxLevelValue;
+    private float currentExp;
+
+    private int maxPlayerLevel;
+
+    public void Init(float expOrbsPerLevel, int maxPlayerLevel)
     {
-        maxLevel = maxLevelValue;
-        currentLevel = 0f;
+        maxLevelValue = expOrbsPerLevel;
+        this.maxPlayerLevel = maxPlayerLevel;
+        currentExp = 0f;
+        UpdateBar();
+        UpdateLevelText(PlayerController.instance.currentLevel);
+    }
+
+    public void SetHealth(float expCount)
+    {
+        currentExp = Mathf.Clamp(expCount, 0, maxLevelValue);
         UpdateBar();
     }
 
-    public void SetHealth(float level)
+    public void UpdateLevelText(int level)
     {
-        currentLevel = Mathf.Clamp(level, 0, maxLevel);
-        UpdateBar();
-    }
+        if (levelText == null)
+        {
+            Debug.LogWarning("Level Text 컴포넌트가 PlayerLevelBar에 연결되지 않았습니다.");
+            return;
+        }
 
-    public void AddLevel(float amount)
-    {
-        currentLevel += amount;
-        currentLevel = Mathf.Clamp(currentLevel, 0, maxLevel);
-        UpdateBar();
+        if (level >= maxPlayerLevel)
+        {
+            levelText.text = "Lv.Max";
+        }
+        else
+        {
+            levelText.text = $"Lv.{level}";
+        }
     }
 
     private void UpdateBar()
     {
-        if (maxLevel > 0)
-            fillImage.fillAmount = currentLevel / maxLevel;
+        if (maxLevelValue > 0)
+            fillImage.fillAmount = currentExp / maxLevelValue;
         else
             fillImage.fillAmount = 0f;
     }

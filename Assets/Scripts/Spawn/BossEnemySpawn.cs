@@ -99,12 +99,6 @@ public class BossEnemySpawn : MonoBehaviour
             return;
         }
 
-        //BGM 변경 로직(선택 사항)
-        if (AudioManager.instance != null)
-        {
-            AudioManager.instance.PlayBGM(BGMType.Boss, forceRestart: true, useFade: true);
-        }
-
         float randomX = Random.Range(mapBounds.min.x, mapBounds.max.x);
         float randomY = Random.Range(mapBounds.min.y, mapBounds.max.y);
 
@@ -113,5 +107,11 @@ public class BossEnemySpawn : MonoBehaviour
         GameObject newBoss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
 
         Debug.Log("Boss Spawned: " + bossToSpawn.name + " at " + spawnPosition);
+
+        if (AudioManager.instance != null)
+        {
+            // BGMType.Boss 로 BGM 변경 요청
+            AudioManager.instance.PlayBGM(BGMType.Boss, forceRestart: true, useFade: true);
+        }
     }
 }

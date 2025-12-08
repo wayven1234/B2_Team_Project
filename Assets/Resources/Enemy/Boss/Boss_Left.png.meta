@@ -129,8 +129,8 @@ TextureImporter:
         y: 62
         width: 1116
         height: 1567
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.6, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,11 +148,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1287
-        y: 62
+        y: 60
         width: 1196
         height: 1567
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.62, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -169,7 +169,7 @@ TextureImporter:
       name: Boss_Left_3
       rect:
         serializedVersion: 2
-        x: 2707
+        x: 2705
         y: 38
         width: 876
         height: 1643

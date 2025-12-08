@@ -9,7 +9,7 @@ using static UnityEngine.Rendering.DebugUI;
 using System.Xml.Serialization;
 
 
-public enum BGMType { Title, Stage1, Stage2, Stage3, Stage4, Boss }
+public enum BGMType { Title, Story, Stage1, Stage2, Stage3, Stage4, Boss }
 
 public enum SFXType { ButtonClick, BookAttack, BarAttack, TalkAttack, EnemyAttack, CharacterWalk }
 
@@ -148,6 +148,10 @@ public class AudioManager : MonoBehaviour
                 newBGM = BGMType.Title;
                 break;
 
+            case "Story":
+                newBGM = BGMType.Story;
+                break;
+
             case "Stage1":
                 newBGM = BGMType.Stage1;
                 break;
@@ -175,46 +179,36 @@ public class AudioManager : MonoBehaviour
     // ========== BGM ==========
     public void PlayBGM(BGMType type, bool forceRestart = false, bool useFade = true)
     {
-        Debug.Log(type.ToString());
-        Debug.Log(Time.timeScale);
-
         if (!bgmDict.TryGetValue(type, out var newClipData) || newClipData.clip == null)
         {
             Debug.LogWarning($"[AudioManager] 등록되지 않은 BGM 타입 또는 클립이 null: {type}");
             return;
         }
 
+        // 이미 같은 BGM이 재생 중이고, 강제 재시작 옵션이 아니라면 스킵
         if (!forceRestart && BGMPlayer.clip == newClipData.clip && BGMPlayer.isPlaying)
         {
             Debug.Log("[PlayBGM] 동일한 BGMType 재생 중, 스킵");
             return;
         }
 
-        //bool isSameClip = BGMPlayer.clip == newClipData.clip;
+        StopAllCoroutines();
+        currentBGMType = type; // BGM 타입 업데이트
 
-        if (!isFirstPlay && BGMPlayer.isPlaying && BGMPlayer.clip == newClipData.clip)
+        // 페이드 효과를 사용하고, 현재 BGM이 재생 중이며, 클립이 다를 경우 페이드 인/아웃 코루틴 시작
+        if (useFade && BGMPlayer.isPlaying && BGMPlayer.clip != newClipData.clip)
         {
-            Debug.Log("[동일한 BGM이 이미 재생 중");
-            return;
-        }
-
-        if (useFade && BGMPlayer.isPlaying && BGMPlayer.clip != newClipData.clip) // 페이드 효과 사용, 재생 중, 그리고 클립이 다를 때만
-        {
-            StopAllCoroutines();
+            Debug.Log($"[PlayBGM] BGM 전환: {BGMPlayer.clip?.name ?? "None"} -> {newClipData.clip.name} (Fade)");
             StartCoroutine(FadeInOutRoutine(newClipData));
         }
-        else // BGM이 재생중이 아니거나, 페이드 효과를 사용하지 않을 경우 즉시 교체
+        else // BGM이 재생중이 아니거나, 페이드 효과를 사용하지 않거나, 클립이 동일하다면 (forceRestart=true) 즉시 교체
         {
+            Debug.Log($"[PlayBGM] BGM 전환: {BGMPlayer.clip?.name ?? "None"} -> {newClipData.clip.name} (Instant)");
             BGMPlayer.Stop();
             BGMPlayer.clip = newClipData.clip;
             BGMPlayer.volume = newClipData.volume;
             BGMPlayer.Play();
         }
-
-        currentBGMType = type;
-        StopAllCoroutines();
-        StartCoroutine(FadeInOutRoutine(newClipData));
-        //isFirstPlay = false;
     }
 
     IEnumerator FadeInOutRoutine(BGMClipData newClipData)

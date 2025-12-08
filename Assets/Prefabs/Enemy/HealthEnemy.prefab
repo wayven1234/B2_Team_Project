@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8940202964230228456}
   - component: {fileID: 6638228133927792578}
   - component: {fileID: 6304696754622911045}
+  - component: {fileID: -3707113405759376839}
   m_Layer: 7
   m_Name: HealthEnemy
   m_TagString: Enemy
@@ -50,9 +51,9 @@ MonoBehaviour:
   playerTag: Player
   wallLayerName: Wall
   wallAttackDistance: 0.6
-  maxHealth: 90
+  maxHealth: 35
   currentHealth: 0
-  moveSpeed: 1.8
+  moveSpeed: 1.2
   damage: 15
   currentStageType: 0
   stoppingDistance: 0.5
@@ -104,12 +105,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7161880412506275453, guid: 12ca1281a12e49948b51f7ea3c68ae36, type: 3}
+  m_Sprite: {fileID: 4071120980739016953, guid: 5df3673d1ab9e4d458ecdbae94147feb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9.559999, y: 14.214842}
+  m_Size: {x: 10.425328, y: 15.26}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -179,3 +180,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0.4661827, y: -2.170157}
   m_Size: {x: 8.048927, y: 9.874528}
   m_Direction: 0
+--- !u!95 &-3707113405759376839
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3538228656762564026}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91f388d31fb564249afe4e2123ab6c4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

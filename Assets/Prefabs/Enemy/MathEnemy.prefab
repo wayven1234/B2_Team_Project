@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8940202964230228456}
   - component: {fileID: 6638228133927792578}
   - component: {fileID: 6304696754622911045}
+  - component: {fileID: -4292125543714389353}
   m_Layer: 7
   m_Name: MathEnemy
   m_TagString: Enemy
@@ -50,9 +51,9 @@ MonoBehaviour:
   playerTag: Player
   wallLayerName: Wall
   wallAttackDistance: 0.6
-  maxHealth: 70
+  maxHealth: 27
   currentHealth: 0
-  moveSpeed: 2
+  moveSpeed: 1.2
   damage: 16
   currentStageType: 0
   stoppingDistance: 0.5
@@ -179,3 +180,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -2.5174475}
   m_Size: {x: 5.3881054, y: 8.299646}
   m_Direction: 0
+--- !u!95 &-4292125543714389353
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3538228656762564026}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 759bc352193d82246837d0fdc6be8675, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
