@@ -17,7 +17,7 @@ public class BossEnemySpawn : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("BossEnemySpawn: 오브젝트 활성화됨. 초기 설정 및 타이머 시작");
+        //Debug.Log("BossEnemySpawn: 오브젝트 활성화됨. 초기 설정 및 타이머 시작");
         InitializeBounds();
         StartBossSpawnTimer();
     }
@@ -32,7 +32,7 @@ public class BossEnemySpawn : MonoBehaviour
         if (mapBoundary != null)
         {
             mapBounds = mapBoundary.bounds;
-            Debug.Log($"BossEnemySpawn: 맵 바운더리 초기화 완료. 크기: {mapBounds.size}");
+            //Debug.Log($"BossEnemySpawn: 맵 바운더리 초기화 완료. 크기: {mapBounds.size}");
         }
         else
         {
@@ -67,7 +67,7 @@ public class BossEnemySpawn : MonoBehaviour
     {
         isBossSpawned = true; // 타이머 시작 시점부터 true로 설정
 
-        Debug.Log($"BossSpawnTimerCoroutine: 총 {delay}s 후에 보스 스폰 예정.");
+        //Debug.Log($"BossSpawnTimerCoroutine: 총 {delay}s 후에 보스 스폰 예정.");
 
         float timeElapsed = 0f;
         while (timeElapsed < delay)
@@ -82,7 +82,7 @@ public class BossEnemySpawn : MonoBehaviour
 
         SpawnBoss(bossEnemyPrefab);
 
-        Debug.Log("Boss Spawned. BossSpawnTimerCoroutine 종료.");
+        //Debug.Log("Boss Spawned. BossSpawnTimerCoroutine 종료.");
 
         // 보스가 스폰된 후에는 더 이상 필요 없으므로 이 스크립트를 비활성화하거나 오브젝트를 파괴할 수 있습니다.
         // gameObject.SetActive(false);
@@ -106,7 +106,7 @@ public class BossEnemySpawn : MonoBehaviour
 
         GameObject newBoss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
 
-        Debug.Log("Boss Spawned: " + bossToSpawn.name + " at " + spawnPosition);
+        //Debug.Log("Boss Spawned: " + bossToSpawn.name + " at " + spawnPosition);
 
         if (AudioManager.instance != null)
         {

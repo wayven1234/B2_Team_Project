@@ -79,7 +79,7 @@ public class ItemPrefab : MonoBehaviour
         if (LevelUpPanelLogic.GetOpenCount() > 0)
         {
             itemSelectPanel.SetActive(true);
-            Debug.Log("ItemPrefab: 다음 레벨업 기회가 남아 있어 패널을 유지합니다.");
+            //Debug.Log("ItemPrefab: 다음 레벨업 기회가 남아 있어 패널을 유지합니다.");
         }
         else
         {

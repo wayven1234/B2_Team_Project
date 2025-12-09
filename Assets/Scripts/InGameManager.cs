@@ -41,7 +41,7 @@ public class InGameManager : MonoBehaviour
                                                .OrderBy(img => img.name)
                                                .ToArray();
 
-            Debug.Log($"[InGameManager] Item Image Slot {itemImageSlots.Length}개 찾음.");
+            //Debug.Log($"[InGameManager] Item Image Slot {itemImageSlots.Length}개 찾음.");
 
             if (itemImageSlots.Length == 0)
             {

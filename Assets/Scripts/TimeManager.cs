@@ -43,7 +43,7 @@ public class TimeManager : MonoBehaviour
         }
 
         UpdateUIText();
-        Debug.Log("TimeManager: OnEnable 호출. 초기화는 GameManager의 OnSceneLoaded 이벤트에 위임.");
+        //Debug.Log("TimeManager: OnEnable 호출. 초기화는 GameManager의 OnSceneLoaded 이벤트에 위임.");
     }
 
     private void Update()
@@ -88,7 +88,7 @@ public class TimeManager : MonoBehaviour
                 break;
         }
 
-        Debug.Log($"TimeManager: Stage {currentStage} 목표 시간 {_gameTime}초로 설정.");
+        //Debug.Log($"TimeManager: Stage {currentStage} 목표 시간 {_gameTime}초로 설정.");
     }
 
     void TimeCalculation()
@@ -168,6 +168,6 @@ public class TimeManager : MonoBehaviour
             _displayTime = _gameTime;
 
         UpdateUIText();
-        Debug.Log($"TimeManager: ResetTimer() 호출됨. Stage {GameManager.instance.currentStageIndex} 시간 재설정 완료.");
+        //Debug.Log($"TimeManager: ResetTimer() 호출됨. Stage {GameManager.instance.currentStageIndex} 시간 재설정 완료.");
     }
 }

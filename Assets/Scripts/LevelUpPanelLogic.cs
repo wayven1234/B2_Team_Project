@@ -13,7 +13,7 @@ public class LevelUpPanelLogic : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log($"LevelUpPanelLogic OnEnable: 현재 패널 카운트 = {panelOpenCount}");
+        //Debug.Log($"LevelUpPanelLogic OnEnable: 현재 패널 카운트 = {panelOpenCount}");
 
         if (LevelUpPanelButton == null)
         {
@@ -55,7 +55,7 @@ public class LevelUpPanelLogic : MonoBehaviour
     public static void ResetOpenCount()
     {
         panelOpenCount = 0;
-        Debug.Log("LevelUpPanelLogic: ResetOpenCount 호출. Count가 0으로 초기화되었습니다.");
+        //Debug.Log("LevelUpPanelLogic: ResetOpenCount 호출. Count가 0으로 초기화되었습니다.");
     }
 
     public static int GetOpenCount()
@@ -87,6 +87,6 @@ public class LevelUpPanelLogic : MonoBehaviour
     public static void IncreaseOpenCount()
     {
         panelOpenCount++;
-        Debug.Log($"LevelUpPanelLogic: IncreaseOpenCount 호출. 현재 Count: {panelOpenCount}");
+        //Debug.Log($"LevelUpPanelLogic: IncreaseOpenCount 호출. 현재 Count: {panelOpenCount}");
     }
 }

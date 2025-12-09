@@ -152,11 +152,11 @@ public class InGameButtonManager : MonoBehaviour
         {
             if (characterSelectionPanel != null) characterSelectionPanel.SetActive(true);
             GameManager.instance.ChangeState(GameState.Paused);
-            Debug.Log("InGameButtonManager: Stage 1 진입 -> Paused 상태로 전환 및 캐릭터 선택창 활성화.");
+            //Debug.Log("InGameButtonManager: Stage 1 진입 -> Paused 상태로 전환 및 캐릭터 선택창 활성화.");
         }
         else
         {
-            Debug.Log("InGameButtonManager: Stage 2+ 진입. 플레이어 스폰 및 게임 시작.");
+            //Debug.Log("InGameButtonManager: Stage 2+ 진입. 플레이어 스폰 및 게임 시작.");
 
             if (stageClearPanel != null)
             {
@@ -172,7 +172,7 @@ public class InGameButtonManager : MonoBehaviour
             }
 
             GameManager.instance.ChangeState(GameState.Playing);
-            Debug.Log("InGameButtonManager: Stage 2+ 진입 -> Update()에게 상태 전환을 위임.");
+            //Debug.Log("InGameButtonManager: Stage 2+ 진입 -> Update()에게 상태 전환을 위임.");
         }
     }
 
@@ -318,7 +318,7 @@ public class InGameButtonManager : MonoBehaviour
             if (inGameManager != null)
             {
                 inGameManager.LinkUIToPlayer();
-                Debug.Log("InGameButtonManager: InGameManager를 통해 UI 연결 강제 호출.");
+                //Debug.Log("InGameButtonManager: InGameManager를 통해 UI 연결 강제 호출.");
             }
             else
             {
@@ -385,7 +385,7 @@ public class InGameButtonManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("아이템이 없어서 사용할 수 없습니다.");
+            //Debug.Log("아이템이 없어서 사용할 수 없습니다.");
         }
     }
 
@@ -494,6 +494,6 @@ public class InGameButtonManager : MonoBehaviour
     public static void ClearSelectedPlayerPrefab()
     {
         selectedPlayerPrefab = null;
-        Debug.Log("InGameButtonManager: selectedPlayerPrefab 초기화 완료.");
+        //Debug.Log("InGameButtonManager: selectedPlayerPrefab 초기화 완료.");
     }
 }

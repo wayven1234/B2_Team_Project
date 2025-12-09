@@ -42,7 +42,7 @@ public class TalkAttackEffect : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(damageAmount);
-                Debug.Log($"[TALK HIT - PIERCE] {other.name} took {damageAmount} damage.");
+                //Debug.Log($"[TALK HIT - PIERCE] {other.name} took {damageAmount} damage.");
             }
         }
     }

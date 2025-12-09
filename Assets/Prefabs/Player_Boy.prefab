@@ -59,7 +59,7 @@ MonoBehaviour:
   healEffectPrefab: {fileID: 6450990467028735698, guid: 9394022962745f749b7175504e7fdd13, type: 3}
   startLevel: 0
   maxLevel: 12
-  expOrbsPerLevel: 20
+  expOrbsPerLevel: 25
   healthPotionHealAmount: 100
   itemTag: HealthItem
   currentHealth: 250

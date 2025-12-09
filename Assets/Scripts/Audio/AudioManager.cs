@@ -76,7 +76,7 @@ public class AudioManager : MonoBehaviour
         if (BGMPlayer != null && SFXPlayer != null) return;
 
 
-        Debug.Log("[AudioManager] Init() 실행");
+        //Debug.Log("[AudioManager] Init() 실행");
 
         // AudioSource 생성
         GameObject bgmObj = new GameObject("BGMPlayer");
@@ -188,7 +188,7 @@ public class AudioManager : MonoBehaviour
         // 이미 같은 BGM이 재생 중이고, 강제 재시작 옵션이 아니라면 스킵
         if (!forceRestart && BGMPlayer.clip == newClipData.clip && BGMPlayer.isPlaying)
         {
-            Debug.Log("[PlayBGM] 동일한 BGMType 재생 중, 스킵");
+            //Debug.Log("[PlayBGM] 동일한 BGMType 재생 중, 스킵");
             return;
         }
 
@@ -198,12 +198,12 @@ public class AudioManager : MonoBehaviour
         // 페이드 효과를 사용하고, 현재 BGM이 재생 중이며, 클립이 다를 경우 페이드 인/아웃 코루틴 시작
         if (useFade && BGMPlayer.isPlaying && BGMPlayer.clip != newClipData.clip)
         {
-            Debug.Log($"[PlayBGM] BGM 전환: {BGMPlayer.clip?.name ?? "None"} -> {newClipData.clip.name} (Fade)");
+            //Debug.Log($"[PlayBGM] BGM 전환: {BGMPlayer.clip?.name ?? "None"} -> {newClipData.clip.name} (Fade)");
             StartCoroutine(FadeInOutRoutine(newClipData));
         }
         else // BGM이 재생중이 아니거나, 페이드 효과를 사용하지 않거나, 클립이 동일하다면 (forceRestart=true) 즉시 교체
         {
-            Debug.Log($"[PlayBGM] BGM 전환: {BGMPlayer.clip?.name ?? "None"} -> {newClipData.clip.name} (Instant)");
+            //Debug.Log($"[PlayBGM] BGM 전환: {BGMPlayer.clip?.name ?? "None"} -> {newClipData.clip.name} (Instant)");
             BGMPlayer.Stop();
             BGMPlayer.clip = newClipData.clip;
             BGMPlayer.volume = newClipData.volume;

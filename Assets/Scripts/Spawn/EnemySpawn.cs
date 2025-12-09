@@ -40,12 +40,12 @@ public class EnemySpawn : MonoBehaviour
             return;
         }
 
-        Debug.Log("EnemySpawn Initialize: StageData 로드 성공.");
+        //Debug.Log("EnemySpawn Initialize: StageData 로드 성공.");
 
         if (mapBoundary != null)
         {
             mapBounds = mapBoundary.bounds;
-            Debug.Log($"맵 바운더리 초기화 완료. 크기: {mapBounds.size}");
+            //Debug.Log($"맵 바운더리 초기화 완료. 크기: {mapBounds.size}");
         }
         else
         {
@@ -58,7 +58,7 @@ public class EnemySpawn : MonoBehaviour
     /// </summary>
     public void StartSpawning()
     {
-        Debug.Log("EnemySpawn: StartSpawning 호출됨. 코루틴 시작.");
+        //Debug.Log("EnemySpawn: StartSpawning 호출됨. 코루틴 시작.");
         StopAllCoroutines();
         StartCoroutine(SpawnController());
     }
@@ -74,7 +74,7 @@ public class EnemySpawn : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("SpawnController: 코루틴 시작, 초기 딜레이 대기 시작.");
+        //Debug.Log("SpawnController: 코루틴 시작, 초기 딜레이 대기 시작.");
 
         float initialDelay = 0f;
         float spawnInterval = 0f;
@@ -105,11 +105,11 @@ public class EnemySpawn : MonoBehaviour
 
         if (initialDelay > 0)
         {
-            Debug.Log($"SpawnController: Initial Delay ({initialDelay}s) 대기 중.");
+            //Debug.Log($"SpawnController: Initial Delay ({initialDelay}s) 대기 중.");
             yield return new WaitForSeconds(initialDelay);
         }
 
-        Debug.Log("SpawnController: 초기 딜레이 완료. 반복 스폰 루프 시작.");
+        //Debug.Log("SpawnController: 초기 딜레이 완료. 반복 스폰 루프 시작.");
 
         StartCoroutine(SpawnLoop(spawnInterval));
     }
@@ -175,7 +175,7 @@ public class EnemySpawn : MonoBehaviour
     /// </summary>
     IEnumerator SpawnLoop(float interval)
     {
-        Debug.Log($"SpawnLoop: {interval}s 간격으로 반복 스폰 시작.");
+        //Debug.Log($"SpawnLoop: {interval}s 간격으로 반복 스폰 시작.");
         while (true)
         {
             while (GameManager.instance.currentGameState != GameState.Playing)
@@ -225,7 +225,7 @@ public class EnemySpawn : MonoBehaviour
                 SpawnForNormal(enemyToSpawn);
                 break;
         }
-        Debug.Log("Enemy Spawned: " + enemyToSpawn.name);
+        //Debug.Log("Enemy Spawned: " + enemyToSpawn.name);
     }
 
     void SpawnForVertical(GameObject enemyToSpawn)

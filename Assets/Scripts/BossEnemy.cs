@@ -31,13 +31,13 @@ public class BossEnemy : Enemy
     {
         if (isPhaseOne && currentHealth <= phaseTwoHealthThreshold)
         {
-            Debug.Log($"보스 체력 {currentHealth} 도달! 페이즈 2로 전환합니다.");
+            //Debug.Log($"보스 체력 {currentHealth} 도달! 페이즈 2로 전환합니다.");
 
             isPhaseOne = false;
 
             currentHealth += phaseTwoHealthIncrease;
 
-            Debug.Log($"페이즈 2 전환 완료! 새로운 체력: {currentHealth}");
+            //Debug.Log($"페이즈 2 전환 완료! 새로운 체력: {currentHealth}");
 
             ChangeAnimationState(phaseTwoAnimationState);
         }

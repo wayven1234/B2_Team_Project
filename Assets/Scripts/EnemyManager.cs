@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour
         ResetKillCount();
 
         UpdateKillCountUI();
-        Debug.Log($"EnemyManager: {scene.name} 로드 완료. 킬 카운트 리셋.");
+        //Debug.Log($"EnemyManager: {scene.name} 로드 완료. 킬 카운트 리셋.");
     }
 
     public void ResetKillCount()
@@ -62,7 +62,7 @@ public class EnemyManager : MonoBehaviour
 
             if (GameManager.instance.currentStageIndex == 3 && currentKills >= KillTargetStage3)
             {
-                Debug.Log($"Stage 3 목표 달성! {currentKills} / {KillTargetStage3} 마리 처치. 즉시 클리어 처리.");
+                //Debug.Log($"Stage 3 목표 달성! {currentKills} / {KillTargetStage3} 마리 처치. 즉시 클리어 처리.");
                 GameManager.instance.HandleStageClear();
             }
         }
@@ -76,12 +76,12 @@ public class EnemyManager : MonoBehaviour
         {
             if (currentKills < KillTargetStage3)
             {
-                Debug.Log($"Stage 3 클리어 실패: {currentKills} / {KillTargetStage3} 마리 처치. (시간 초과)");
+                //Debug.Log($"Stage 3 클리어 실패: {currentKills} / {KillTargetStage3} 마리 처치. (시간 초과)");
                 GameManager.instance.ChangeState(GameState.GameOver);
             }
             else
             {
-                Debug.Log("Stage 3 시간 초과 확인. 킬 목표는 이미 충족되었습니다.");
+                //Debug.Log("Stage 3 시간 초과 확인. 킬 목표는 이미 충족되었습니다.");
             }
         }
     }

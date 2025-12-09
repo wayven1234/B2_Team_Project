@@ -39,7 +39,7 @@ public class BarAttackEffect : MonoBehaviour
             {
                 enemy.TakeDamage(damageAmount);
                 damagedEnemies.Add(other); // 데미지 처리 후 목록에 추가 (중복 방지)
-                Debug.Log($"[BAR HIT - AOE] {other.name} took {damageAmount} damage.");
+                //Debug.Log($"[BAR HIT - AOE] {other.name} took {damageAmount} damage.");
             }
         }
     }

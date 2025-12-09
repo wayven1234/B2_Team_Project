@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour
                     rb.linearVelocity = Vector2.zero;
                 return;
             }
-            Debug.Log(gameObject.name + ": Player 추적 시작");
+            //Debug.Log(gameObject.name + ": Player 추적 시작");
         }
 
         Vector2 targetPosition = player.transform.position;
@@ -110,13 +110,13 @@ public class Enemy : MonoBehaviour
 
             if (hit.collider == null)
             {
-                Debug.DrawRay(rayStart, rayDirection * raycastDistance, rayColor);
+                //Debug.DrawRay(rayStart, rayDirection * raycastDistance, rayColor);
 
                 finalMoveVector += directionToTarget * moveSpeed;
             }
             else
             {
-                Debug.DrawRay(rayStart, rayDirection * hit.distance, rayColor);
+                //Debug.DrawRay(rayStart, rayDirection * hit.distance, rayColor);
 
                 HandleWallAttack(hit.collider.gameObject);
             }
@@ -226,7 +226,7 @@ public class Enemy : MonoBehaviour
 
                 SpawnAttackEffect(transform.position);
 
-                Debug.Log($"{gameObject.name}이 Stage2Wall에 {damage} 피해를 입혔습니다.");
+                //Debug.Log($"{gameObject.name}이 Stage2Wall에 {damage} 피해를 입혔습니다.");
             }
             else
             {
@@ -256,7 +256,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        Debug.Log($"Enemy took {damage} damage. Current HP: {currentHealth}");
+        //Debug.Log($"Enemy took {damage} damage. Current HP: {currentHealth}");
 
         if (spriteRenderer != null)
         {
@@ -270,7 +270,7 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0f)
         {
             Die();
-            Debug.Log("Enemy Die");
+            //Debug.Log("Enemy Die");
         }
     }
 

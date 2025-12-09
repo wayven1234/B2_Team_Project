@@ -57,17 +57,17 @@ public class GameManager : MonoBehaviour
     {
         if (currentStageData != null)
         {
-            Debug.Log($"현재 스테이지 Type: {currentStageData.stageType} (Stage {currentStageIndex})");
+            //Debug.Log($"현재 스테이지 Type: {currentStageData.stageType} (Stage {currentStageIndex})");
         }
 
-        Debug.Log("GameManager: Start() 완료.");
+        //Debug.Log("GameManager: Start() 완료.");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "TitleScene")
         {
-            Debug.Log("GameManager: TitleScene 로드 감지. 모든 DontDestroyOnLoad 오브젝트 파괴를 시작합니다.");
+            //Debug.Log("GameManager: TitleScene 로드 감지. 모든 DontDestroyOnLoad 오브젝트 파괴를 시작합니다.");
             CleanupPersistentObjects();
             return;
         }
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
         InGameButtonManager.instance.ResetAllPanelsAndState();
     }
 
-        Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
+        //Debug.Log($"GameManager: 씬 로드 완료. Stage {currentStageIndex} 데이터 및 시간 초기화 완료.");
     }
 
     private void CleanupPersistentObjects()
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
         if (arrayIndex >= 0 && arrayIndex < stageDatabase.stages.Length)
         {
             currentStageData = stageDatabase.stages[arrayIndex];
-            Debug.Log($"Stage {stageIndex} 데이터 로드 완료.");
+            //Debug.Log($"Stage {stageIndex} 데이터 로드 완료.");
             return true;
         }
 
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         if (currentGameState == newState) return;
 
         currentGameState = newState;
-        Debug.Log("게임 상태 변경: " + newState);
+        //Debug.Log("게임 상태 변경: " + newState);
 
         switch (newState)
         {
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
 
                 if (enemySpawn != null)
                 {
-                    Debug.Log("asdfasdfasdfasdfasdfasdf");
+                    //Debug.Log("asdfasdfasdfasdfasdfasdf");
                     enemySpawn.Initialize(currentStageData, currentStageIndex);
                     enemySpawn.StartSpawning();
                 }
@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Debug.Log("씬 오브젝트 정리 완료: Enemy, EXP, HealthItem, SkillItem 제거 및 EnemySpawn 정지.");
+        //Debug.Log("씬 오브젝트 정리 완료: Enemy, EXP, HealthItem, SkillItem 제거 및 EnemySpawn 정지.");
     }
 
     public StageData GetCurrentStageData()
@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
         foreach (var pair in weaponLevels)
             savedWeaponLevels[pair.Key] = pair.Value;
 
-        Debug.Log($"[Checkpoint Save] Stage {currentStageIndex} 클리어 데이터 백업 완료.");
+        //Debug.Log($"[Checkpoint Save] Stage {currentStageIndex} 클리어 데이터 백업 완료.");
     }
 
     /// <summary>
@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
         foreach (var pair in savedWeaponLevels)
             weaponLevels.Add(pair.Key, pair.Value);
 
-        Debug.Log($"[Checkpoint Restore] Stage {currentStageIndex} 시작 상태로 데이터 복원 완료.");
+        //Debug.Log($"[Checkpoint Restore] Stage {currentStageIndex} 시작 상태로 데이터 복원 완료.");
     }
 
     public void HandleStageClear()
@@ -312,7 +312,7 @@ public class GameManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
 
-        Debug.Log($"[Retry] 씬 재시작 요청: {currentScene.name} (Stage {currentStageIndex} 복원)");
+        //Debug.Log($"[Retry] 씬 재시작 요청: {currentScene.name} (Stage {currentStageIndex} 복원)");
     }
 
     /// <summary>
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
 
             currentStageIndex = nextStageNumber;
             SceneManager.LoadScene(nextSceneName);
-            Debug.Log($"씬 전환 요청: {nextSceneName}");
+            //Debug.Log($"씬 전환 요청: {nextSceneName}");
         }
         else
         {
