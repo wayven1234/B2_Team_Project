@@ -51,7 +51,7 @@ MonoBehaviour:
   playerTag: Player
   wallLayerName: Wall
   wallAttackDistance: 0.6
-  maxHealth: 1100
+  maxHealth: 10000
   currentHealth: 0
   moveSpeed: 1
   damage: 25
@@ -61,8 +61,9 @@ MonoBehaviour:
   separationForce: 1
   attackInterval: 1
   enemyAttackEffectPrefab: {fileID: 8748566495200295411, guid: e11b4bcec2aeec04a867144f22edc653, type: 3}
-  phaseTwoHealthThreshold: 400
-  phaseTwoHealthIncrease: 400
+  flashDuration: 0.2
+  phaseTwoHealthThreshold: 4000
+  phaseTwoHealthIncrease: 4000
   phaseTwoAnimationState: Boss_Phase2_Move
   isPhaseOne: 1
 --- !u!212 &8940202964230228456
@@ -114,7 +115,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.0999994, y: 13.334541}
+  m_Size: {x: 10.825534, y: 14.589999}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

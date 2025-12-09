@@ -12995,7 +12995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eb14eafbb584a41aa63c6f7a332b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTimeStage1: 1
+  targetTimeStage1: 90
   targetTimeStage2: 60
   targetTimeStage3: 120
   targetTimeStage4: 300

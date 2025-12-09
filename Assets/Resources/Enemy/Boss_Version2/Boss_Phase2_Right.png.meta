@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 260c4ff1d5406b44ebf668dc43f7d247
+guid: 109473dbc8a1be340a38a436a51b558c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7638191204395539602
-    second: Boss_Right_2_0
+      213: -8799204773353519146
+    second: Boss_Phase2_Right_0
   - first:
-      213: 6975086888799644047
-    second: Boss_Right_2_1
+      213: 4398092847804127857
+    second: Boss_Phase2_Right_1
   - first:
-      213: -853482147840460472
-    second: Boss_Right_2_2
+      213: -4500276055654148194
+    second: Boss_Phase2_Right_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,30 +102,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boss_Right_2_0
+      name: Boss_Phase2_Right_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 23
-        width: 805
-        height: 1189
+        x: 315
+        y: 24
+        width: 1078
+        height: 1590
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e63ad778191bff590800000000000000
-      internalID: -7638191204395539602
+      spriteID: 6d7875af0e1f2e580800000000000000
+      internalID: -8799204773353519146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss_Right_2_1
+      name: Boss_Phase2_Right_1
       rect:
         serializedVersion: 2
-        x: 892
-        y: 26
-        width: 864
-        height: 1187
+        x: 1434
+        y: 27
+        width: 1154
+        height: 1590
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f89236cd19c7cc060800000000000000
-      internalID: 6975086888799644047
+      spriteID: 17a1d8a942a290d30800000000000000
+      internalID: 4398092847804127857
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss_Right_2_2
+      name: Boss_Phase2_Right_2
       rect:
         serializedVersion: 2
-        x: 1837
-        y: 26
-        width: 788
-        height: 1187
+        x: 2698
+        y: 28
+        width: 1055
+        height: 1588
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,8 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 849f4db2282d724f0800000000000000
-      internalID: -853482147840460472
+      spriteID: e97d98755cecb81c0800000000000000
+      internalID: -4500276055654148194
       vertices: []
       indices: 
       edges: []
@@ -198,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Boss_Right_2_0: -7638191204395539602
-      Boss_Right_2_1: 6975086888799644047
-      Boss_Right_2_2: -853482147840460472
+      Boss_Phase2_Right_0: -8799204773353519146
+      Boss_Phase2_Right_1: 4398092847804127857
+      Boss_Phase2_Right_2: -4500276055654148194
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

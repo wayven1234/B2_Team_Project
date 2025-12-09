@@ -3,8 +3,8 @@ using UnityEngine;
 public class BossEnemy : Enemy
 {
     [Header("보스 페이즈 설정")]
-    [SerializeField] private float phaseTwoHealthThreshold = 400f;
-    [SerializeField] private float phaseTwoHealthIncrease = 400f;
+    [SerializeField] private float phaseTwoHealthThreshold = 4000f;
+    [SerializeField] private float phaseTwoHealthIncrease = 4000f;
     [SerializeField] private string phaseTwoAnimationState = "Boss_Phase2_Move";
 
     [Header("Phase 2 애니메이션 이름")]
@@ -22,16 +22,9 @@ public class BossEnemy : Enemy
 
     public override void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        Debug.Log($"Boss took {damage} damage. Current HP: {currentHealth}");
+        base.TakeDamage(damage);
 
         CheckPhaseTransition();
-
-        if (currentHealth <= 0f)
-        {
-            Die();
-            Debug.Log("Boss Die");
-        }
     }
 
     void CheckPhaseTransition()

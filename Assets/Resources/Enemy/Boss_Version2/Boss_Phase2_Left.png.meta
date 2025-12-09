@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 084e976fba0facd4091d226325645afa
+guid: 22212c3833628f24981d06bdc91cac94
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -91475846481243342
-    second: Boss_Back_2_0
+      213: 5509419749057907159
+    second: Boss_Phase2_Left_0
   - first:
-      213: -2181489700995123483
-    second: Boss_Back_2_1
+      213: -3810339916900437135
+    second: Boss_Phase2_Left_1
   - first:
-      213: 7459996296856106010
-    second: Boss_Back_2_2
+      213: -2707732483535467277
+    second: Boss_Phase2_Left_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,52 +102,39 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boss_Back_2_0
+      name: Boss_Phase2_Left_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 96
-        width: 1106
-        height: 862
+        x: 155
+        y: 44
+        width: 1158
+        height: 1595
       alignment: 9
-      pivot: {x: 0.46, y: 0.5}
+      pivot: {x: 0.47, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 23315f8c3330bbef0800000000000000
-      internalID: -91475846481243342
+      spriteID: 7d94e155214657c40800000000000000
+      internalID: 5509419749057907159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss_Back_2_1
+      name: Boss_Phase2_Left_1
       rect:
         serializedVersion: 2
-        x: 1161
-        y: 82
-        width: 964
-        height: 861
+        x: 1390
+        y: 44
+        width: 1073
+        height: 1595
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,30 +143,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e6330bccaac9b1e0800000000000000
-      internalID: -2181489700995123483
+      spriteID: 17378ab9804fe1bc0800000000000000
+      internalID: -3810339916900437135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss_Back_2_2
+      name: Boss_Phase2_Left_2
       rect:
         serializedVersion: 2
-        x: 2194
-        y: 83
-        width: 1033
-        height: 863
-      alignment: 9
-      pivot: {x: 0.46, y: 0.5}
+        x: 2468
+        y: 33
+        width: 1083
+        height: 1596
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a1476d37b1b378760800000000000000
-      internalID: 7459996296856106010
+      spriteID: 3fc051407a33c6ad0800000000000000
+      internalID: -2707732483535467277
       vertices: []
       indices: 
       edges: []
@@ -188,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ba716207e80c84040b8217983076255e
+    spriteID: 94c6f193127fd44458b2a251708ba837
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Boss_Back_2_0: -91475846481243342
-      Boss_Back_2_1: -2181489700995123483
-      Boss_Back_2_2: 7459996296856106010
+      Boss_Phase2_Left_0: 5509419749057907159
+      Boss_Phase2_Left_1: -3810339916900437135
+      Boss_Phase2_Left_2: -2707732483535467277
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -58,6 +58,6 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 3538228656762564026, guid: c70461dd03e75cb4da8ecf16ccf3c64d, type: 3}
       spawnChance: 1
     normalInitialDelay: 1
-    normalSpawnInterval: 1
+    normalSpawnInterval: 0.5
     verticalInitialDelay: 5
     verticalSpawnInterval: 2.5

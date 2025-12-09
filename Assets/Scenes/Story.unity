@@ -364,7 +364,7 @@ MonoBehaviour:
   - {fileID: 1234021209}
   - {fileID: 163083027}
   - {fileID: 1961851698}
-  _cutDelay: 3
+  _cutDelay: 2.8
   _fadeSpeed: 5
   _fadePanel: {fileID: 1901180357}
 --- !u!1 &787146281

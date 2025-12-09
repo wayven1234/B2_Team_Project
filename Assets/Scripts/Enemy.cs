@@ -1,10 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
     private PlayerController player;
+    protected SpriteRenderer spriteRenderer;
 
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string wallLayerName = "Wall";
@@ -29,6 +31,10 @@ public class Enemy : MonoBehaviour
     private float attackTimer;
     [SerializeField] private GameObject enemyAttackEffectPrefab;
 
+    [Header("피격 효과")]
+    [SerializeField] private float flashDuration = 0.2f;
+    protected Coroutine flashCoroutine;
+
     protected const string ENEMY_FRONT = "Move_Down";
     protected const string ENEMY_BACK = "Move_Up";
     protected const string ENEMY_LEFT = "Move_Left";
@@ -51,6 +57,13 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         attackTimer = 0f;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer 컴포넌트를 찾을 수 없습니다! Enemy 오브젝트에 SpriteRenderer가 부착되어 있는지 확인하세요.");
+        }
     }
 
     void FixedUpdate()
@@ -245,11 +258,31 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"Enemy took {damage} damage. Current HP: {currentHealth}");
 
+        if (spriteRenderer != null)
+        {
+            if (flashCoroutine != null)
+            {
+                StopCoroutine(flashCoroutine);
+            }
+            flashCoroutine = StartCoroutine(FlashRed());
+        }
+
         if (currentHealth <= 0f)
         {
             Die();
             Debug.Log("Enemy Die");
         }
+    }
+
+    protected IEnumerator FlashRed()
+    {
+        spriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(flashDuration);
+
+        spriteRenderer.color = Color.white;
+
+        flashCoroutine = null;
     }
 
     protected void Die()

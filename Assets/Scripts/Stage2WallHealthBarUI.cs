@@ -1,24 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Stage2WallHealthBarUI : MonoBehaviour
 {
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Image fillImage;
+
     private Stage2Wall targetWall;
 
     public void LinkToWall(Stage2Wall wall)
     {
+        if (targetWall != null)
+        {
+            targetWall.OnHealthChanged -= UpdateHealthBar;
+        }
+
         targetWall = wall;
         if (targetWall != null)
         {
             targetWall.OnHealthChanged += UpdateHealthBar;
+
             UpdateHealthBar(targetWall.GetCurrentHealth(), targetWall.GetMaxHealth());
         }
     }
 
     private void OnDisable()
     {
-        // 오브젝트 비활성화 또는 파괴 시 이벤트 구독 해제 (누수 방지)
         if (targetWall != null)
         {
             targetWall.OnHealthChanged -= UpdateHealthBar;
@@ -27,10 +34,9 @@ public class Stage2WallHealthBarUI : MonoBehaviour
 
     private void UpdateHealthBar(float currentHealth, float maxHealth)
     {
-        if (healthSlider != null)
+        if (fillImage != null && maxHealth > 0)
         {
-            healthSlider.maxValue = maxHealth;
-            healthSlider.value = currentHealth;
+            fillImage.fillAmount = currentHealth / maxHealth;
         }
     }
 }

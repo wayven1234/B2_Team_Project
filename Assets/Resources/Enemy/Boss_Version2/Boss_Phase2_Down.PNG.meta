@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: cceba4feea2ca6940852f9e62fa1c14b
+guid: fdf6cdee38712e9439de83b0c209404e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3454147582303042880
-    second: Boss_Front_2_0
+      213: -7820675157505649637
+    second: Boss_Phase2_Down_0
   - first:
-      213: 7291589606405680341
-    second: Boss_Front_2_1
+      213: -3200509651017376310
+    second: Boss_Phase2_Down_1
   - first:
-      213: 6560132967208182811
-    second: Boss_Front_2_2
+      213: -2181759331384128441
+    second: Boss_Phase2_Down_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,84 +102,71 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boss_Front_2_0
+      name: Boss_Phase2_Down_0
       rect:
         serializedVersion: 2
-        x: 29
-        y: 31
-        width: 959
-        height: 848
+        x: 117
+        y: 71
+        width: 1725
+        height: 1525
       alignment: 9
-      pivot: {x: 0.46, y: 0.5}
+      pivot: {x: 0.45, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 04d72fcdce89fef20800000000000000
-      internalID: 3454147582303042880
+      spriteID: b1457254161677390800000000000000
+      internalID: -7820675157505649637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss_Front_2_1
+      name: Boss_Phase2_Down_1
       rect:
         serializedVersion: 2
-        x: 997
-        y: 41
-        width: 1091
-        height: 851
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1881
+        y: 59
+        width: 1960
+        height: 1530
+      alignment: 9
+      pivot: {x: 0.51, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5dcadb15d1ee03560800000000000000
-      internalID: 7291589606405680341
+      spriteID: acd56eeed618593d0800000000000000
+      internalID: -3200509651017376310
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss_Front_2_2
+      name: Boss_Phase2_Down_2
       rect:
         serializedVersion: 2
-        x: 2136
-        y: 29
-        width: 1024
-        height: 849
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 3869
+        y: 67
+        width: 1839
+        height: 1527
+      alignment: 9
+      pivot: {x: 0.51, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b14e5c53d264a0b50800000000000000
-      internalID: 6560132967208182811
+      spriteID: 74c84739275d8b1e0800000000000000
+      internalID: -2181759331384128441
       vertices: []
       indices: 
       edges: []
@@ -188,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6d66e0a56e2e7b643bb6476715b951c5
+    spriteID: 560b2e1973ea77741bc8ceb63d21e913
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Boss_Front_2_0: 3454147582303042880
-      Boss_Front_2_1: 7291589606405680341
-      Boss_Front_2_2: 6560132967208182811
+      Boss_Phase2_Down_0: -7820675157505649637
+      Boss_Phase2_Down_1: -3200509651017376310
+      Boss_Phase2_Down_2: -2181759331384128441
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
