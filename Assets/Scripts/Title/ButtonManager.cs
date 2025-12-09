@@ -84,6 +84,9 @@ public class ButtonManager : MonoBehaviour
             AudioManager.instance.PlaySFX(SFXType.ButtonClick);
         }
         descriptionPanel?.SetActive(true);
+
+        firstWindow?.SetActive(true);
+        secondWindow?.SetActive(false);
     }
     
     public void OnSetButton()
@@ -197,5 +200,14 @@ public class ButtonManager : MonoBehaviour
         }
         escPanel.SetActive(false);
         setPanel.SetActive(true);
+    }
+
+    public void OnDescriptionCloseButtonClick()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+        descriptionPanel.SetActive(false);
     }
 }
