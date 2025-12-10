@@ -15,9 +15,13 @@ public class Weapon : MonoBehaviour
     private GameObject talkPrefab;
     private GameObject barPrefab;
 
+    private GameObject activeBarRangeVisualizer;
+    private GameObject activeBookRangeVisualizer;
+
     private const float BOOK_RANGE = 2.5f;
     private const float BOOK_ANGLE = 90f;
     private const string ENEMY_TAG = "Enemy";
+    private const float BAR_RANGE = 25f;
 
     private Vector2 lastMoveDirection = Vector2.right;
 
@@ -31,6 +35,26 @@ public class Weapon : MonoBehaviour
         talkPrefab = data.talkPrefab;
         barPrefab = data.barPrefab;
 
+        GameObject visualPrefab = data.barRangeVisualPrefab;
+
+        if (currentData.type == ItemData.ItemType.Bar && visualPrefab != null)
+        {
+            activeBarRangeVisualizer = Instantiate(visualPrefab, transform);
+            activeBarRangeVisualizer.name = "Bar Range Visualizer";
+
+            BarSetVisualizerScale(activeBarRangeVisualizer, BAR_RANGE);
+        }
+
+        GameObject bookVisualPrefab = data.bookRangeVisualPrefab;
+
+        if (currentData.type == ItemData.ItemType.Book && bookVisualPrefab != null)
+        {
+            activeBookRangeVisualizer = Instantiate(bookVisualPrefab, transform);
+            activeBookRangeVisualizer.name = "Book Range Visualizer";
+
+            BookSetVisualizerScale(activeBookRangeVisualizer, BOOK_RANGE);
+        }
+
         StartCoroutine(WeaponSpawn());
     }
 
@@ -38,6 +62,22 @@ public class Weapon : MonoBehaviour
     {
         currentDamage = damage;
         currentSpeed = speed;
+    }
+
+    private void BarSetVisualizerScale(GameObject visualizer, float range)
+    {
+        float visualScale = range * 0.4f;
+
+        visualizer.transform.localScale = new Vector3(visualScale, visualScale, 1f);
+        visualizer.transform.localPosition = Vector3.zero;
+    }
+
+    private void BookSetVisualizerScale(GameObject visualizer, float range)
+    {
+        float visualScale = range * 1f;
+
+        visualizer.transform.localScale = new Vector3(visualScale, visualScale, 1f);
+        visualizer.transform.localPosition = Vector3.zero;
     }
 
     private IEnumerator WeaponSpawn()
@@ -207,7 +247,7 @@ public class Weapon : MonoBehaviour
         PlayerController player = PlayerController.instance;
         if (player == null) return;
 
-        const float BAR_RANGE = 25f;
+        //const float BAR_RANGE = 25f;
         const float BAR_LIFETIME = 0.3f;
         const float BAR_TARGETING_RANGE = 10f;
 
@@ -246,6 +286,9 @@ public class Weapon : MonoBehaviour
                 Quaternion.Euler(0, 0, finalRotationZ));
 
             BarAttackEffect barEffectScript = effect.GetComponent<BarAttackEffect>();
+
+            //const float BAR_RANGE_IN_ATTACK = 25f;
+
             if (barEffectScript != null)
             {
                 float finalDamage = currentDamage + player.GetSkillDamageBonus();

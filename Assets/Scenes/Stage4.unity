@@ -531,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossEnemyPrefab: {fileID: 3538228656762564026, guid: 54474dd295686be49838cd780d4ebfa4, type: 3}
   mapBoundary: {fileID: 1933723288}
-  bossSpawnDelay: 150
+  bossSpawnDelay: 60
 --- !u!4 &907180620
 Transform:
   m_ObjectHideFlags: 0

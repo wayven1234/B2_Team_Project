@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 public enum BGMType { Title, Story, Stage1, Stage2, Stage3, Stage4, Boss }
 
-public enum SFXType { ButtonClick, BookAttack, BarAttack, TalkAttack, EnemyAttack, CharacterWalk }
+public enum SFXType { ButtonClick, BookAttack, BarAttack, TalkAttack, EnemyAttack, CharacterWalk, HealSound }
 
 [System.Serializable]
 public class BGMClipData

@@ -25,6 +25,10 @@ public class InGameButtonManager : MonoBehaviour
     private GameObject gameOverPanel;
     private GameObject gameClearPanel;
 
+    private GameObject talkItemPanel;
+    private GameObject bookItemPanel;
+    private GameObject barItemPanel;
+
     public string nextSceneName;
 
     public void StartNextStageFlow()
@@ -45,7 +49,7 @@ public class InGameButtonManager : MonoBehaviour
             return;
         }
 
-            Canvas persistentCanvas = FindFirstObjectByType<PersistentPanel>(FindObjectsInactive.Include)?.GetComponent<Canvas>();
+        Canvas persistentCanvas = FindFirstObjectByType<PersistentPanel>(FindObjectsInactive.Include)?.GetComponent<Canvas>();
         if (persistentCanvas == null)
         {
             Debug.LogError("InGameButtonManager: Persistent Canvas를 찾을 수 없습니다.");
@@ -61,6 +65,10 @@ public class InGameButtonManager : MonoBehaviour
         gameOverPanel = FindChildRecursive(persistentCanvas.transform, "GameOverPanel");
         gameClearPanel = FindChildRecursive(persistentCanvas.transform, "GameClearPanel");
 
+        talkItemPanel = FindChildRecursive(persistentCanvas.transform, "TalkItemPanel");
+        bookItemPanel = FindChildRecursive(persistentCanvas.transform, "BookItemPanel");
+        barItemPanel = FindChildRecursive(persistentCanvas.transform, "BarItemPanel");
+
         if (escPanel != null) escPanel.SetActive(false);
         if (setPanel != null) setPanel.SetActive(false);
         if (characterSelectionPanel != null) characterSelectionPanel.SetActive(false);
@@ -69,6 +77,10 @@ public class InGameButtonManager : MonoBehaviour
         if (stageClearPanel != null) stageClearPanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (gameClearPanel != null) gameClearPanel.SetActive(false);
+
+        if (talkItemPanel != null) talkItemPanel.SetActive(false);
+        if (bookItemPanel != null) bookItemPanel.SetActive(false);
+        if (barItemPanel != null) barItemPanel.SetActive(false);
 
         if (GameManager.instance != null && GameManager.instance.currentStageIndex == 1)
         {
@@ -110,7 +122,9 @@ public class InGameButtonManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            bool isSelectionPanelActive = IsPanelActive(characterSelectionPanel) || IsPanelActive(itemSelectionPanel) || IsPanelActive(itemLevelUpPanel);
+            bool isSelectionPanelActive = IsPanelActive(characterSelectionPanel) ||
+                                          IsPanelActive(itemSelectionPanel) ||
+                                          IsPanelActive(itemLevelUpPanel);
 
             if (!isSelectionPanelActive)
             {
@@ -123,7 +137,10 @@ public class InGameButtonManager : MonoBehaviour
                                      IsPanelActive(setPanel) ||
                                      IsPanelActive(characterSelectionPanel) ||
                                      IsPanelActive(itemSelectionPanel) ||
-                                     IsPanelActive(itemLevelUpPanel);
+                                     IsPanelActive(itemLevelUpPanel) ||
+                                     IsPanelActive(talkItemPanel) ||
+                                     IsPanelActive(bookItemPanel) ||
+                                     IsPanelActive(barItemPanel);
 
         if (isAnyPausePanelActive)
         {
@@ -495,5 +512,71 @@ public class InGameButtonManager : MonoBehaviour
     {
         selectedPlayerPrefab = null;
         //Debug.Log("InGameButtonManager: selectedPlayerPrefab 초기화 완료.");
+    }
+
+    public void TalkItemPanelButton()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+
+        itemSelectionPanel.SetActive(false);
+        talkItemPanel.SetActive(true);
+    }
+
+    public void TalkItemPanelCloseButton()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+
+        itemSelectionPanel.SetActive(true);
+        talkItemPanel.SetActive(false);
+    }
+
+    public void BookItemPanelButton()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+
+        itemSelectionPanel.SetActive(false);
+        bookItemPanel.SetActive(true);
+    }
+
+    public void BookItemPanelCloseButton()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+
+        itemSelectionPanel.SetActive(true);
+        bookItemPanel.SetActive(false);
+    }
+
+    public void BarItemPanelButton()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+
+        itemSelectionPanel.SetActive(false);
+        barItemPanel.SetActive(true);
+    }
+
+    public void BarItemPanelCloseButton()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySFX(SFXType.ButtonClick);
+        }
+
+        itemSelectionPanel.SetActive(true);
+        barItemPanel.SetActive(false);
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
+[CreateAssetMenu(fileName = "New Item Data", menuName = "Custom/Item Data")]
 public class ItemData
 {
     public enum ItemType
@@ -29,6 +30,10 @@ public class ItemData
     public GameObject bookPrefab;
     public GameObject talkPrefab;
     public GameObject barPrefab;
+
+    [Header("Visualization")]
+    public GameObject barRangeVisualPrefab;
+    public GameObject bookRangeVisualPrefab;
 
     [Header("Talk 사거리 속성")]
     public float rangeIncreasePerLevel = 3f;

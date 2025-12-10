@@ -9104,16 +9104,19 @@ MonoBehaviour:
     volume: 0.5
   - type: 1
     clip: {fileID: 8300000, guid: d567d19819911d0439e10e4b8cea1e33, type: 3}
-    volume: 0.5
+    volume: 0.2
   - type: 2
     clip: {fileID: 8300000, guid: 7dd069df766594a4caa7ca54e619d9f2, type: 3}
-    volume: 0.5
+    volume: 0.2
   - type: 4
     clip: {fileID: 8300000, guid: 9579ec6a2810c204bb8aea3eed9beadc, type: 3}
     volume: 0.5
   - type: 5
     clip: {fileID: 8300000, guid: 27508ae3f7e56a146883ec09af076585, type: 3}
     volume: 0.5
+  - type: 6
+    clip: {fileID: 8300000, guid: 2d2d7704542043c4097e0ff507303757, type: 3}
+    volume: 0.3
 --- !u!4 &2015936735
 Transform:
   m_ObjectHideFlags: 0
