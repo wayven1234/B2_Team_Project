@@ -3,8 +3,8 @@ using UnityEngine;
 public class BossEnemy : Enemy
 {
     [Header("보스 페이즈 설정")]
-    [SerializeField] private float phaseTwoHealthThreshold = 4000f;
-    [SerializeField] private float phaseTwoHealthIncrease = 4000f;
+    [SerializeField] private float phaseTwoHealthThreshold = 3500f;
+    [SerializeField] private float phaseTwoHealthIncrease = 3500f;
     [SerializeField] private string phaseTwoAnimationState = "Boss_Phase2_Move";
 
     [Header("Phase 2 애니메이션 이름")]

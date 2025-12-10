@@ -51,7 +51,7 @@ MonoBehaviour:
   playerTag: Player
   wallLayerName: Wall
   wallAttackDistance: 0.6
-  maxHealth: 10000
+  maxHealth: 8000
   currentHealth: 0
   moveSpeed: 1
   damage: 25
