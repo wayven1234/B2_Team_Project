@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public int playerLevel = 1;
     public Dictionary<ItemData.ItemType, int> weaponLevels = new Dictionary<ItemData.ItemType, int>();
     public int playerItemCount = 0;
+    public int playerExpCount = 0;
     public bool isFirstStageLoad = true;
 
     [Header("Retry 복구 지점 데이터")]
